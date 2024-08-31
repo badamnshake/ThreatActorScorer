@@ -1,0 +1,7 @@
+name: TInnovationP
+channels:
+  - defaults
+dependencies:
+  - python
+  - pandas
+  - ipykernel
