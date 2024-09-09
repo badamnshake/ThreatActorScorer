@@ -1,0 +1,9 @@
+Vulnerability score
+likelihood
+IOC
+Tactic Based Score
+Techniques
+Region
+Threat Score
+
+https://center-for-threat-informed-defense.github.io/mappings-explorer/external/nist/
