@@ -1,9 +1,18 @@
-Vulnerability score
-likelihood
-IOC
-Tactic Based Score
-Techniques
-Region
+Vulnerability score -- cve primary impact
+IOC -- nist score
+Tactic Based Score ---
+Techniques         cwe score.
+
+likelihood -- research..
+
+
+Region -- sponsorship score..
+
 Threat Score
 
+
 https://center-for-threat-informed-defense.github.io/mappings-explorer/external/nist/
+
+https://www.cfr.org/cyber-operations/
+
+https://www.kaggle.com/datasets/katerynameleshenko/cyber-security-indexes/data
