@@ -1,10 +1,10 @@
-Vulnerability score -- cve primary impact
+Vulnerability score -- cve primary impact -- we have now 
 IOC -- nist score
 Tactic Based Score ---
 Techniques         cwe score.
 
 likelihood -- research..
-
+industry
 
 Region -- sponsorship score..
 
