@@ -1,0 +1,92 @@
+id,attack_type,severity,description
+1,3rd party desktop,5,Vulnerabilities in external software.
+2,Abuse of functionality,6,Exploits normal functionality for malicious use.
+3,Adminware,4,Admin tools used for control.
+4,Adware,3,Displays unwanted ads minor nuisance.
+5,Backdoor,9,Provides secret access to systems.
+6,Backdoor or C2,7,Controls infected systems remotely.
+7,Brute force,6,Repeated attempts to guess passwords.
+8,Buffer overflow,9,Overwrites memory to control the system.
+9,C2,7,Command and control of infected systems.
+10,Cache poisoning,6,Corrupts cache misdirects traffic.
+11,Capture app data,7,Steals application-level data.
+12,Capture stored data,9,Extracts sensitive stored information.
+13,Click fraud,5,Generates false clicks for revenue.
+14,Click fraud and crypto mining,6,Combined fraudulent and mining actions.
+15,Client-side attack,7,Targets client software. moderate risk.
+16,Command shell,7,Grants shell access for control.
+17,Cryptanalysis,8,Breaks encryption to reveal data.
+18,Cryptocurrency mining,6,Uses system resources for mining.
+19,Desktop sharing software,6,Can be exploited for remote access.
+20,Destroy data,9,Deletes critical information.
+21,Direct install,6,Installs malware directly on target systems.
+22,Disable controls,7,Deactivates security measures.
+23,DoS,7,Denies legitimate service to users.
+24,Download by malware,5,Malware triggers further downloads.
+25,Downloader,5,Software used to fetch additional malware.
+26,Email,5,Email-based phishing or malware delivery.
+27,Email attachment,6,Delivers malware via attachments.
+28,Email link,6,Links that direct to malicious content.
+29,Evade Defenses,7,Bypasses security mechanisms.
+30,Exploit misconfig,7,Leverages misconfigurations.
+31,Exploit vuln,7,Uses known or zero-day vulnerabilities.
+32,Export data,8,Transfers stolen data externally.
+33,Forced browsing,5,Explores web directories without permission.
+34,Forgery,6,Falsifies data or credentials.
+35,Format string attack,7,Executes arbitrary code via input flaws.
+36,Fuzz testing,5,Sends random inputs to expose bugs.
+37,HTTP request smuggling,6,Manipulates HTTP requests to cause damage.
+38,HTTP request splitting,6,Splits HTTP requests for injection.
+39,HTTP response smuggling,6,Alters responses for malicious purposes.
+40,HTTP response splitting,6,Forcibly changes HTTP responses.
+41,Hijack,7,Seizes control of sessions or systems.
+42,Hypervisor,9,Attacks virtualized environments.
+43,In-memory,8,Targets data stored in memory.
+44,Insecure deserialization,7,Manipulates serialized objects for exploitation.
+45,Instant messaging,5,Targets instant messaging systems.
+46,Integer overflows,7,Overflows in arithmetic causing crashes or exploits.
+47,Inter-tenant,7,Exploits vulnerabilities in shared systems.
+48,LDAP injection,7,Alters LDAP queries to access unauthorized data.
+49,MitM,8,Intercepts communication between parties.
+50,Modify data,7,Changes sensitive information. often unnoticed.
+51,Network propagation,7,Spreads quickly across networks.
+52,Null byte injection,7,Exploits null characters for attack.
+53,OS commanding,8,Executes system commands arbitrarily.
+54,Offline cracking,7,Decrypts passwords offline.
+55,Other network service,6,Exploits non-standard network services.
+56,Packet sniffer,4,Captures unencrypted network traffic.
+57,Partner,5,Exploits partner organizations for attack.
+58,Pass-the-hash,7,Uses hashed credentials for lateral movement.
+59,Password dumper,8,Extracts stored passwords from systems.
+60,Phishing,6,Deceptive emails or websites to steal credentials.
+61,Physical access,9,Direct system access leads to full control.
+62,Pretexting,5,Fakes identity for manipulation.
+63,Profile host,4,Gathers system details for reconnaissance.
+64,RAM scraper,9,Steals sensitive data from memory.
+65,RAT,9,Remote control of compromised systems.
+66,Ransomware,10,Encrypts data. demanding ransom.
+67,Remote injection,8,Injects malicious code remotely.
+68,Removable media,8,Infects through USB drives or CDs.
+69,Rootkit,9,Provides stealthy and persistent access.
+70,Routing detour,7,Reroutes traffic through malicious nodes.
+71,SQLi,8,Alters SQL queries to access or control data.
+72,Scan network,3,Discovers devices or open ports.
+73,Session fixation,6,Forces a user to use a compromised session.
+74,Session prediction,6,Predicts session IDs for hijacking.
+75,Session replay,7,Reuses valid sessions for malicious access.
+76,Soap array abuse,5,Exploits SOAP services with array handling flaws.
+77,Social media,4,Uses social platforms for attacks.
+78,Software,4,General software exploitation.
+79,Software update,7,Malicious updates to compromise systems.
+80,Spyware/Keylogger,8,Monitors user activity and steals data.
+81,Trojan,8,Disguises malware as legitimate software.
+82,Unknown,5,General unknown threat vectors.
+83,Use of stolen creds,7,Gains access using stolen credentials.
+84,VPN,6,Compromised VPN exposes internal network.
+85,Virtual machine escape,9,Breaks out of virtualized environments.
+86,Web application,5,Targets web applications. moderate severity.
+87,Web application - download,5,Downloads malware via web apps.
+88,Web application - drive-by,6,Drive-by infection via websites.
+89,Worm,7,Rapidly propagates across networks.
+90,XML external entities,7,Exploits XML processing to expose internal files.
+91,XML injection,7,Manipulates XML data to gain access.
