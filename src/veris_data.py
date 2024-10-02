@@ -51,7 +51,7 @@ def extract_veris_data(ttps):
     average_severity = veris_df.groupby('attack_object_id')['severity'].mean().reset_index()
 
     # Define severity categories
-    bins = [0, 5, 7, 9, 10]
+    bins = [0, 4, 6, 8, 10]
     labels = ['Low', 'Moderate', 'High', 'Critical']
 
     # Rename columns for clarity
@@ -61,7 +61,14 @@ def extract_veris_data(ttps):
     average_severity['severity_level'] = pd.cut(average_severity['severity'], bins=bins, labels=labels, right=True)
 
     # Count occurrences of each severity level
-    severity_counts = average_severity['severity_level'].value_counts()
+    severity_counts = average_severity['severity_level'].value_counts().reset_index();
+    severity_counts.columns = ['severity_level', 'count']
+
+    # order based on Low Moderate High critical
+    severity_order = pd.CategoricalDtype(['Low', 'Moderate', 'High', 'Critical'], ordered=True)
+    severity_counts['severity_level'] = severity_counts['severity_level'].astype(severity_order)
+
+    severity_counts = severity_counts.sort_values('severity_level', ignore_index=True)
 
     # Return the processed data
     return average_severity, severity_counts, veris_df_attribute.groupby('capability_group')['capability_id'].count().reset_index()
