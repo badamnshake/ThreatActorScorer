@@ -6,6 +6,13 @@ base_path = Path(__file__).resolve().parent.parent
 # Initialize a variable to cache the loaded data
 cached_data = None
 
+def load_data():
+    """Load the VERIS data and cache it for reuse."""
+    
+    global cached_data
+    if cached_data is None:
+        cached_data = load_group_data()  # Cache the processed data for future calls
+
 def load_group_data():
     # Load the group data
     mitre_attack_data = MitreAttackData(str(base_path / 'data/enterprise-attack.json'))

@@ -8,6 +8,13 @@ base_path = Path(__file__).resolve().parent.parent
 cached_data = None
 
 
+def load_data():
+    """Load the VERIS data and cache it for reuse."""
+    
+    global cached_data
+    if cached_data is None:
+        cached_data = load_nist_data()  # Cache the processed data for future calls
+
 def load_nist_data():
     # nist data preprocessing and cleaning
     # this data maps nist violations against mitre techniques

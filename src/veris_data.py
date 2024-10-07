@@ -7,6 +7,14 @@ base_path = Path(__file__).resolve().parent.parent
 # Initialize a variable to cache the loaded data
 cached_data = None
 
+def load_data():
+    """Load the VERIS data and cache it for reuse."""
+    
+    global cached_data
+    if cached_data is None:
+        cached_data = load_veris_data()  # Cache the processed data for future calls
+
+
 def load_veris_data():
     """Load the VERIS data from CSV files."""
     veris_df = pd.read_csv(base_path / 'data/veris_attack_mapping.csv')
@@ -51,7 +59,7 @@ def extract_veris_data(ttps):
     average_severity = veris_df.groupby('attack_object_id')['severity'].mean().reset_index()
 
     # Define severity categories
-    bins = [0, 4, 6, 8, 10]
+    bins = [0, 4.0, 6.0, 7.5, 10.0]
     labels = ['Low', 'Moderate', 'High', 'Critical']
 
     # Rename columns for clarity
