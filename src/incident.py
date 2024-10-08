@@ -208,5 +208,4 @@ def load_incident_data():
 
     # Save the updated DataFrame
     incident_df.to_csv('incident_list_processed.csv', index=False)
-
-    print(incident_df.head())  # To check the output for validation
+     # To check the output for validation
