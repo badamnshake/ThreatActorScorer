@@ -23,6 +23,10 @@ load_actor_per_country()  # Load actor per country data
 server = Flask(__name__, static_folder='../public')  # Adjust if necessary based on directory structure
 app = Dash(__name__, server=server, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
+# Function to load the processed incident data from the CSV file
+def load_processed_incident_data():
+    return pd.read_csv('incident_list_processed.csv')
+
 # Function to load the processed actor per country data from the CSV file
 def load_actor_per_country_data():
     # Ensure that the file path is correct and relative to your setup
@@ -119,11 +123,6 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
     # New table for CVSS data
     html.Div(id='cvss-table-container', children=[
         dash_table.DataTable(id='cvss-data-table', style_table={'overflowX': 'auto'})
-    ]),
-
-    # New section for the 3D globe of actors per country
-    html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-        dcc.Graph(id='actors-globe', style={'height': '1500px', 'width': '2000px'})  # Increased size for 3D globe
     ])
 ])
 
@@ -133,13 +132,86 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
      Output('capability-pie-chart', 'figure'),
      Output('nist-bar-chart', 'figure'),
      Output('cvss-data-table', 'data'),
-     Output('region-bar-chart', 'figure'),
-     Output('actors-globe', 'figure')],
+     Output('region-bar-chart', 'figure')],
     Input('submit-button', 'n_clicks'),
     State('ttp-input', 'value')
 )
 def update_graphs(n_clicks, ttps_input):
-    # Your existing Plotly-based graph logic goes here
+    if n_clicks > 0 and ttps_input:
+        # Split the input string into a list of TTPs
+        ttps = [ttp.strip() for ttp in ttps_input.split(',')]
+
+        # Call the extract functions
+        _, severity_counts, capability_counts = extract_veris_data(ttps)
+        nist_violations = extract_nist_data(ttps)
+        cvss_data = extract_cvss_data(ttps)  # Extract CVSS data
+
+        # Load the processed incident data for regions
+        incident_data = load_processed_incident_data()
+
+        # Group by region to get counts for bar chart
+        region_counts = incident_data['Output'].value_counts().reset_index()
+        region_counts.columns = ['Region', 'Count']
+
+        # Load the actor per country data
+        actors_per_country = load_actor_per_country_data()
+
+        # Create pie charts for severity counts
+        severity_colors = ['#00FF00', '#FFFF00', '#FFA500', '#FF0000']  # Green, Yellow, Orange, Red
+        severity_fig = px.pie(
+            names=severity_counts['severity_level'],
+            values=severity_counts['count'],
+            title='Techniques Rated',
+            color=severity_counts.index,
+            color_discrete_sequence=severity_colors
+        )
+
+        # Create a pie chart for capability counts
+        capability_fig = px.pie(
+            capability_counts,
+            names='capability_group',
+            values='capability_id',
+            title='CIA Triad Capability Counts',
+            color_discrete_sequence=['#FF9999', '#66B3FF', '#99FF99']  # Custom colors
+        )
+
+        # Create a bar chart for NIST violations
+        nist_fig = px.bar(
+            nist_violations,
+            x='capability_id',
+            y='capability_group',
+            title='NIST Violations by Type',
+            labels={'capability_id': 'Violations', 'capability_group': 'Type'},
+        )
+
+        # Create a bar chart for region-based incidents
+        region_fig = px.bar(
+            region_counts,
+            x='Region',
+            y='Count',
+            title='Incident Counts by Region',
+            labels={'Region': 'Region', 'Count': 'Number of Incidents'},
+        )
+
+        # Convert CVSS data into a format suitable for the DataTable
+        cvss_data_table = cvss_data.to_dict('records')  # Convert to list of dictionaries
+
+        return severity_fig, capability_fig, nist_fig, cvss_data_table, region_fig
+    else:
+        empty_fig = go.Figure()
+        return empty_fig, empty_fig, empty_fig, [], empty_fig
+
+
+# New callback to update TTP input based on selected group
+@app.callback(
+    Output('ttp-input', 'value'),
+    Input('group-id-dropdown', 'value')
+)
+def update_ttp_input(selected_group):
+    if selected_group:
+        ttps = get_ttps_of_group(selected_group)
+        return ', '.join(ttps) if isinstance(ttps, list) else ''
+    return ''
     return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
 
 if __name__ == '__main__':
