@@ -75,14 +75,9 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         dash_table.DataTable(id='cvss-data-table', style_table={'overflowX': 'auto'})
     ]),
 
-    # New section for the choropleth map of actors per country
-    html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-        dcc.Graph(id='actors-map', style={'height': '800px'})  # Choropleth map
-    ]),
-
     # New section for the 3D globe of actors per country
     html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-    dcc.Graph(id='actors-map', style={'height': '1500px','width': '2000px'})  # Increased size for 3D globe
+    dcc.Graph(id='actors-globe', style={'height': '1500px','width': '2000px'})  # Increased size for 3D globe
 ])
 
 ])
@@ -94,7 +89,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
      Output('nist-bar-chart', 'figure'),
      Output('cvss-data-table', 'data'),
      Output('region-bar-chart', 'figure'),
-     Output('actors-map', 'figure')],  # Add output for the actors map
+     Output('actors-globe', 'figure')],
     Input('submit-button', 'n_clicks'),
     State('ttp-input', 'value')
 )
@@ -155,22 +150,16 @@ def update_graphs(n_clicks, ttps_input):
             labels={'Region': 'Region', 'Count': 'Number of Incidents'},
         )
 
-        # Create the choropleth map for actors per country
-        actors_map_fig = px.choropleth(
-            actors_per_country,
-            locations='country',  # Make sure this matches the column name in your data
-            locationmode='country names',  # Ensure countries are mapped by name
-            color='number_of_actors',
-            hover_name='country',
-            color_continuous_scale='Reds',
-            title='Distribution of Threat Actors by Country'
+        # Create the 3D globe for actors per country, coloring each country based on the number of actors
+        actors_globe_fig = go.Figure()
+
+        # Format the actor list for each country
+        actors_per_country['actor_list'] = actors_per_country['actor_list'].apply(
+            lambda x: '<br>'.join(x.split(','))
         )
 
-        # Create the 3D globe for actors per country, coloring each country based on the number of actors
-        actors_map_fig = go.Figure()
-
         # Create a choropleth trace for the globe
-        actors_map_fig.add_trace(
+        actors_globe_fig.add_trace(
             go.Choropleth(
                 locations=actors_per_country['country'],  # Use the country names from the dataset
                 locationmode='country names',  # Use country names to match the locations
@@ -178,7 +167,8 @@ def update_graphs(n_clicks, ttps_input):
                 colorscale='Plasma',  # High contrast color scale
                 marker_line_color='black',  # Country borders color (darker for realism)
                 marker_line_width=0.7,  # Thicker borders for better visibility
-                hoverinfo='location+z',  # Display country and number of actors on hover
+                hoverinfo='location+z+text',  # Display country and number of actors, and list of actors on hover
+                text=actors_per_country['actor_list'],  # Display properly formatted list of actors
                 zmin=0,  # Minimum value for color scale
                 zmax=actors_per_country['number_of_actors'].max(),  # Maximum value for color scale
                 colorbar=dict(
@@ -189,8 +179,8 @@ def update_graphs(n_clicks, ttps_input):
             )
         )
 
-        # Update layout to display the globe with realistic colors and shading
-        actors_map_fig.update_geos(
+        # Update layout to display the globe
+        actors_globe_fig.update_geos(
             projection_type="orthographic",  # Globe projection
             showcoastlines=True,  # Show coastlines
             coastlinecolor="white",  # White coastlines for contrast
@@ -201,19 +191,21 @@ def update_graphs(n_clicks, ttps_input):
             showlakes=True,
             lakecolor="rgb(85, 173, 240)",  # Lighter blue for lakes
             showrivers=False,
-            bgcolor="black"  # Black background for space-like appearance
+            bgcolor="black",  # Black background for space-like appearance
+            showcountries=True,  # Show country borders
+            countrycolor="white"  # White country names
         )
 
         # Layout configuration for the 3D globe with realistic look
-        actors_map_fig.update_layout(
+        actors_globe_fig.update_layout(
             title=dict(
                 text='3D Interactive Globe: Distribution of Threat Actors by Country',
                 font=dict(
-                size=24,  # Adjust the size of the title if necessary
-                color='white'  # Set the title text color to white
+                    size=24,  # Adjust the size of the title if necessary
+                    color='white'  # Set the title text color to white
+                ),
+                x=0.5,  # Center the title
             ),
-            x=0.5,  # Center the title
-        ),
             geo=dict(
                 showframe=False,  # Hide the frame around the globe
                 showcoastlines=True,  # Show coastlines to highlight land masses
@@ -229,16 +221,15 @@ def update_graphs(n_clicks, ttps_input):
                 countrycolor="black",  # Black country borders for contrast
             ),
             height=1000,  # Set the height of the figure
-            margin={"r":0,"t":50,"l":0,"b":0},  # Margins
+            margin={"r": 0, "t": 50, "l": 0, "b": 0},  # Margins
             paper_bgcolor="black",  # Background color to simulate space
             plot_bgcolor="black"  # Plot background color
         )
 
-
         # Convert CVSS data into a format suitable for the DataTable
         cvss_data_table = cvss_data.to_dict('records')  # Convert to list of dictionaries
 
-        return severity_fig, capability_fig, nist_fig, cvss_data_table, region_fig, actors_map_fig
+        return severity_fig, capability_fig, nist_fig, cvss_data_table, region_fig, actors_globe_fig
     else:
         empty_fig = go.Figure()
         return empty_fig, empty_fig, empty_fig, [], empty_fig, empty_fig
