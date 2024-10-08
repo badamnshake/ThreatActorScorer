@@ -72,13 +72,33 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
 
     # New table for CVSS data
     html.Div(id='cvss-table-container', children=[
-        dash_table.DataTable(id='cvss-data-table', style_table={'overflowX': 'auto'})
+        dash_table.DataTable(
+            id='cvss-data-table',
+            style_table={
+                'overflowX': 'auto',
+                'minWidth': '90%',
+                'width': '90%',  # Adjust column widths as needed
+                'maxWidth': '90%',
+                'border': '1px solid black',
+                'padding': '10px',
+                'backgroundColor': '#f2f2f2',
+                'color': '#333333',
+                'fontSize': '14px',
+                'fontFamily': 'Arial, sans-serif'
+            },
+            style_data={
+                'whiteSpace': 'normal',  # Enable multiline text within cells
+                'textAlign': 'left',
+                'backgroundColor': '#f2f2f2',
+                'color': '#333333'
+            }
+        )
     ]),
 
     # New section for the choropleth map of actors per country
-    html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-        dcc.Graph(id='actors-map', style={'height': '800px'})  # Choropleth map
-    ]),
+    # html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
+    #     dcc.Graph(id='actors-map', style={'height': '800px'})  # Choropleth map
+    # ]),
 
     # New section for the 3D globe of actors per country
     html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
