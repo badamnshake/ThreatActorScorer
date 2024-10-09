@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- Include the CesiumJS JavaScript and CSS files -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script type="module">
+        // Your Cesium Ion access token
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyZWMwYjE0Zi0zYzZmLTQzODctODFmNS1lMDk0NzMxMzIyYTciLCJpZCI6MjQ2Njk2LCJpYXQiOjE3Mjg0MDIwOTh9.txrSqd--7624yo0gnOO_0wmym54zADAECgpphD2cQKA';
+
+        // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+        const viewer = new Cesium.Viewer('cesiumContainer', {
+            terrain: Cesium.Terrain.fromWorldTerrain(),
+            baseLayerPicker: false,  // Disable base layer picker
+            animation: false,  // Disable the animation control
+            timeline: false,  // Disable the timeline
+            geocoder: false,  // Disable the search box
+            fullscreenButton: false,  // Disable fullscreen button
+            homeButton: false,  // Disable the home button
+            infoBox: true,  // Enable info box to display details on click
+            sceneModePicker: false,  // Disable scene mode picker
+            navigationHelpButton: false,  // Disable help button
+            selectionIndicator: true  // Enable selection indicator
+        });
+
+        // Add Cesium OSM Buildings, a global 3D buildings layer.
+        const buildingTileset = await Cesium.createOsmBuildingsAsync();
+        viewer.scene.primitives.add(buildingTileset);
+
+        // Add the imagery layer to label the globe
+        const layer = viewer.imageryLayers.addImageryProvider(
+            await Cesium.IonImageryProvider.fromAssetId(2)
+        );
+
+        // Function to add a country label and its threat actors (shown on click)
+        function addCountryWithThreatActors(countryData) {
+            const { country, latitude, longitude, actors } = countryData;
+            const actorCount = actors.length;  // Calculate the number of threat actors
+
+            viewer.entities.add({
+                name: country,
+                position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
+                label: {
+                    text: country,  // Display the country name on the globe
+                    font: '8pt sans-serif',
+                    fillColor: Cesium.Color.WHITE,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    pixelOffset: new Cesium.Cartesian2(0, -15)  // Move label slightly above the position
+                },
+                description: `
+            <strong>${country}</strong><br />
+            <strong>Number of Threat Actors:</strong> ${actorCount}<br />
+            <strong>Threat Actors:</strong><br />
+            ${actors.join('<br />')}
+        `,  // Display country name, actor count, and actors list in the info box on click
+            });
+        }
+
+
+        // Fetch the threat actor data from the Flask API and process it
+        fetch('http://localhost:8050/actors_by_country')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(countryData => {
+                    addCountryWithThreatActors(countryData);  // Pass the country data directly to the function
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching threat actor data:', error);
+            });
+
+
+        // Adjust the initial view to make the globe more user-friendly
+        viewer.scene.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(0.0, 20.0, 20000000),  // Adjust camera view as needed
+            orientation: {
+                heading: Cesium.Math.toRadians(0.0),
+                pitch: Cesium.Math.toRadians(-90.0),
+                roll: 0.0
+            }
+        });
+    </script>
+</body>
+
+</html>

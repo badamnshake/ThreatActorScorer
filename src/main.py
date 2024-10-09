@@ -1,6 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
+from flask import Flask, jsonify, send_from_directory
 from dash import Dash, dcc, html, Input, Output, State, dash_table
 from veris_data import extract_veris_data, load_data as load_vd
 from nist_data import extract_nist_data, load_data as load_nd
@@ -8,8 +9,9 @@ from cvwe_data import extract_cvss_data, load_data as load_cd
 from group_data import get_all_groups, get_ttps_of_group, load_data as load_gd
 from incident import load_data as load_incident  # Import load_data from incident.py
 from actor_per_country import load_data as load_actor_per_country  # Importing actor_per_country
+import os
 
-# cache all the data so the app is fast::
+# Cache all the data so the app is fast
 load_nd()  # nist data
 load_cd()  # cve data
 load_vd()  # veris data
@@ -17,20 +19,68 @@ load_gd()  # group data
 load_incident()  # incident data
 load_actor_per_country()  # Load actor per country data
 
-# Function to load the processed actor per country data from the CSV file
-def load_actor_per_country_data():
-    return pd.read_csv('actors_per_country.csv')  # Replace with the correct path if needed
-
-# Create the Dash app
-app = Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+# Create Flask app and integrate it with Dash
+server = Flask(__name__, static_folder='../public')  # Adjust if necessary based on directory structure
+app = Dash(__name__, server=server, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
 # Function to load the processed incident data from the CSV file
 def load_processed_incident_data():
-    return pd.read_csv('incident_list_processed.csv')  # Replace with the correct path if needed
+    return pd.read_csv('incident_list_processed.csv')
 
-# Initial layout for the app
+# Function to load the processed actor per country data from the CSV file
+def load_actor_per_country_data():
+    # Ensure that the file path is correct and relative to your setup
+    csv_path = os.path.join(os.path.dirname(__file__), '../data/actors_per_country_filled_lat_lon.csv')
+    if os.path.exists(csv_path):
+        return pd.read_csv(csv_path)
+    else:
+        print(f"File not found: {csv_path}")
+        return pd.DataFrame()  # Return an empty DataFrame if file is not found
+
+# Flask API endpoint to serve threat actor data by country, including latitude and longitude
+@server.route('/actors_by_country', methods=['GET'])
+def get_actors_by_country():
+    print("Request received for /actors_by_country")  # Debug print
+    # Load actor data
+    actor_data = load_actor_per_country_data()
+
+    # Prepare the data to be returned as JSON
+    data = []
+    for index, row in actor_data.iterrows():
+        country = row['country']
+        latitude = row['latitude']
+        longitude = row['longitude']
+        
+        # Validate if latitude and longitude are numbers
+        if pd.notna(latitude) and pd.notna(longitude):
+            latitude = float(latitude)
+            longitude = float(longitude)
+
+            # Only include valid entries
+            actor_list = row['actor_list'].split(',')  # Ensure actors are a list
+            data.append({
+                'country': country,
+                'latitude': latitude,
+                'longitude': longitude,
+                'actors': actor_list
+            })
+
+    # Return JSON response
+    return jsonify(data)
+
+# Serve the index.html file
+@server.route('/public/<path:path>')
+def serve_static_files(path):
+    return send_from_directory('../public', path)
+
+# Initial layout for the Dash app
 app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'}, children=[
     html.H1(children='Threat Actor Analysis', style={'textAlign': 'center', 'color': '#4B0082'}),
+
+    html.Iframe(
+        src='http://localhost:8050/public/index.html',
+        style={"height": "600px", "width": "100%"}
+    ),
 
     html.Div(style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
         dcc.Dropdown(
@@ -133,8 +183,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
      Output('nist-bar-chart', 'figure'),
      Output('cvss-data-table', 'data'),
      Output('ttp-data-table', 'data'),
-     Output('region-bar-chart', 'figure'),
-     Output('actors-globe', 'figure')],
+     Output('region-bar-chart', 'figure')],
     Input('submit-button', 'n_clicks'),
     State('ttp-input', 'value')
 )
@@ -195,87 +244,13 @@ def update_graphs(n_clicks, ttps_input):
             labels={'Region': 'Region', 'Count': 'Number of Incidents'},
         )
 
-        # Create the 3D globe for actors per country, coloring each country based on the number of actors
-        actors_globe_fig = go.Figure()
-
-        # Format the actor list for each country
-        actors_per_country['actor_list'] = actors_per_country['actor_list'].apply(
-            lambda x: '<br>'.join(x.split(','))
-        )
-
-        # Create a choropleth trace for the globe
-        actors_globe_fig.add_trace(
-            go.Choropleth(
-                locations=actors_per_country['country'],  # Use the country names from the dataset
-                locationmode='country names',  # Use country names to match the locations
-                z=actors_per_country['number_of_actors'],  # Values to be colored (number of actors)
-                colorscale='Plasma',  # High contrast color scale
-                marker_line_color='black',  # Country borders color (darker for realism)
-                marker_line_width=0.7,  # Thicker borders for better visibility
-                hoverinfo='location+z+text',  # Display country and number of actors, and list of actors on hover
-                text=actors_per_country['actor_list'],  # Display properly formatted list of actors
-                zmin=0,  # Minimum value for color scale
-                zmax=actors_per_country['number_of_actors'].max(),  # Maximum value for color scale
-                colorbar=dict(
-                    title="Number of Actors",
-                    titlefont=dict(color='white'),  # Set the color of the colorbar title to white
-                    tickfont=dict(color='white')  # Set the color of the colorbar ticks to white
-                )
-            )
-        )
-
-        # Update layout to display the globe
-        actors_globe_fig.update_geos(
-            projection_type="orthographic",  # Globe projection
-            showcoastlines=True,  # Show coastlines
-            coastlinecolor="white",  # White coastlines for contrast
-            showland=True,
-            landcolor="rgb(34, 139, 34)",  # Green land color (realistic)
-            showocean=True,
-            oceancolor="rgb(0, 105, 148)",  # Deep blue ocean color
-            showlakes=True,
-            lakecolor="rgb(85, 173, 240)",  # Lighter blue for lakes
-            showrivers=False,
-            bgcolor="black",  # Black background for space-like appearance
-            showcountries=True,  # Show country borders
-            countrycolor="white"  # White country names
-        )
-
-        # Layout configuration for the 3D globe with realistic look
-        # Finish configuring the 3D globe's layout
-        actors_globe_fig.update_layout(
-            title=dict(
-                text='3D Interactive Globe: Distribution of Threat Actors by Country',
-                font=dict(size=24, color='white'),
-                x=0.5,  # Center the title
-            ),
-            geo=dict(
-                showframe=False,  # Hide the frame around the globe
-                showcoastlines=True,
-                coastlinecolor="white",  # White coastlines for contrast
-                projection_type='orthographic',  # Globe projection
-                showland=True,
-                landcolor="rgb(34, 139, 34)",  # Realistic land color
-                showocean=True,
-                oceancolor="rgb(0, 105, 148)",  # Realistic ocean color
-                showlakes=True,
-                lakecolor="rgb(85, 173, 240)",  # Lakes in lighter blue
-                showcountries=True,  # Show country borders
-                countrycolor="black",  # Black country borders for contrast
-            ),
-            height=1000,  # Set the height of the figure
-            margin={"r": 0, "t": 50, "l": 0, "b": 0},  # Margins
-            paper_bgcolor="black",  # Background color to simulate space
-            plot_bgcolor="black"  # Plot background color
-        )
-
         # Convert CVSS data into a format suitable for the DataTable
         cvss_data_table = cvss_data.to_dict('records')  # Convert to list of dictionaries
 
-        return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records'), region_fig, actors_globe_fig
+        return severity_fig, capability_fig, nist_fig, cvss_data_table, region_fig
     else:
         empty_fig = go.Figure()
-        return empty_fig, empty_fig, empty_fig,[], [], empty_fig, empty_fig
+        return empty_fig, empty_fig, empty_fig, [], empty_fig
 
 
 # New callback to update TTP input based on selected group
@@ -288,7 +263,7 @@ def update_ttp_input(selected_group):
         ttps = get_ttps_of_group(selected_group)
         return ', '.join(ttps) if isinstance(ttps, list) else ''
     return ''
+    return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
 
-# Run the app
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8050)

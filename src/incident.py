@@ -208,4 +208,3 @@ def load_incident_data():
 
     # Save the updated DataFrame
     incident_df.to_csv('incident_list_processed.csv', index=False)
-
