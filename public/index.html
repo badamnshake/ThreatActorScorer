@@ -7,14 +7,25 @@
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Cesium.js"></script>
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <style>
-        html,
-        body,
-        #cesiumContainer {
+        html, body, #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
+        }
+        
+        /* Custom selection indicator wrapper */
+        .cesium-selection-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Adjust selection box size dynamically */
+        .cesium-selection-indicator {
+            transform-origin: center;
+            transition: transform 0.2s ease-in-out;
         }
     </style>
 </head>
@@ -54,12 +65,12 @@
             const { country, latitude, longitude, actors } = countryData;
             const actorCount = actors.length;  // Calculate the number of threat actors
 
-            viewer.entities.add({
+            const entity = viewer.entities.add({
                 name: country,
                 position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
                 label: {
                     text: country,  // Display the country name on the globe
-                    font: '8pt sans-serif',
+                    font: '9pt sans-serif',
                     fillColor: Cesium.Color.WHITE,
                     outlineColor: Cesium.Color.BLACK,
                     outlineWidth: 2,
@@ -69,14 +80,33 @@
                     pixelOffset: new Cesium.Cartesian2(0, -15)  // Move label slightly above the position
                 },
                 description: `
-            <strong>${country}</strong><br />
-            <strong>Number of Threat Actors:</strong> ${actorCount}<br />
-            <strong>Threat Actors:</strong><br />
-            ${actors.join('<br />')}
-        `,  // Display country name, actor count, and actors list in the info box on click
+                    <strong>${country}</strong><br />
+                    <strong>Number of Threat Actors:</strong> ${actorCount}<br />
+                    <strong>Threat Actors:</strong><br />
+                    ${actors.join('<br />')}
+                `,  // Display country name, actor count, and actors list in the info box on click
+            });
+
+            // Adjust selection indicator size based on label length
+            viewer.selectedEntityChanged.addEventListener(function (selectedEntity) {
+                if (selectedEntity === entity) {
+                    const textWidth = getTextWidth(country);
+                    const scaleFactor = textWidth / 50;  // Adjust scale factor based on text width
+                    const selectionIndicator = document.querySelector('.cesium-selection-indicator');
+                    if (selectionIndicator) {
+                        selectionIndicator.style.transform = `scale(${scaleFactor}, 1)`;  // Scale horizontally
+                    }
+                }
             });
         }
 
+        // Utility function to measure text width
+        function getTextWidth(text) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            context.font = '9pt sans-serif';  // Match the label font
+            return context.measureText(text).width;
+        }
 
         // Fetch the threat actor data from the Flask API and process it
         fetch('http://localhost:8050/actors_by_country')
@@ -89,7 +119,6 @@
             .catch(error => {
                 console.error('Error fetching threat actor data:', error);
             });
-
 
         // Adjust the initial view to make the globe more user-friendly
         viewer.scene.camera.setView({
