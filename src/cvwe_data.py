@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 from pathlib import Path 
 
 base_path = Path(__file__).resolve().parent.parent
@@ -71,15 +72,28 @@ def load_cvss_data():
 
 
 def extract_cvss_data(ttps):
-    
     global cached_data
-    if cached_data is None:
-        cached_data = extract_cvss_data()
-
     cvedf = cached_data.loc[cached_data['ttp'].isin(ttps)].reset_index(drop=True)
     cvedf.drop(columns=['mapping_type_count'], inplace=True)
-    return  cvedf
+    return cvedf, get_ttps_by_year(cvedf.copy())
 
 
-    veris_df_action, veris_df_attribute = cached_data
 
+
+def extract_cve_year(cve):
+    match = re.search(r'CVE-(\d{4})', cve)
+    return int(match.group(1)) if match else None
+
+
+def get_ttps_by_year(df):
+
+    df['cve_years'] = [[extract_cve_year(cve) for cve in cves.split(', ') if cve] for cves in df['cves']]
+
+    # Combine logic for finding most recent year
+    df['most_recent_cve_year'] = df['cve_years'].apply(lambda years: max([y for y in years if y is not None]) if years else None)
+
+    # Group by TTP and count
+    ttp_year_summary = df.groupby('most_recent_cve_year').size().reset_index(name='ttp_count').sort_values(by='most_recent_cve_year', ascending=False)
+
+    return ttp_year_summary
+    

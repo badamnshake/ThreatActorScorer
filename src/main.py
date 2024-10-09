@@ -95,6 +95,30 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         )
     ]),
 
+    # New table for CVSS data summary
+    html.Div(id='ttp-table-container', children=[
+        dash_table.DataTable(
+            id='ttp-data-table',
+            style_table={
+                'overflowX': 'auto',
+                'minWidth': '20%',
+                'maxWidth': '90%',
+                'border': '1px solid black',
+                'padding': '10px',
+                'backgroundColor': '#f2f2f2',
+                'color': '#333333',
+                'fontSize': '14px',
+                'fontFamily': 'Arial, sans-serif'
+            },
+            style_data={
+                'whiteSpace': 'normal',  # Enable multiline text within cells
+                'textAlign': 'left',
+                'backgroundColor': '#f2f2f2',
+                'color': '#333333'
+            }
+        )
+    ]),
+
     # New section for the choropleth map of actors per country
     # html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
     #     dcc.Graph(id='actors-map', style={'height': '800px'})  # Choropleth map
@@ -102,8 +126,8 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
 
     # New section for the 3D globe of actors per country
     html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-    dcc.Graph(id='actors-map', style={'height': '1500px','width': '2000px'})  # Increased size for 3D globe
-])
+        dcc.Graph(id='actors-map', style={'height': '1500px','width': '2000px'})  # Increased size for 3D globe
+    ])
 
 ])
 
@@ -113,6 +137,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
      Output('capability-pie-chart', 'figure'),
      Output('nist-bar-chart', 'figure'),
      Output('cvss-data-table', 'data'),
+     Output('ttp-data-table', 'data'),
      Output('region-bar-chart', 'figure'),
      Output('actors-map', 'figure')],  # Add output for the actors map
     Input('submit-button', 'n_clicks'),
@@ -126,7 +151,7 @@ def update_graphs(n_clicks, ttps_input):
         # Call the extract functions
         _, severity_counts, capability_counts = extract_veris_data(ttps)
         nist_violations = extract_nist_data(ttps)
-        cvss_data = extract_cvss_data(ttps)  # Extract CVSS data
+        cvss_data, ttp_year_summary = extract_cvss_data(ttps)  # Extract CVSS data
 
         # Load the processed incident data for regions
         incident_data = load_processed_incident_data()
@@ -225,43 +250,40 @@ def update_graphs(n_clicks, ttps_input):
         )
 
         # Layout configuration for the 3D globe with realistic look
+        # Finish configuring the 3D globe's layout
         actors_map_fig.update_layout(
             title=dict(
                 text='3D Interactive Globe: Distribution of Threat Actors by Country',
-                font=dict(
-                size=24,  # Adjust the size of the title if necessary
-                color='white'  # Set the title text color to white
+                font=dict(size=24, color='white'),
+                x=0.5,  # Center the title
             ),
-            x=0.5,  # Center the title
-        ),
             geo=dict(
                 showframe=False,  # Hide the frame around the globe
-                showcoastlines=True,  # Show coastlines to highlight land masses
-                coastlinecolor="white",  # Make coastlines prominent
-                projection_type='orthographic',  # 3D Globe projection
+                showcoastlines=True,
+                coastlinecolor="white",  # White coastlines for contrast
+                projection_type='orthographic',  # Globe projection
                 showland=True,
                 landcolor="rgb(34, 139, 34)",  # Realistic land color
                 showocean=True,
-                oceancolor="rgb(0, 105, 148)",  # Deep blue ocean
+                oceancolor="rgb(0, 105, 148)",  # Realistic ocean color
                 showlakes=True,
-                lakecolor="rgb(85, 173, 240)",  # Lakes in lighter blue
-                showcountries=True,  # Show country borders
-                countrycolor="black",  # Black country borders for contrast
-            ),
-            height=1000,  # Set the height of the figure
-            margin={"r":0,"t":50,"l":0,"b":0},  # Margins
-            paper_bgcolor="black",  # Background color to simulate space
-            plot_bgcolor="black"  # Plot background color
+                lakecolor="rgb(85, 173, 240)",  # Light blue for lakes
+                showrivers=False,
+                bgcolor="black"  # Space-like background
+            )
         )
 
 
-        # Convert CVSS data into a format suitable for the DataTable
-        cvss_data_table = cvss_data.to_dict('records')  # Convert to list of dictionaries
 
-        return severity_fig, capability_fig, nist_fig, cvss_data_table, region_fig, actors_map_fig
+        
+
+        empty_fig = go.Figure()
+        # return empty_fig, empty_fig, empty_fig,[], [], empty_fig, empty_fig
+
+        return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records'), region_fig, actors_map_fig
     else:
         empty_fig = go.Figure()
-        return empty_fig, empty_fig, empty_fig, [], empty_fig, empty_fig
+        return empty_fig, empty_fig, empty_fig,[], [], empty_fig, empty_fig
 
 
 # New callback to update TTP input based on selected group
