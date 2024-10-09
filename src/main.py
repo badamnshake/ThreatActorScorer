@@ -168,12 +168,6 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
             }
         )
     ]),
-
-    # New section for the 3D globe of actors per country
-    html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-    dcc.Graph(id='actors-globe', style={'height': '1500px','width': '2000px'})  # Increased size for 3D globe
-])
-
 ])
 
 # Callback to update graphs based on TTPs input
@@ -247,10 +241,10 @@ def update_graphs(n_clicks, ttps_input):
         # Convert CVSS data into a format suitable for the DataTable
         cvss_data_table = cvss_data.to_dict('records')  # Convert to list of dictionaries
 
-        return severity_fig, capability_fig, nist_fig, cvss_data_table, region_fig
+        return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records'), region_fig,
     else:
         empty_fig = go.Figure()
-        return empty_fig, empty_fig, empty_fig, [], empty_fig
+        return empty_fig, empty_fig, empty_fig,[], [], empty_fig
 
 
 # New callback to update TTP input based on selected group
