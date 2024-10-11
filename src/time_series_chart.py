@@ -11,7 +11,7 @@ def time_series_layout():
 def create_time_series_chart():
     # Sample data for time series
     data = {
-        'date': pd.date_range(start='2022-01-01', periods=12, freq='M'),  # Monthly data for one year
+        'date': pd.date_range(start='2022-01-01', periods=12, freq='ME'),  # Monthly data for one year
         'attacks': [5, 10, 15, 7, 12, 9, 20, 25, 30, 18, 22, 35],  # Sample number of attacks
         'actor': ['Actor 1'] * 12  # All attacks attributed to 'Actor 1'
     }

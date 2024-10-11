@@ -1,149 +1,149 @@
-id,name,associated groups,url,first_seen,last_seen
-G0018,admin@338,,https://attack.mitre.org/groups/G0018,2017-05-31,2020-03-18
-G0130,Ajax Security Team,"AjaxTM, Flying Kitten, Operation Saffron Rose, Operation Woolen-Goldfish, Rocket Kitten",https://attack.mitre.org/groups/G0130,2021-04-14,2023-10-09
-G1024,Akira,"GOLD SAHARA, PUNK SPIDER",https://attack.mitre.org/groups/G1024,2024-02-20,2024-04-08
-G0138,Andariel,"Onyx Sleet, PLUTONIUM, Silent Chollima",https://attack.mitre.org/groups/G0138,2021-09-29,2024-01-08
-G1007,Aoqin Dragon,,https://attack.mitre.org/groups/G1007,2022-07-14,2022-10-24
-G1028,APT-C-23,"Arid Viper, Big Bang APT, Desert Falcon, Grey Karkadann, Mantis, TAG-63, Two-tailed Scorpion",https://attack.mitre.org/groups/G1028,2024-03-26,2024-04-16
-G0099,APT-C-36,Blind Eagle,https://attack.mitre.org/groups/G0099,2020-05-05,2021-05-26
-G0006,APT1,"Comment Crew, Comment Group, Comment Panda",https://attack.mitre.org/groups/G0006,2017-05-31,2021-05-26
-G0005,APT12,"DNSCALC, DynCalc, IXESHE, Numbered Panda",https://attack.mitre.org/groups/G0005,2017-05-31,2020-03-30
-G0023,APT16,,https://attack.mitre.org/groups/G0023,2017-05-31,2022-07-26
-G0025,APT17,Deputy Dog,https://attack.mitre.org/groups/G0025,2017-05-31,2020-10-13
-G0026,APT18,"Dynamite Panda, TG-0416, Threat Group-0416",https://attack.mitre.org/groups/G0026,2017-05-31,2024-04-11
-G0073,APT19,"C0d0so0, Codoso, Codoso Team, Sunshop Group",https://attack.mitre.org/groups/G0073,2018-10-17,2024-04-11
-G0007,APT28,"FROZENLAKE, Fancy Bear, Forest Blizzard, Group 74, IRON TWILIGHT, Pawn Storm, SNAKEMACKEREL, STRONTIUM, Sednit, Sofacy, Swallowtail, TG-4127, Threat Group-4127, Tsar Team",https://attack.mitre.org/groups/G0007,2017-05-31,2024-04-04
-G0016,APT29,"Blue Kitsune, Cozy Bear, CozyDuke, Dark Halo, IRON HEMLOCK, IRON RITUAL, Midnight Blizzard, NOBELIUM, NobleBaron, SolarStorm, StellarParticle, The Dukes, UNC2452, UNC3524, YTTRIUM",https://attack.mitre.org/groups/G0016,2017-05-31,2024-04-12
-G0022,APT3,"Buckeye, Gothic Panda, Pirpi, TG-0110, Threat Group-0110, UPS Team",https://attack.mitre.org/groups/G0022,2017-05-31,2024-02-06
-G0013,APT30,,https://attack.mitre.org/groups/G0013,2017-05-31,2020-07-29
-G0050,APT32,"APT-C-00, BISMUTH, Canvas Cyclone, OceanLotus, SeaLotus",https://attack.mitre.org/groups/G0050,2017-12-14,2024-04-17
-G0064,APT33,"Elfin, HOLMIUM, Peach Sandstorm",https://attack.mitre.org/groups/G0064,2018-04-18,2024-04-11
-G0067,APT37,"Group123, InkySquid, Reaper, Ricochet Chollima, ScarCruft, TEMP.Reaper",https://attack.mitre.org/groups/G0067,2018-04-18,2023-06-26
-G0082,APT38,"BeagleBoyz, Bluenoroff, COPERNICIUM, NICKEL GLADSTONE, Sapphire Sleet, Stardust Chollima",https://attack.mitre.org/groups/G0082,2019-01-29,2024-04-17
-G0087,APT39,"Chafer, ITG07, Remix Kitten",https://attack.mitre.org/groups/G0087,2019-02-19,2024-04-11
-G0096,APT41,"BARIUM, Brass Typhoon, Wicked Panda",https://attack.mitre.org/groups/G0096,2019-09-23,2024-04-03
-G1023,APT5,"BRONZE FLEETWOOD, Keyhole Panda, MANGANESE, Mulberry Typhoon, UNC2630",https://attack.mitre.org/groups/G1023,2024-02-05,2024-03-14
-G0143,Aquatic Panda,,https://attack.mitre.org/groups/G0143,2022-01-18,2023-03-21
-G0001,Axiom,Group 72,https://attack.mitre.org/groups/G0001,2017-05-31,2023-03-20
-G0135,BackdoorDiplomacy,,https://attack.mitre.org/groups/G0135,2021-09-21,2021-10-18
-G1002,BITTER,T-APT-17,https://attack.mitre.org/groups/G1002,2022-06-01,2024-04-11
-G0063,BlackOasis,,https://attack.mitre.org/groups/G0063,2018-04-18,2018-10-17
-G0098,BlackTech,Palmerworm,https://attack.mitre.org/groups/G0098,2020-05-05,2022-04-06
-G0108,Blue Mockingbird,,https://attack.mitre.org/groups/G0108,2020-05-26,2024-04-11
-G0060,BRONZE BUTLER,"REDBALDKNIGHT, Tick",https://attack.mitre.org/groups/G0060,2018-01-16,2021-10-12
-G0008,Carbanak,Anunak,https://attack.mitre.org/groups/G0008,2017-05-31,2021-10-18
-G0114,Chimera,,https://attack.mitre.org/groups/G0114,2020-08-24,2023-03-22
-G1021,Cinnamon Tempest,"BRONZE STARLIGHT, DEV-0401, Emperor Dragonfly",https://attack.mitre.org/groups/G1021,2023-12-06,2024-04-04
-G0003,Cleaver,"TG-2889, Threat Group 2889",https://attack.mitre.org/groups/G0003,2017-05-31,2022-07-22
-G0080,Cobalt Group,"Cobalt Gang, Cobalt Spider, GOLD KINGSWOOD",https://attack.mitre.org/groups/G0080,2018-10-17,2023-03-22
-G0142,Confucius,Confucius APT,https://attack.mitre.org/groups/G0142,2021-12-26,2023-09-22
-G0052,CopyKittens,,https://attack.mitre.org/groups/G0052,2018-01-16,2022-08-08
-G1012,CURIUM,"Crimson Sandstorm, TA456, Tortoise Shell",https://attack.mitre.org/groups/G1012,2023-01-13,2024-04-17
-G0070,Dark Caracal,,https://attack.mitre.org/groups/G0070,2018-10-17,2024-04-11
-G0012,Darkhotel,"DUBNIUM, Zigzag Hail",https://attack.mitre.org/groups/G0012,2017-05-31,2024-01-08
-G0079,DarkHydrus,,https://attack.mitre.org/groups/G0079,2018-10-17,2021-10-12
-G0105,DarkVishnya,,https://attack.mitre.org/groups/G0105,2020-05-15,2021-10-12
-G0009,Deep Panda,"Black Vine, KungFu Kittens, PinkPanther, Shell Crew, WebMasters",https://attack.mitre.org/groups/G0009,2017-05-31,2022-07-20
-G0035,Dragonfly,"BROMINE, Berserk Bear, Crouching Yeti, DYMALLOY, Energetic Bear, Ghost Blizzard, IRON LIBERTY, TEMP.Isotope, TG-4192",https://attack.mitre.org/groups/G0035,2017-05-31,2024-01-08
-G0017,DragonOK,,https://attack.mitre.org/groups/G0017,2017-05-31,2019-03-22
-G1006,Earth Lusca,"CHROMIUM, Charcoal Typhoon, ControlX, TAG-22",https://attack.mitre.org/groups/G1006,2022-07-01,2024-04-10
-G0066,Elderwood,"Beijing Group, Elderwood Gang, Sneaky Panda",https://attack.mitre.org/groups/G0066,2018-04-18,2024-04-11
-G1003,Ember Bear,"Bleeding Bear, Lorec Bear, Lorec53, Saint Bear, UAC-0056, UNC2589",https://attack.mitre.org/groups/G1003,2022-06-09,2023-03-22
-G0020,Equation,,https://attack.mitre.org/groups/G0020,2017-05-31,2020-06-29
-G0120,Evilnum,,https://attack.mitre.org/groups/G0120,2021-01-22,2021-04-27
-G1011,EXOTIC LILY,,https://attack.mitre.org/groups/G1011,2022-08-18,2022-10-24
-G0137,Ferocious Kitten,,https://attack.mitre.org/groups/G0137,2021-09-28,2021-10-25
-G0051,FIN10,,https://attack.mitre.org/groups/G0051,2017-12-14,2021-05-26
-G1016,FIN13,Elephant Beetle,https://attack.mitre.org/groups/G1016,2023-07-27,2023-09-29
-G0085,FIN4,,https://attack.mitre.org/groups/G0085,2019-01-31,2023-02-01
-G0053,FIN5,,https://attack.mitre.org/groups/G0053,2018-01-16,2021-10-16
-G0037,FIN6,"Camouflage Tempest, ITG08, Magecart Group 6, Skeleton Spider, TAAL",https://attack.mitre.org/groups/G0037,2017-05-31,2024-01-08
-G0046,FIN7,"Carbon Spider, ELBRUS, GOLD NIAGARA, ITG14, Sangria Tempest",https://attack.mitre.org/groups/G0046,2017-05-31,2024-04-17
-G0061,FIN8,Syssphinx,https://attack.mitre.org/groups/G0061,2018-04-18,2023-09-19
-G0117,Fox Kitten,"Lemon Sandstorm, Parisite, Pioneer Kitten, RUBIDIUM, UNC757",https://attack.mitre.org/groups/G0117,2020-12-21,2024-01-08
-G0093,GALLIUM,Granite Typhoon,https://attack.mitre.org/groups/G0093,2019-07-18,2024-04-17
-G0084,Gallmaker,,https://attack.mitre.org/groups/G0084,2019-01-30,2020-03-30
-G0047,Gamaredon Group,"ACTINIUM, Aqua Blizzard, Armageddon, DEV-0157, IRON TILDEN, Primitive Bear, Shuckworm",https://attack.mitre.org/groups/G0047,2017-05-31,2023-12-04
-G0036,GCMAN,,https://attack.mitre.org/groups/G0036,2017-05-31,2020-03-30
-G0115,GOLD SOUTHFIELD,Pinchy Spider,https://attack.mitre.org/groups/G0115,2020-09-22,2023-03-28
-G0078,Gorgon Group,,https://attack.mitre.org/groups/G0078,2018-10-17,2021-10-12
-G0043,Group5,,https://attack.mitre.org/groups/G0043,2017-05-31,2024-04-11
-G0125,HAFNIUM,"Operation Exchange Marauder, Silk Typhoon",https://attack.mitre.org/groups/G0125,2021-03-03,2024-01-08
-G1001,HEXANE,"Lyceum, Siamesekitten, Spirlin",https://attack.mitre.org/groups/G1001,2018-10-17,2024-02-09
-G0126,Higaisa,,https://attack.mitre.org/groups/G0126,2021-03-05,2024-04-11
-G0100,Inception,"Cloud Atlas, Inception Framework",https://attack.mitre.org/groups/G0100,2020-05-08,2024-04-11
-G0136,IndigoZebra,,https://attack.mitre.org/groups/G0136,2021-09-24,2021-10-16
-G0119,Indrik Spider,"DEV-0243, Evil Corp, Manatee Tempest",https://attack.mitre.org/groups/G0119,2021-01-06,2024-04-17
-G0004,Ke3chang,"APT15, GREF, Mirage, NICKEL, Nylon Typhoon, Playful Dragon, RoyalAPT, Vixen Panda",https://attack.mitre.org/groups/G0004,2017-05-31,2024-01-08
-G0094,Kimsuky,"Black Banshee, Emerald Sleet, THALLIUM, Velvet Chollima",https://attack.mitre.org/groups/G0094,2019-08-26,2024-04-17
-G1004,LAPSUS$,"DEV-0537, Strawberry Tempest",https://attack.mitre.org/groups/G1004,2022-06-09,2024-01-11
-G0032,Lazarus Group,"Diamond Sleet, Guardians of Peace, HIDDEN COBRA, Labyrinth Chollima, NICKEL ACADEMY, ZINC",https://attack.mitre.org/groups/G0032,2017-05-31,2024-04-11
-G0140,LazyScripter,,https://attack.mitre.org/groups/G0140,2021-11-24,2023-03-22
-G0077,Leafminer,Raspite,https://attack.mitre.org/groups/G0077,2018-10-17,2023-03-22
-G0065,Leviathan,"APT40, BRONZE MOHAWK, Gadolinium, Gingham Typhoon, Kryptonite Panda, MUDCARP, TEMP.Jumper, TEMP.Periscope",https://attack.mitre.org/groups/G0065,2018-04-18,2024-01-08
-G0030,Lotus Blossom,"DRAGONFISH, RADIUM, Raspberry Typhoon, Spring Dragon",https://attack.mitre.org/groups/G0030,2017-05-31,2024-01-08
-G1014,LuminousMoth,,https://attack.mitre.org/groups/G1014,2023-02-23,2023-04-17
-G0095,Machete,"APT-C-43, El Machete",https://attack.mitre.org/groups/G0095,2019-09-13,2021-10-06
-G0059,Magic Hound,"APT35, COBALT ILLUSION, Charming Kitten, ITG18, Mint Sandstorm, Newscaster, Phosphorus, TA453",https://attack.mitre.org/groups/G0059,2018-01-16,2024-01-08
-G1026,Malteiro,,https://attack.mitre.org/groups/G1026,2024-03-13,2024-03-29
-G0045,menuPass,"APT10, BRONZE RIVERSIDE, CVNX, Cicada, HOGFISH, POTASSIUM, Red Apollo, Stone Panda",https://attack.mitre.org/groups/G0045,2017-05-31,2024-04-11
-G1013,Metador,,https://attack.mitre.org/groups/G1013,2023-01-25,2024-04-11
-G0002,Moafee,,https://attack.mitre.org/groups/G0002,2017-05-31,2020-03-30
-G0103,Mofang,,https://attack.mitre.org/groups/G0103,2020-05-12,2024-04-11
-G0021,Molerats,"Gaza Cybergang, Operation Molerats",https://attack.mitre.org/groups/G0021,2017-05-31,2024-04-11
-G1009,Moses Staff,"DEV-0500, Marigold Sandstorm",https://attack.mitre.org/groups/G1009,2022-08-11,2024-04-11
-G1019,MoustachedBouncer,,https://attack.mitre.org/groups/G1019,2023-09-25,2023-09-26
-G0069,MuddyWater,"Earth Vetala, MERCURY, Mango Sandstorm, Seedworm, Static Kitten, TA450, TEMP.Zagros",https://attack.mitre.org/groups/G0069,2018-04-18,2024-04-17
-G0129,Mustang Panda,"BRONZE PRESIDENT, RedDelta, TA416",https://attack.mitre.org/groups/G0129,2021-04-12,2023-03-22
-G1020,Mustard Tempest,"DEV-0206, GOLD PRELUDE, TA569, UNC1543",https://attack.mitre.org/groups/G1020,2023-12-06,2024-03-25
-G0019,Naikon,,https://attack.mitre.org/groups/G0019,2017-05-31,2021-08-19
-G0055,NEODYMIUM,,https://attack.mitre.org/groups/G0055,2018-01-16,2019-03-25
-G0133,Nomadic Octopus,DustSquad,https://attack.mitre.org/groups/G0133,2021-08-24,2022-09-02
-G0049,OilRig,"APT34, COBALT GYPSY, EUROPIUM, Evasive Serpens, Hazel Sandstorm, Helix Kitten, IRN2",https://attack.mitre.org/groups/G0049,2017-12-14,2024-04-11
-G0071,Orangeworm,,https://attack.mitre.org/groups/G0071,2018-10-17,2024-04-10
-G0040,Patchwork,"Chinastrats, Dropping Elephant, Hangover Group, MONSOON, Operation Hangover",https://attack.mitre.org/groups/G0040,2017-05-31,2023-03-22
-G0011,PittyTiger,,https://attack.mitre.org/groups/G0011,2017-05-31,2021-10-12
-G0068,PLATINUM,,https://attack.mitre.org/groups/G0068,2018-04-18,2021-04-22
-G1005,POLONIUM,Plaid Rain,https://attack.mitre.org/groups/G1005,2022-07-01,2024-01-08
-G0033,Poseidon Group,,https://attack.mitre.org/groups/G0033,2017-05-31,2020-03-18
-G0056,PROMETHIUM,StrongPity,https://attack.mitre.org/groups/G0056,2018-01-16,2024-04-19
-G0024,Putter Panda,"APT2, MSUpdater",https://attack.mitre.org/groups/G0024,2017-05-31,2024-04-11
-G0075,Rancor,,https://attack.mitre.org/groups/G0075,2018-10-17,2024-02-09
-G0106,Rocke,,https://attack.mitre.org/groups/G0106,2020-05-26,2020-06-19
-G0048,RTM,,https://attack.mitre.org/groups/G0048,2017-05-31,2020-05-12
-G0034,Sandworm Team,"BlackEnergy (Group), ELECTRUM, FROZENBARENTS, IRIDIUM, IRON VIKING, Quedagh, Seashell Blizzard, Telebots, Voodoo Bear",https://attack.mitre.org/groups/G0034,2017-05-31,2024-04-06
-G0029,Scarlet Mimic,,https://attack.mitre.org/groups/G0029,2017-05-31,2020-03-30
-G1015,Scattered Spider,"Octo Tempest, Roasted 0ktapus, Storm-0875",https://attack.mitre.org/groups/G1015,2023-07-05,2024-04-04
-G1008,SideCopy,,https://attack.mitre.org/groups/G1008,2022-08-07,2022-10-24
-G0121,Sidewinder,"Rattlesnake, T-APT-04",https://attack.mitre.org/groups/G0121,2021-01-27,2024-04-11
-G0091,Silence,Whisper Spider,https://attack.mitre.org/groups/G0091,2019-05-24,2023-03-22
-G0122,Silent Librarian,"COBALT DICKENS, TA407",https://attack.mitre.org/groups/G0122,2021-02-03,2021-04-21
-G0083,SilverTerrier,,https://attack.mitre.org/groups/G0083,2019-01-29,2023-09-27
-G0054,Sowbug,,https://attack.mitre.org/groups/G0054,2018-01-16,2020-03-30
-G0038,Stealth Falcon,,https://attack.mitre.org/groups/G0038,2017-05-31,2020-11-23
-G0041,Strider,ProjectSauron,https://attack.mitre.org/groups/G0041,2017-05-31,2020-06-29
-G0039,Suckfly,,https://attack.mitre.org/groups/G0039,2017-05-31,2022-04-15
-G1018,TA2541,,https://attack.mitre.org/groups/G1018,2023-09-12,2024-04-10
-G0062,TA459,,https://attack.mitre.org/groups/G0062,2018-04-18,2020-03-30
-G0092,TA505,"CHIMBORAZO, Hive0065, Spandex Tempest",https://attack.mitre.org/groups/G0092,2019-05-28,2024-04-10
-G0127,TA551,"GOLD CABIN, Shathak",https://attack.mitre.org/groups/G0127,2021-03-19,2023-03-22
-G0139,TeamTNT,,https://attack.mitre.org/groups/G0139,2021-10-01,2024-04-10
-G0088,TEMP.Veles,XENOTIME,https://attack.mitre.org/groups/G0088,2019-04-16,2024-04-17
-G0089,The White Company,,https://attack.mitre.org/groups/G0089,2019-05-02,2020-03-30
-G0028,Threat Group-1314,TG-1314,https://attack.mitre.org/groups/G0028,2017-05-31,2020-03-19
-G0027,Threat Group-3390,"APT27, BRONZE UNION, Earth Smilodon, Emissary Panda, Iron Tiger, LuckyMouse, TG-3390",https://attack.mitre.org/groups/G0027,2017-05-31,2024-04-10
-G0076,Thrip,,https://attack.mitre.org/groups/G0076,2018-10-17,2021-10-12
-G1022,ToddyCat,,https://attack.mitre.org/groups/G1022,2024-01-03,2024-02-14
-G0131,Tonto Team,"BRONZE HUNTLEY, CactusPete, Earth Akhlut, Karma Panda",https://attack.mitre.org/groups/G0131,2021-05-05,2022-01-27
-G0134,Transparent Tribe,"APT36, COPPER FIELDSTONE, Mythic Leopard, ProjectM",https://attack.mitre.org/groups/G0134,2021-09-02,2024-04-10
-G0081,Tropic Trooper,"KeyBoy, Pirate Panda",https://attack.mitre.org/groups/G0081,2019-01-29,2024-04-18
-G0010,Turla,"BELUGASTURGEON, Group 88, IRON HUNTER, Krypton, Secret Blizzard, Snake, Venomous Bear, Waterbug, WhiteBear",https://attack.mitre.org/groups/G0010,2017-05-31,2024-04-17
-G0123,Volatile Cedar,Lebanese Cedar,https://attack.mitre.org/groups/G0123,2021-02-08,2022-04-20
-G1017,Volt Typhoon,BRONZE SILHOUETTE,https://attack.mitre.org/groups/G1017,2023-07-27,2024-03-28
-G0107,Whitefly,,https://attack.mitre.org/groups/G0107,2020-05-26,2024-04-10
-G0124,Windigo,,https://attack.mitre.org/groups/G0124,2021-02-10,2021-04-26
-G0112,Windshift,Bahamut,https://attack.mitre.org/groups/G0112,2020-06-25,2021-04-26
-G0044,Winnti Group,Blackfly,https://attack.mitre.org/groups/G0044,2017-05-31,2023-03-20
-G0090,WIRTE,,https://attack.mitre.org/groups/G0090,2019-05-24,2022-04-15
-G0102,Wizard Spider,"DEV-0193, FIN12, GOLD BLACKBURN, Grim Spider, ITG23, Periwinkle Tempest, TEMP.MixMaster, UNC1878",https://attack.mitre.org/groups/G0102,2020-05-12,2024-04-03
-G0128,ZIRCONIUM,"APT31, Violet Typhoon",https://attack.mitre.org/groups/G0128,2021-03-24,2024-01-08
+id,name,associated groups,url,first_seen,last_seen,region,Unnamed: 7
+G0018,admin@338,,https://attack.mitre.org/groups/G0018,5/31/2017,3/18/2020,China,
+G0130,Ajax Security Team,"AjaxTM, Flying Kitten, Operation Saffron Rose, Operation Woolen-Goldfish, Rocket Kitten",https://attack.mitre.org/groups/G0130,4/14/2021,10/9/2023,Iran,
+G1024,Akira,"GOLD SAHARA, PUNK SPIDER",https://attack.mitre.org/groups/G1024,2/20/2024,4/8/2024,Unknown,
+G0138,Andariel,"Onyx Sleet, PLUTONIUM, Silent Chollima",https://attack.mitre.org/groups/G0138,9/29/2021,1/8/2024,North Korea,
+G1007,Aoqin Dragon,,https://attack.mitre.org/groups/G1007,7/14/2022,10/24/2022,China,
+G1028,APT-C-23,"Arid Viper, Big Bang APT, Desert Falcon, Grey Karkadann, Mantis, TAG-63, Two-tailed Scorpion",https://attack.mitre.org/groups/G1028,3/26/2024,4/16/2024,Palestine,
+G0099,APT-C-36,Blind Eagle,https://attack.mitre.org/groups/G0099,5/5/2020,5/26/2021,South America,
+G0006,APT1,"Comment Crew, Comment Group, Comment Panda",https://attack.mitre.org/groups/G0006,5/31/2017,5/26/2021,China,
+G0005,APT12,"DNSCALC, DynCalc, IXESHE, Numbered Panda",https://attack.mitre.org/groups/G0005,5/31/2017,3/30/2020,China,
+G0023,APT16,,https://attack.mitre.org/groups/G0023,5/31/2017,7/26/2022,China,
+G0025,APT17,Deputy Dog,https://attack.mitre.org/groups/G0025,5/31/2017,10/13/2020,China,
+G0026,APT18,"Dynamite Panda, TG-0416, Threat Group-0416",https://attack.mitre.org/groups/G0026,5/31/2017,4/11/2024,China,
+G0073,APT19,"C0d0so0, Codoso, Codoso Team, Sunshop Group",https://attack.mitre.org/groups/G0073,10/17/2018,4/11/2024,China,
+G0007,APT28,"FROZENLAKE, Fancy Bear, Forest Blizzard, Group 74, IRON TWILIGHT, Pawn Storm, SNAKEMACKEREL, STRONTIUM, Sednit, Sofacy, Swallowtail, TG-4127, Threat Group-4127, Tsar Team",https://attack.mitre.org/groups/G0007,5/31/2017,4/4/2024,Russia,
+G0016,APT29,"Blue Kitsune, Cozy Bear, CozyDuke, Dark Halo, IRON HEMLOCK, IRON RITUAL, Midnight Blizzard, NOBELIUM, NobleBaron, SolarStorm, StellarParticle, The Dukes, UNC2452, UNC3524, YTTRIUM",https://attack.mitre.org/groups/G0016,5/31/2017,4/12/2024,Russia,
+G0022,APT3,"Buckeye, Gothic Panda, Pirpi, TG-0110, Threat Group-0110, UPS Team",https://attack.mitre.org/groups/G0022,5/31/2017,2/6/2024,China,
+G0013,APT30,,https://attack.mitre.org/groups/G0013,5/31/2017,7/29/2020,China,
+G0050,APT32,"APT-C-00, BISMUTH, Canvas Cyclone, OceanLotus, SeaLotus",https://attack.mitre.org/groups/G0050,12/14/2017,4/17/2024,Vietnam,
+G0064,APT33,"Elfin, HOLMIUM, Peach Sandstorm",https://attack.mitre.org/groups/G0064,4/18/2018,4/11/2024,Iran,
+G0067,APT37,"Group123, InkySquid, Reaper, Ricochet Chollima, ScarCruft, TEMP.Reaper",https://attack.mitre.org/groups/G0067,4/18/2018,6/26/2023,North Korea,
+G0082,APT38,"BeagleBoyz, Bluenoroff, COPERNICIUM, NICKEL GLADSTONE, Sapphire Sleet, Stardust Chollima",https://attack.mitre.org/groups/G0082,1/29/2019,4/17/2024,North Korea,
+G0087,APT39,"Chafer, ITG07, Remix Kitten",https://attack.mitre.org/groups/G0087,2/19/2019,4/11/2024,Iran,
+G0096,APT41,"BARIUM, Brass Typhoon, Wicked Panda",https://attack.mitre.org/groups/G0096,9/23/2019,4/3/2024,China,
+G1023,APT5,"BRONZE FLEETWOOD, Keyhole Panda, MANGANESE, Mulberry Typhoon, UNC2630",https://attack.mitre.org/groups/G1023,2/5/2024,3/14/2024,China,
+G0143,Aquatic Panda,,https://attack.mitre.org/groups/G0143,1/18/2022,3/21/2023,China,
+G0001,Axiom,Group 72,https://attack.mitre.org/groups/G0001,5/31/2017,3/20/2023,China,
+G0135,BackdoorDiplomacy,,https://attack.mitre.org/groups/G0135,9/21/2021,10/18/2021,China,
+G1002,BITTER,T-APT-17,https://attack.mitre.org/groups/G1002,6/1/2022,4/11/2024,South Asia,
+G0063,BlackOasis,,https://attack.mitre.org/groups/G0063,4/18/2018,10/17/2018,Middle East,
+G0098,BlackTech,Palmerworm,https://attack.mitre.org/groups/G0098,5/5/2020,4/6/2022,China,
+G0108,Blue Mockingbird,,https://attack.mitre.org/groups/G0108,5/26/2020,4/11/2024,Unknown,
+G0060,BRONZE BUTLER,"REDBALDKNIGHT, Tick",https://attack.mitre.org/groups/G0060,1/16/2018,10/12/2021,China,
+G0008,Carbanak,Anunak,https://attack.mitre.org/groups/G0008,5/31/2017,10/18/2021,Russia,
+G0114,Chimera,,https://attack.mitre.org/groups/G0114,8/24/2020,3/22/2023,China,
+G1021,Cinnamon Tempest,"BRONZE STARLIGHT, DEV-0401, Emperor Dragonfly",https://attack.mitre.org/groups/G1021,12/6/2023,4/4/2024,China,
+G0003,Cleaver,"TG-2889, Threat Group 2889",https://attack.mitre.org/groups/G0003,5/31/2017,7/22/2022,Iran,
+G0080,Cobalt Group,"Cobalt Gang, Cobalt Spider, GOLD KINGSWOOD",https://attack.mitre.org/groups/G0080,10/17/2018,3/22/2023,Russia,
+G0142,Confucius,Confucius APT,https://attack.mitre.org/groups/G0142,12/26/2021,9/22/2023,India/Pakistan,
+G0052,CopyKittens,,https://attack.mitre.org/groups/G0052,1/16/2018,8/8/2022,Iran,
+G1012,CURIUM,"Crimson Sandstorm, TA456, Tortoise Shell",https://attack.mitre.org/groups/G1012,1/13/2023,4/17/2024,Iran,
+G0070,Dark Caracal,,https://attack.mitre.org/groups/G0070,10/17/2018,4/11/2024,Lebanon,
+G0012,Darkhotel,"DUBNIUM, Zigzag Hail",https://attack.mitre.org/groups/G0012,5/31/2017,1/8/2024,South Korea,
+G0079,DarkHydrus,,https://attack.mitre.org/groups/G0079,10/17/2018,10/12/2021,Middle East,
+G0105,DarkVishnya,,https://attack.mitre.org/groups/G0105,5/15/2020,10/12/2021,Eastern Europe,
+G0009,Deep Panda,"Black Vine, KungFu Kittens, PinkPanther, Shell Crew, WebMasters",https://attack.mitre.org/groups/G0009,5/31/2017,7/20/2022,China,
+G0035,Dragonfly,"BROMINE, Berserk Bear, Crouching Yeti, DYMALLOY, Energetic Bear, Ghost Blizzard, IRON LIBERTY, TEMP.Isotope, TG-4192",https://attack.mitre.org/groups/G0035,5/31/2017,1/8/2024,Russia,
+G0017,DragonOK,,https://attack.mitre.org/groups/G0017,5/31/2017,3/22/2019,China,
+G1006,Earth Lusca,"CHROMIUM, Charcoal Typhoon, ControlX, TAG-22",https://attack.mitre.org/groups/G1006,7/1/2022,4/10/2024,China,
+G0066,Elderwood,"Beijing Group, Elderwood Gang, Sneaky Panda",https://attack.mitre.org/groups/G0066,4/18/2018,4/11/2024,China,
+G1003,Ember Bear,"Bleeding Bear, Lorec Bear, Lorec53, Saint Bear, UAC-0056, UNC2589",https://attack.mitre.org/groups/G1003,6/9/2022,3/22/2023,Russia,
+G0020,Equation,,https://attack.mitre.org/groups/G0020,5/31/2017,6/29/2020,United States,
+G0120,Evilnum,,https://attack.mitre.org/groups/G0120,1/22/2021,4/27/2021,Europe,
+G1011,EXOTIC LILY,,https://attack.mitre.org/groups/G1011,8/18/2022,10/24/2022,Russia,
+G0137,Ferocious Kitten,,https://attack.mitre.org/groups/G0137,9/28/2021,10/25/2021,Iran,
+G0051,FIN10,,https://attack.mitre.org/groups/G0051,12/14/2017,5/26/2021,Canada,Unknown?
+G1016,FIN13,Elephant Beetle,https://attack.mitre.org/groups/G1016,7/27/2023,9/29/2023,South America,Unknown?
+G0085,FIN4,,https://attack.mitre.org/groups/G0085,1/31/2019,2/1/2023,USA,
+G0053,FIN5,,https://attack.mitre.org/groups/G0053,1/16/2018,10/16/2021,Russia,
+G0037,FIN6,"Camouflage Tempest, ITG08, Magecart Group 6, Skeleton Spider, TAAL",https://attack.mitre.org/groups/G0037,5/31/2017,1/8/2024,Russia,
+G0046,FIN7,"Carbon Spider, ELBRUS, GOLD NIAGARA, ITG14, Sangria Tempest",https://attack.mitre.org/groups/G0046,5/31/2017,4/17/2024,Russia,
+G0061,FIN8,Syssphinx,https://attack.mitre.org/groups/G0061,4/18/2018,9/19/2023,Russia,
+G0117,Fox Kitten,"Lemon Sandstorm, Parisite, Pioneer Kitten, RUBIDIUM, UNC757",https://attack.mitre.org/groups/G0117,12/21/2020,1/8/2024,Iran,
+G0093,GALLIUM,Granite Typhoon,https://attack.mitre.org/groups/G0093,7/18/2019,4/17/2024,China,
+G0084,Gallmaker,,https://attack.mitre.org/groups/G0084,1/30/2019,3/30/2020,Middle East,
+G0047,Gamaredon Group,"ACTINIUM, Aqua Blizzard, Armageddon, DEV-0157, IRON TILDEN, Primitive Bear, Shuckworm",https://attack.mitre.org/groups/G0047,5/31/2017,12/4/2023,Russia,
+G0036,GCMAN,,https://attack.mitre.org/groups/G0036,5/31/2017,3/30/2020,Russia,
+G0115,GOLD SOUTHFIELD,Pinchy Spider,https://attack.mitre.org/groups/G0115,9/22/2020,3/28/2023,Unknown,
+G0078,Gorgon Group,,https://attack.mitre.org/groups/G0078,10/17/2018,10/12/2021,Pakistan,
+G0043,Group5,,https://attack.mitre.org/groups/G0043,5/31/2017,4/11/2024,Iran,
+G0125,HAFNIUM,"Operation Exchange Marauder, Silk Typhoon",https://attack.mitre.org/groups/G0125,3/3/2021,1/8/2024,China,
+G1001,HEXANE,"Lyceum, Siamesekitten, Spirlin",https://attack.mitre.org/groups/G1001,10/17/2018,2/9/2024,Iran,
+G0126,Higaisa,,https://attack.mitre.org/groups/G0126,3/5/2021,4/11/2024,South Korea,
+G0100,Inception,"Cloud Atlas, Inception Framework",https://attack.mitre.org/groups/G0100,5/8/2020,4/11/2024,,
+G0136,IndigoZebra,,https://attack.mitre.org/groups/G0136,9/24/2021,10/16/2021,China,
+G0119,Indrik Spider,"DEV-0243, Evil Corp, Manatee Tempest",https://attack.mitre.org/groups/G0119,1/6/2021,4/17/2024,Russia,
+G0004,Ke3chang,"APT15, GREF, Mirage, NICKEL, Nylon Typhoon, Playful Dragon, RoyalAPT, Vixen Panda",https://attack.mitre.org/groups/G0004,5/31/2017,1/8/2024,China,
+G0094,Kimsuky,"Black Banshee, Emerald Sleet, THALLIUM, Velvet Chollima",https://attack.mitre.org/groups/G0094,8/26/2019,4/17/2024,North Korea,
+G1004,LAPSUS$,"DEV-0537, Strawberry Tempest",https://attack.mitre.org/groups/G1004,6/9/2022,1/11/2024,,
+G0032,Lazarus Group,"Diamond Sleet, Guardians of Peace, HIDDEN COBRA, Labyrinth Chollima, NICKEL ACADEMY, ZINC",https://attack.mitre.org/groups/G0032,5/31/2017,4/11/2024,North Korea,
+G0140,LazyScripter,,https://attack.mitre.org/groups/G0140,11/24/2021,3/22/2023,,
+G0077,Leafminer,Raspite,https://attack.mitre.org/groups/G0077,10/17/2018,3/22/2023,Iran,
+G0065,Leviathan,"APT40, BRONZE MOHAWK, Gadolinium, Gingham Typhoon, Kryptonite Panda, MUDCARP, TEMP.Jumper, TEMP.Periscope",https://attack.mitre.org/groups/G0065,4/18/2018,1/8/2024,China,
+G0030,Lotus Blossom,"DRAGONFISH, RADIUM, Raspberry Typhoon, Spring Dragon",https://attack.mitre.org/groups/G0030,5/31/2017,1/8/2024,,
+G1014,LuminousMoth,,https://attack.mitre.org/groups/G1014,2/23/2023,4/17/2023,China,
+G0095,Machete,"APT-C-43, El Machete",https://attack.mitre.org/groups/G0095,9/13/2019,10/6/2021,Spain?,
+G0059,Magic Hound,"APT35, COBALT ILLUSION, Charming Kitten, ITG18, Mint Sandstorm, Newscaster, Phosphorus, TA453",https://attack.mitre.org/groups/G0059,1/16/2018,1/8/2024,Iran,
+G1026,Malteiro,,https://attack.mitre.org/groups/G1026,3/13/2024,3/29/2024,Brazil,
+G0045,menuPass,"APT10, BRONZE RIVERSIDE, CVNX, Cicada, HOGFISH, POTASSIUM, Red Apollo, Stone Panda",https://attack.mitre.org/groups/G0045,5/31/2017,4/11/2024,China,
+G1013,Metador,,https://attack.mitre.org/groups/G1013,1/25/2023,4/11/2024,,
+G0002,Moafee,,https://attack.mitre.org/groups/G0002,5/31/2017,3/30/2020,China,
+G0103,Mofang,,https://attack.mitre.org/groups/G0103,5/12/2020,4/11/2024,China,
+G0021,Molerats,"Gaza Cybergang, Operation Molerats",https://attack.mitre.org/groups/G0021,5/31/2017,4/11/2024,Arab?,
+G1009,Moses Staff,"DEV-0500, Marigold Sandstorm",https://attack.mitre.org/groups/G1009,8/11/2022,4/11/2024,Iran,
+G1019,MoustachedBouncer,,https://attack.mitre.org/groups/G1019,9/25/2023,9/26/2023,,
+G0069,MuddyWater,"Earth Vetala, MERCURY, Mango Sandstorm, Seedworm, Static Kitten, TA450, TEMP.Zagros",https://attack.mitre.org/groups/G0069,4/18/2018,4/17/2024,Iran,
+G0129,Mustang Panda,"BRONZE PRESIDENT, RedDelta, TA416",https://attack.mitre.org/groups/G0129,4/12/2021,3/22/2023,China,
+G1020,Mustard Tempest,"DEV-0206, GOLD PRELUDE, TA569, UNC1543",https://attack.mitre.org/groups/G1020,12/6/2023,3/25/2024,,
+G0019,Naikon,,https://attack.mitre.org/groups/G0019,5/31/2017,8/19/2021,China,
+G0055,NEODYMIUM,,https://attack.mitre.org/groups/G0055,1/16/2018,3/25/2019,,
+G0133,Nomadic Octopus,DustSquad,https://attack.mitre.org/groups/G0133,8/24/2021,9/2/2022,Russia,
+G0049,OilRig,"APT34, COBALT GYPSY, EUROPIUM, Evasive Serpens, Hazel Sandstorm, Helix Kitten, IRN2",https://attack.mitre.org/groups/G0049,12/14/2017,4/11/2024,Iran,
+G0071,Orangeworm,,https://attack.mitre.org/groups/G0071,10/17/2018,4/10/2024,China,
+G0040,Patchwork,"Chinastrats, Dropping Elephant, Hangover Group, MONSOON, Operation Hangover",https://attack.mitre.org/groups/G0040,5/31/2017,3/22/2023,India,
+G0011,PittyTiger,,https://attack.mitre.org/groups/G0011,5/31/2017,10/12/2021,China,
+G0068,PLATINUM,,https://attack.mitre.org/groups/G0068,4/18/2018,4/22/2021,,
+G1005,POLONIUM,Plaid Rain,https://attack.mitre.org/groups/G1005,7/1/2022,1/8/2024,Lebanon,
+G0033,Poseidon Group,,https://attack.mitre.org/groups/G0033,5/31/2017,3/18/2020,Portugal,
+G0056,PROMETHIUM,StrongPity,https://attack.mitre.org/groups/G0056,1/16/2018,4/19/2024,,
+G0024,Putter Panda,"APT2, MSUpdater",https://attack.mitre.org/groups/G0024,5/31/2017,4/11/2024,China,
+G0075,Rancor,,https://attack.mitre.org/groups/G0075,10/17/2018,2/9/2024,China,
+G0106,Rocke,,https://attack.mitre.org/groups/G0106,5/26/2020,6/19/2020,China,
+G0048,RTM,,https://attack.mitre.org/groups/G0048,5/31/2017,5/12/2020,Russia,
+G0034,Sandworm Team,"BlackEnergy (Group), ELECTRUM, FROZENBARENTS, IRIDIUM, IRON VIKING, Quedagh, Seashell Blizzard, Telebots, Voodoo Bear",https://attack.mitre.org/groups/G0034,5/31/2017,4/6/2024,Russia,
+G0029,Scarlet Mimic,,https://attack.mitre.org/groups/G0029,5/31/2017,3/30/2020,China,
+G1015,Scattered Spider,"Octo Tempest, Roasted 0ktapus, Storm-0875",https://attack.mitre.org/groups/G1015,7/5/2023,4/4/2024,US-UK,
+G1008,SideCopy,,https://attack.mitre.org/groups/G1008,8/7/2022,10/24/2022,Pakistan,
+G0121,Sidewinder,"Rattlesnake, T-APT-04",https://attack.mitre.org/groups/G0121,1/27/2021,4/11/2024,India,
+G0091,Silence,Whisper Spider,https://attack.mitre.org/groups/G0091,5/24/2019,3/22/2023,,
+G0122,Silent Librarian,"COBALT DICKENS, TA407",https://attack.mitre.org/groups/G0122,2/3/2021,4/21/2021,Iran,
+G0083,SilverTerrier,,https://attack.mitre.org/groups/G0083,1/29/2019,9/27/2023,Nigeria,
+G0054,Sowbug,,https://attack.mitre.org/groups/G0054,1/16/2018,3/30/2020,,Unknown?
+G0038,Stealth Falcon,,https://attack.mitre.org/groups/G0038,5/31/2017,11/23/2020,United Arab Emirates,
+G0041,Strider,ProjectSauron,https://attack.mitre.org/groups/G0041,5/31/2017,6/29/2020,,
+G0039,Suckfly,,https://attack.mitre.org/groups/G0039,5/31/2017,4/15/2022,China,
+G1018,TA2541,,https://attack.mitre.org/groups/G1018,9/12/2023,4/10/2024,,
+G0062,TA459,,https://attack.mitre.org/groups/G0062,4/18/2018,3/30/2020,China,
+G0092,TA505,"CHIMBORAZO, Hive0065, Spandex Tempest",https://attack.mitre.org/groups/G0092,5/28/2019,4/10/2024,Russia,
+G0127,TA551,"GOLD CABIN, Shathak",https://attack.mitre.org/groups/G0127,3/19/2021,3/22/2023,,
+G0139,TeamTNT,,https://attack.mitre.org/groups/G0139,10/1/2021,4/10/2024,,
+G0088,TEMP.Veles,XENOTIME,https://attack.mitre.org/groups/G0088,4/16/2019,4/17/2024,Russia,
+G0089,The White Company,,https://attack.mitre.org/groups/G0089,5/2/2019,3/30/2020,Middle East,
+G0028,Threat Group-1314,TG-1314,https://attack.mitre.org/groups/G0028,5/31/2017,3/19/2020,,Unknown?
+G0027,Threat Group-3390,"APT27, BRONZE UNION, Earth Smilodon, Emissary Panda, Iron Tiger, LuckyMouse, TG-3390",https://attack.mitre.org/groups/G0027,5/31/2017,4/10/2024,China,
+G0076,Thrip,,https://attack.mitre.org/groups/G0076,10/17/2018,10/12/2021,China,
+G1022,ToddyCat,,https://attack.mitre.org/groups/G1022,1/3/2024,2/14/2024,China,
+G0131,Tonto Team,"BRONZE HUNTLEY, CactusPete, Earth Akhlut, Karma Panda",https://attack.mitre.org/groups/G0131,5/5/2021,1/27/2022,China,
+G0134,Transparent Tribe,"APT36, COPPER FIELDSTONE, Mythic Leopard, ProjectM",https://attack.mitre.org/groups/G0134,9/2/2021,4/10/2024,Pakistan,
+G0081,Tropic Trooper,"KeyBoy, Pirate Panda",https://attack.mitre.org/groups/G0081,1/29/2019,4/18/2024,,
+G0010,Turla,"BELUGASTURGEON, Group 88, IRON HUNTER, Krypton, Secret Blizzard, Snake, Venomous Bear, Waterbug, WhiteBear",https://attack.mitre.org/groups/G0010,5/31/2017,4/17/2024,Russia,
+G0123,Volatile Cedar,Lebanese Cedar,https://attack.mitre.org/groups/G0123,2/8/2021,4/20/2022,Lebanon,
+G1017,Volt Typhoon,BRONZE SILHOUETTE,https://attack.mitre.org/groups/G1017,7/27/2023,3/28/2024,China,
+G0107,Whitefly,,https://attack.mitre.org/groups/G0107,5/26/2020,4/10/2024,,
+G0124,Windigo,,https://attack.mitre.org/groups/G0124,2/10/2021,4/26/2021,,
+G0112,Windshift,Bahamut,https://attack.mitre.org/groups/G0112,6/25/2020,4/26/2021,,Unknown?
+G0044,Winnti Group,Blackfly,https://attack.mitre.org/groups/G0044,5/31/2017,3/20/2023,China,
+G0090,WIRTE,,https://attack.mitre.org/groups/G0090,5/24/2019,4/15/2022,,
+G0102,Wizard Spider,"DEV-0193, FIN12, GOLD BLACKBURN, Grim Spider, ITG23, Periwinkle Tempest, TEMP.MixMaster, UNC1878",https://attack.mitre.org/groups/G0102,5/12/2020,4/3/2024,Russia,
+G0128,ZIRCONIUM,"APT31, Violet Typhoon",https://attack.mitre.org/groups/G0128,3/24/2021,1/8/2024,China,
