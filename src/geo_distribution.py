@@ -3,10 +3,15 @@ import pandas as pd
 import plotly.express as px
 from dash import dcc, html
 
+from pathlib import Path 
+
+base_path = Path(__file__).resolve().parent.parent
+
+
 # Load the CSV file
 
-csv_file_path = r'..\data\actors_per_country_filled_lat_lon.csv'
-df = pd.read_csv(csv_file_path)
+# csv_file_path = r'..\data\actors_per_country_filled_lat_lon.csv'
+df = pd.read_csv(base_path / 'data/actors_per_country_filled_lat_lon.csv')
 
 
 # Initialize a dictionary to hold actor-country relationships with lat/long

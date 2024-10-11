@@ -273,8 +273,6 @@ def update_graphs(n_clicks, ttps_input):
             labels={'Region': 'Region', 'Count': 'Number of Incidents'},
         )
 
-        # Convert CVSS data into a format suitable for the DataTable
-        cvss_data_table = cvss_data.to_dict('records')  # Convert to list of dictionaries
 
         return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records'), region_fig,
     else:

@@ -207,4 +207,4 @@ def load_incident_data():
     incident_df['Output'] = incident_df.apply(process_row, axis=1)
 
     # Save the updated DataFrame
-    incident_df.to_csv('incident_list_processed.csv', index=False)
+    # incident_df.to_csv('incident_list_processed.csv', index=False)
