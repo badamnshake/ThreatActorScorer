@@ -1,53 +1,75 @@
-# geo_chart.py
+# geo_distribution.py
 import pandas as pd
 import plotly.express as px
 from dash import dcc, html
 
+# Load the CSV file
+
+csv_file_path = r'..\data\actors_per_country_filled_lat_lon.csv'
+df = pd.read_csv(csv_file_path)
+
+
+# Initialize a dictionary to hold actor-country relationships with lat/long
+actor_country_map = {}
+
+# Iterate over each row in the DataFrame
+for index, row in df.iterrows():
+    country = row['country']
+    latitude = row['latitude']
+    longitude = row['longitude']
+    actors = row['actor_list'].split(', ')
+    
+    # Map each actor to the corresponding country, latitude, and longitude
+    for actor in actors:
+        actor = actor.strip()  # Remove any leading/trailing spaces
+        if actor not in actor_country_map:
+            actor_country_map[actor] = []
+        actor_country_map[actor].append({
+            'country': country,
+            'latitude': latitude,
+            'longitude': longitude
+        })
+
 def geo_layout():
     return html.Div([
-        dcc.Graph(id='geo-distribution-chart'),
+        dcc.Graph(id='geo-distribution-chart'),  # Ensure this ID matches what you're using
     ])
 
-def create_geo_distribution_chart():
-    # Static data for testing
-    data = {
-        'latitude': [34.0522, 40.7128, 37.7749],
-        'longitude': [-118.2437, -74.0060, -122.4194],
-        'attacks': [10, 20, 15],
-        'actor': ['Actor 1', 'Actor 1', 'Actor 1']
-    }
-    df = pd.DataFrame(data)
+def create_geo_distribution_chart(selected_actor):
+    if selected_actor not in actor_country_map:
+        return px.scatter_geo()  # Return an empty figure if the actor is not found
+    
+    # Prepare the data for the selected actor
+    locations = actor_country_map[selected_actor]
+    df = pd.DataFrame(locations)
 
-    # Create a geographical distribution chart with enhancements
+    # Create a geographical distribution chart
     fig = px.scatter_geo(
         df,
         lat='latitude',
         lon='longitude',
-        size='attacks',
-        hover_name='actor',
-        size_max=30,
-        title='Geographical Distribution of Attacks by Actor 1',
+        size=[1]*len(df),  # Static size, or adjust based on some value if needed
+        hover_name='country',  # Show country name on hover
+        title=f'Geographical Distribution of Attacks by {selected_actor}',
         projection='natural earth',
-        template='plotly',  # Use a predefined template
-        color='attacks',  # Color by the number of attacks
-        color_continuous_scale=px.colors.sequential.Plasma,  # Change the color scale
-        opacity=0.6,  # Add some transparency
-        labels={'attacks': 'Number of Attacks'},  # Label for hover text
-        hover_data={'latitude': True, 'longitude': True}  # Show latitude and longitude on hover
+        template='plotly',
+        color='country',  # Optional: color by country
+        opacity=0.6,
+        labels={'country': 'Country'},
+        hover_data={'latitude': True, 'longitude': True}
     )
 
     # Update layout for better appearance
     fig.update_layout(
         geo=dict(
-            scope='world',  # Show the entire world or specify a continent
-            showland=True,  # Show land
-            landcolor='lightgray',  # Land color
-            subunitcolor='white',  # Color of country borders
-            countrycolor='white',  # Color of countries
+            scope='world',
+            showland=True,
+            landcolor='lightgray',
+            subunitcolor='white',
+            countrycolor='white',
         ),
-        title_font=dict(size=24, color='black'),  # Title font properties
-        margin=dict(l=0, r=0, t=50, b=0),  # Adjust margins
+        title_font=dict(size=24, color='black'),
+        margin=dict(l=0, r=0, t=50, b=0),
     )
 
     return fig
-

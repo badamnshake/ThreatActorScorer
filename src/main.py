@@ -9,11 +9,12 @@ from cvwe_data import extract_cvss_data, load_data as load_cd
 from group_data import get_all_groups, get_ttps_of_group, load_data as load_gd
 from incident import load_data as load_incident  # Import load_data from incident.py
 from actor_per_country import load_data as load_actor_per_country  # Importing actor_per_country
-from geo_distribution import geo_layout, create_geo_distribution_chart
 from time_series_chart import time_series_layout, create_time_series_chart 
 from attack_techniques import heatmap_layout, create_heatmap_chart
 from resource_utilization import resource_utilization_layout, create_resource_utilization_chart
 from plotly import graph_objects as go
+from geo_distribution import geo_layout, create_geo_distribution_chart
+import geo_distribution 
 import os
 
 # Cache all the data so the app is fast
@@ -317,32 +318,20 @@ def update_timeline_chart(n_clicks):
     else:
         # Return an empty figure if no clicks yet
         return go.Figure()
-    
-#Geo callback
-def geo_layout():
-    return html.Div([
-        dcc.Graph(id='geo-distribution-chart'),  # Ensure this ID matches what you're using
-        # Other components can be added here as needed
-    ])
+ # Callback to update the geo chart
 
-def register_callbacks(app):
-    @app.callback(
-        Output('geo-distribution-chart', 'figure'),
-        Input('some-input', 'value')
-    )
-    def update_geo_chart(input_value):
-        print(f'Input value received: {input_value}')  # Log input value
-        # Return a figure or empty figure for debugging
-        return {}
 # Callback to update the geo chart
 @app.callback(
     Output('geo-distribution-chart', 'figure'),
-    Input('submit-button', 'n_clicks')  # You can trigger this with any relevant input
+    Input('group-id-dropdown', 'value'),  # Get selected value from dropdown
+    Input('submit-button', 'n_clicks')  # Optional: trigger with a button
 )
-def update_geo_chart(n_clicks):
-    # Call the function to create the geo chart
-    return create_geo_distribution_chart()
-
+def update_geo_chart(selected_actor, n_clicks):
+    # Check if a valid actor is selected
+    if selected_actor is None:
+        return geo_distribution.create_geo_distribution_chart("Unknown Actor")  # Handle no selection
+    
+    return geo_distribution.create_geo_distribution_chart(selected_actor)
 # Callback to update the time series chart
 @app.callback(
     Output('time-series-chart', 'figure'),
