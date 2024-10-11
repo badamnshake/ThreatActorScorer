@@ -86,6 +86,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         style={"height": "600px", "width": "100%"}
     ),
 
+    # Dropdown and input field for TTPs
     html.Div(style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
         dcc.Dropdown(
             id='group-id-dropdown',
@@ -106,6 +107,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         }),
     ]),
 
+    # Severity and Capability Pie Charts
     html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
         html.Div(style={'flex': '1', 'marginRight': '10px'}, children=[
             dcc.Graph(id='severity-pie-chart', style={'height': '300px'}),
@@ -115,47 +117,49 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         ]),
     ]),
 
+    # NIST and Region Bar Charts
     html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
         html.Div(style={'flex': '1'}, children=[
             dcc.Graph(id='nist-bar-chart'),
         ]),
         html.Div(style={'flex': '1'}, children=[
-            dcc.Graph(id='region-bar-chart'),  # New bar chart for regions
+            dcc.Graph(id='region-bar-chart'),
         ]),
     ]),
 
-   # New graph for the timeline chart
+    # Timeline chart
     html.Div([
         dcc.Graph(id='timeline-chart', style={'height': '400px'})
     ]),
 
-    # Button to trigger the update
-    html.Button('Submit', id='submit-button', n_clicks=0),
-
-# Geo chart
-html.Div([
+    # Geo chart
+    html.Div([
         geo_layout(),
     ]),
-    
-    #time series chart
-html.Div([time_series_layout()]),
 
-     # New section for Heatmap Chart
-    html.Div([heatmap_layout()]), 
+    # Time series chart
+    html.Div([
+        time_series_layout(),
+    ]),
 
-     # New section for Resource Utilization chart
+    # Heatmap Chart
+    html.Div([
+        heatmap_layout(),
+    ]),
+
+    # Resource Utilization chart
     html.Div([
         resource_utilization_layout(),
     ]),
 
-    # New table for CVSS data
+    # CVSS Data Table
     html.Div(id='cvss-table-container', children=[
         dash_table.DataTable(
             id='cvss-data-table',
             style_table={
                 'overflowX': 'auto',
                 'minWidth': '90%',
-                'width': '90%',  # Adjust column widths as needed
+                'width': '90%',
                 'maxWidth': '90%',
                 'border': '1px solid black',
                 'padding': '10px',
@@ -165,7 +169,7 @@ html.Div([time_series_layout()]),
                 'fontFamily': 'Arial, sans-serif'
             },
             style_data={
-                'whiteSpace': 'normal',  # Enable multiline text within cells
+                'whiteSpace': 'normal',
                 'textAlign': 'left',
                 'backgroundColor': '#f2f2f2',
                 'color': '#333333'
@@ -173,7 +177,7 @@ html.Div([time_series_layout()]),
         )
     ]),
 
-    # New table for CVSS data summary
+    # CVSS Summary Table
     html.Div(id='ttp-table-container', children=[
         dash_table.DataTable(
             id='ttp-data-table',
@@ -189,7 +193,7 @@ html.Div([time_series_layout()]),
                 'fontFamily': 'Arial, sans-serif'
             },
             style_data={
-                'whiteSpace': 'normal',  # Enable multiline text within cells
+                'whiteSpace': 'normal',
                 'textAlign': 'left',
                 'backgroundColor': '#f2f2f2',
                 'color': '#333333'
@@ -197,6 +201,7 @@ html.Div([time_series_layout()]),
         )
     ]),
 ])
+
 
 # Callback to update graphs based on TTPs input
 @app.callback(
