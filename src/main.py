@@ -14,6 +14,7 @@ from attack_techniques import heatmap_layout, create_heatmap_chart
 from resource_utilization import resource_utilization_layout, create_resource_utilization_chart
 from plotly import graph_objects as go
 from geo_distribution import geo_layout, create_geo_distribution_chart
+import geo_distribution 
 import os
 
 # Cache all the data so the app is fast
@@ -322,12 +323,15 @@ def update_timeline_chart(n_clicks):
 # Callback to update the geo chart
 @app.callback(
     Output('geo-distribution-chart', 'figure'),
-    Input('submit-button', 'n_clicks')  # Adjust based on your app's logic
+    Input('group-id-dropdown', 'value'),  # Get selected value from dropdown
+    Input('submit-button', 'n_clicks')  # Optional: trigger with a button
 )
-def update_geo_chart(n_clicks):
-    # Call the function to create the geo chart
-    return create_geo_distribution_chart()
-
+def update_geo_chart(selected_actor, n_clicks):
+    # Check if a valid actor is selected
+    if selected_actor is None:
+        return geo_distribution.create_geo_distribution_chart("Unknown Actor")  # Handle no selection
+    
+    return geo_distribution.create_geo_distribution_chart(selected_actor)
 # Callback to update the time series chart
 @app.callback(
     Output('time-series-chart', 'figure'),
