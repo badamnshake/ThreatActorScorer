@@ -9,6 +9,10 @@ from cvwe_data import extract_cvss_data, load_data as load_cd
 from group_data import get_all_groups, get_ttps_of_group, load_data as load_gd
 from incident import load_data as load_incident  # Import load_data from incident.py
 from actor_per_country import load_data as load_actor_per_country  # Importing actor_per_country
+from geo_distribution import geo_layout, create_geo_distribution_chart
+from time_series_chart import time_series_layout, create_time_series_chart 
+from attack_techniques import heatmap_layout, create_heatmap_chart
+from resource_utilization import resource_utilization_layout, create_resource_utilization_chart
 import os
 
 # Cache all the data so the app is fast
@@ -21,7 +25,7 @@ load_actor_per_country()  # Load actor per country data
 
 # Create Flask app and integrate it with Dash
 server = Flask(__name__, static_folder='../public')  # Adjust if necessary based on directory structure
-app = Dash(__name__, server=server, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+app = Dash(__name__, server=server, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'], suppress_callback_exceptions=True)
 
 # Function to load the processed incident data from the CSV file
 def load_processed_incident_data():
@@ -118,6 +122,30 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         html.Div(style={'flex': '1'}, children=[
             dcc.Graph(id='region-bar-chart'),  # New bar chart for regions
         ]),
+    ]),
+
+   # New graph for the timeline chart
+    html.Div([
+        dcc.Graph(id='timeline-chart', style={'height': '400px'})
+    ]),
+
+    # Button to trigger the update
+    html.Button('Submit', id='submit-button', n_clicks=0),
+
+# Geo chart
+html.Div([
+        geo_layout(),
+    ]),
+    
+    #time series chart
+html.Div([time_series_layout()]),
+
+     # New section for Heatmap Chart
+    html.Div([heatmap_layout()]), 
+
+     # New section for Resource Utilization chart
+    html.Div([
+        resource_utilization_layout(),
     ]),
 
     # New table for CVSS data
@@ -258,6 +286,88 @@ def update_ttp_input(selected_group):
         return ', '.join(ttps) if isinstance(ttps, list) else ''
     return ''
     return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
+
+# Callback to update the timeline chart
+@app.callback(
+    Output('timeline-chart', 'figure'),
+    Input('submit-button', 'n_clicks')
+)
+def update_timeline_chart(n_clicks):
+    if n_clicks > 0:
+        # Sample data for threat actors
+        data = {
+            'actor': ['Actor A', 'Actor B', 'Actor C'],
+            'first_seen': ['2020-01-01', '2021-05-15', '2019-08-23'],
+            'last_seen': ['2022-01-01', '2022-12-15', '2021-12-23']
+        }
+
+        # Create a DataFrame
+        df = pd.DataFrame(data)
+        df['first_seen'] = pd.to_datetime(df['first_seen'])
+        df['last_seen'] = pd.to_datetime(df['last_seen'])
+
+        # Create a timeline chart
+        fig = px.timeline(df, x_start='first_seen', x_end='last_seen', y='actor', title='Threat Actor Activity Timeline')
+        return fig
+    else:
+        # Return an empty figure if no clicks yet
+        return go.Figure()
+
+def geo_layout():
+    return html.Div([
+        dcc.Graph(id='geo-distribution-chart'),  # Ensure this ID matches what you're using
+        # Other components can be added here as needed
+    ])
+
+def register_callbacks(app):
+    @app.callback(
+        Output('geo-distribution-chart', 'figure'),
+        Input('some-input', 'value')
+    )
+    def update_geo_chart(input_value):
+        print(f'Input value received: {input_value}')  # Log input value
+        # Return a figure or empty figure for debugging
+        return {}
+# Callback to update the geo chart
+@app.callback(
+    Output('geo-distribution-chart', 'figure'),
+    Input('submit-button', 'n_clicks')  # You can trigger this with any relevant input
+)
+def update_geo_chart(n_clicks):
+    # Call the function to create the geo chart
+    return create_geo_distribution_chart()
+
+# Callback to update the time series chart
+@app.callback(
+    Output('time-series-chart', 'figure'),
+    Input('submit-button', 'n_clicks')  # Modify if needed for specific interactions
+)
+def update_time_series_chart(n_clicks):
+    if n_clicks > 0:
+        return create_time_series_chart()  # Create the time series chart
+    return create_time_series_chart()  # Return the chart by default
+
+# Callback to create the heatmap chart
+@app.callback(
+    Output('heatmap-chart', 'figure'),
+    Input('submit-button', 'n_clicks')  # Modify if needed for specific interactions
+)
+def update_heatmap_chart(n_clicks):
+    if n_clicks > 0:
+        return create_heatmap_chart()  # Create the heatmap chart
+    return create_heatmap_chart()  # Return the chart by default
+
+# Callback to create the resource utilization chart
+@app.callback(
+    Output('resource-utilization-chart', 'figure'),
+    Input('submit-button', 'n_clicks')  # Adjust according to your buttons/input
+)
+def update_resource_utilization(n_clicks):
+    if n_clicks > 0:  # Trigger the update on button click
+        return create_resource_utilization_chart()
+    return create_resource_utilization_chart()  # Default chart on load
+
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
