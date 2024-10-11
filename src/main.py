@@ -226,7 +226,7 @@ def update_graphs(n_clicks, ttps_input):
             x='capability_id',
             y='capability_group',
             title='NIST Violations by Type',
-            labels={'capability_id': 'Violations', 'capability_group': 'Type'},
+            labels={'capability_id': 'Violatons', 'capability_group': 'Type'},
         )
 
         # Create a bar chart for region-based incidents
