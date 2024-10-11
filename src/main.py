@@ -13,6 +13,7 @@ from geo_distribution import geo_layout, create_geo_distribution_chart
 from time_series_chart import time_series_layout, create_time_series_chart 
 from attack_techniques import heatmap_layout, create_heatmap_chart
 from resource_utilization import resource_utilization_layout, create_resource_utilization_chart
+from plotly import graph_objects as go
 import os
 
 # Cache all the data so the app is fast
@@ -129,7 +130,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
 
     # Timeline chart
     html.Div([
-        dcc.Graph(id='timeline-chart', style={'height': '400px'})
+        dcc.Graph(id='timeline-chart', style={'height': '900px'})
     ]),
 
     # Geo chart
@@ -291,6 +292,7 @@ def update_ttp_input(selected_group):
         return ', '.join(ttps) if isinstance(ttps, list) else ''
     return ''
     return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
+csv_file_path = r'..\data\threat_actor_groups_aliases.csv'
 
 # Callback to update the timeline chart
 @app.callback(
@@ -299,25 +301,24 @@ def update_ttp_input(selected_group):
 )
 def update_timeline_chart(n_clicks):
     if n_clicks > 0:
-        # Sample data for threat actors
-        data = {
-            'actor': ['Actor A', 'Actor B', 'Actor C'],
-            'first_seen': ['2020-01-01', '2021-05-15', '2019-08-23'],
-            'last_seen': ['2022-01-01', '2022-12-15', '2021-12-23']
-        }
+        try:
+            # Load the CSV file
+            df = pd.read_csv(csv_file_path)
 
-        # Create a DataFrame
-        df = pd.DataFrame(data)
-        df['first_seen'] = pd.to_datetime(df['first_seen'])
-        df['last_seen'] = pd.to_datetime(df['last_seen'])
+            # Convert 'first_seen' and 'last_seen' columns to datetime
+            df['first_seen'] = pd.to_datetime(df['first_seen'])
+            df['last_seen'] = pd.to_datetime(df['last_seen'])
 
-        # Create a timeline chart
-        fig = px.timeline(df, x_start='first_seen', x_end='last_seen', y='actor', title='Threat Actor Activity Timeline')
-        return fig
+            # Create a timeline chart using the 'name' column as the y-axis
+            fig = px.timeline(df, x_start='first_seen', x_end='last_seen', y='name', title='Threat Actor Activity Timeline')
+            return fig
+        except FileNotFoundError:
+            raise FileNotFoundError(f"CSV file not found at: {csv_file_path}")
     else:
         # Return an empty figure if no clicks yet
         return go.Figure()
-
+    
+#Geo callback
 def geo_layout():
     return html.Div([
         dcc.Graph(id='geo-distribution-chart'),  # Ensure this ID matches what you're using
