@@ -1,18 +1,19 @@
 import plotly.express as px
 import pandas as pd
 
-# Sample data for threat actors
-data = {
-    'actor': ['Actor A', 'Actor B', 'Actor C'],
-    'first_seen': ['2020-01-01', '2021-05-15', '2019-08-23'],
-    'last_seen': ['2022-01-01', '2022-12-15', '2021-12-23']
-}
+# Load the CSV file from the data folder
+csv_file_path = 'data/threat_actor_groups_aliases.csv'
+df = pd.read_csv(csv_file_path)
 
-# Create a DataFrame
-df = pd.DataFrame(data)
+# Convert 'first_seen' and 'last_seen' columns to datetime
 df['first_seen'] = pd.to_datetime(df['first_seen'])
 df['last_seen'] = pd.to_datetime(df['last_seen'])
 
-# Create a timeline chart
-fig = px.timeline(df, x_start='first_seen', x_end='last_seen', y='actor', title='Threat Actor Activity Timeline')
+# Check for missing or incorrect values in 'name', 'first_seen', 'last_seen'
+print(df[['name', 'first_seen', 'last_seen']].head())
+
+# Create a timeline chart using the 'name' column as the y-axis, and 'first_seen', 'last_seen' as the x-axis
+fig = px.timeline(df, x_start='first_seen', x_end='last_seen', y='name', title='Threat Actor Activity Timeline')
+
+# Show the chart
 fig.show()
