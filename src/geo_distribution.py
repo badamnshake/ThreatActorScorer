@@ -10,7 +10,6 @@ base_path = Path(__file__).resolve().parent.parent
 
 # Load the CSV file
 
-# csv_file_path = r'..\data\actors_per_country_filled_lat_lon.csv'
 df = pd.read_csv(base_path / 'data/actors_per_country_filled_lat_lon.csv')
 
 

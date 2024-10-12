@@ -7,13 +7,13 @@ from veris_data import extract_veris_data, load_data as load_vd
 from nist_data import extract_nist_data, load_data as load_nd
 from cvwe_data import extract_cvss_data, load_data as load_cd
 from group_data import get_all_groups, get_ttps_of_group, load_data as load_gd
-from incident import load_data as load_incident  # Import load_data from incident.py
 from actor_per_country import load_data as load_actor_per_country  # Importing actor_per_country
 from time_series_chart import time_series_layout, create_time_series_chart 
 from attack_techniques import heatmap_layout, create_heatmap_chart
 from resource_utilization import resource_utilization_layout, create_resource_utilization_chart
 from plotly import graph_objects as go
 from geo_distribution import geo_layout, create_geo_distribution_chart
+from incident import load_processed_incident_data, load_actor_per_country_data
 import geo_distribution 
 import os
 
@@ -22,26 +22,12 @@ load_nd()  # nist data
 load_cd()  # cve data
 load_vd()  # veris data
 load_gd()  # group data
-load_incident()  # incident data
 load_actor_per_country()  # Load actor per country data
 
 # Create Flask app and integrate it with Dash
 server = Flask(__name__, static_folder='../public')  # Adjust if necessary based on directory structure
 app = Dash(__name__, server=server, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'], suppress_callback_exceptions=True)
 
-# Function to load the processed incident data from the CSV file
-def load_processed_incident_data():
-    return pd.read_csv('incident_list_processed.csv')
-
-# Function to load the processed actor per country data from the CSV file
-def load_actor_per_country_data():
-    # Ensure that the file path is correct and relative to your setup
-    csv_path = os.path.join(os.path.dirname(__file__), '../data/actors_per_country_filled_lat_lon.csv')
-    if os.path.exists(csv_path):
-        return pd.read_csv(csv_path)
-    else:
-        print(f"File not found: {csv_path}")
-        return pd.DataFrame()  # Return an empty DataFrame if file is not found
 
 # Flask API endpoint to serve threat actor data by country, including latitude and longitude
 @server.route('/actors_by_country', methods=['GET'])
@@ -130,9 +116,9 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
     ]),
 
     # Timeline chart
-    html.Div([
-        dcc.Graph(id='timeline-chart', style={'height': '900px'})
-    ]),
+    # html.Div([
+    #     dcc.Graph(id='timeline-chart', style={'height': '900px'})
+    # ]),
 
     # Geo chart
     html.Div([
@@ -211,8 +197,7 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
      Output('capability-pie-chart', 'figure'),
      Output('nist-bar-chart', 'figure'),
      Output('cvss-data-table', 'data'),
-     Output('ttp-data-table', 'data'),
-     Output('region-bar-chart', 'figure')],
+     Output('ttp-data-table', 'data')],
     Input('submit-button', 'n_clicks'),
     State('ttp-input', 'value')
 )
@@ -264,20 +249,12 @@ def update_graphs(n_clicks, ttps_input):
             labels={'capability_id': 'Violatons', 'capability_group': 'Type'},
         )
 
-        # Create a bar chart for region-based incidents
-        region_fig = px.bar(
-            region_counts,
-            x='Region',
-            y='Count',
-            title='Incident Counts by Region',
-            labels={'Region': 'Region', 'Count': 'Number of Incidents'},
-        )
 
 
-        return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records'), region_fig,
+        return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records')
     else:
         empty_fig = go.Figure()
-        return empty_fig, empty_fig, empty_fig,[], [], empty_fig
+        return empty_fig, empty_fig, empty_fig,[], []
 
 
 # New callback to update TTP input based on selected group
@@ -291,8 +268,10 @@ def update_ttp_input(selected_group):
         return ', '.join(ttps) if isinstance(ttps, list) else ''
     return ''
     return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
+
 csv_file_path = r'..\data\threat_actor_groups_aliases.csv'
 
+'''
 # Callback to update the timeline chart
 @app.callback(
     Output('timeline-chart', 'figure'),
@@ -316,6 +295,7 @@ def update_timeline_chart(n_clicks):
     else:
         # Return an empty figure if no clicks yet
         return go.Figure()
+'''
  # Callback to update the geo chart
 
 # Callback to update the geo chart
