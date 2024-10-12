@@ -267,7 +267,6 @@ def update_ttp_input(selected_group):
         ttps = get_ttps_of_group(selected_group)
         return ', '.join(ttps) if isinstance(ttps, list) else ''
     return ''
-    return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
 
 csv_file_path = r'..\data\threat_actor_groups_aliases.csv'
 
