@@ -251,16 +251,17 @@ def create_incidents_scatter_plot(group_id, incident_data):
 def create_attack_geo_plot(group_id):
     """Create a geographic scatter plot of attack incidents."""
     gf = get_group_incidents(group_id)
-    return px.scatter_geo(
+    return px.choropleth(
         gf,
         locations='country',
         locationmode='country names',
-        size=[3] * len(gf),
+        #size=[3] * len(gf),
         hover_name='description',
         color='country',
-        opacity=0.6,
+        #opacity=0.6,
         title='Scatter Geo Plot of Events by Country',
         labels={'country': 'Country'},
+        color_discrete_sequence=px.colors.qualitative.Safe,
     )
 
 def create_cvss_scatter_plot(cvss_scores):
