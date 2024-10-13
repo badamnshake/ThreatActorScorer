@@ -11,8 +11,10 @@ def load_data():
     """Load the CVSS data and cache it for reuse."""
     
     global cached_data
+    global cve_with_scores
+
     if cached_data is None:
-        cached_data = load_cvss_data()  # Cache the processed data for future calls
+        cached_data, cve_with_scores = load_cvss_data()  # Cache the processed data for future calls
 
 
 
@@ -67,7 +69,7 @@ def load_cvss_data():
     result.columns = ['ttp', 'cves', 'high_cvss', 'avg_cvss', 'cwes', 'mapping_type_count']
 
     # Display the result
-    return result
+    return result, df_sorted
 
 
 
@@ -76,6 +78,11 @@ def extract_cvss_data(ttps):
     cvedf = cached_data.loc[cached_data['ttp'].isin(ttps)].reset_index(drop=True)
     cvedf.drop(columns=['mapping_type_count'], inplace=True)
     return cvedf, get_ttps_by_year(cvedf.copy())
+
+
+def extract_cvss_scores(ttps):
+    global cve_with_scores
+    return cve_with_scores.loc[cve_with_scores['attack_object_id'].isin(ttps)]
 
 
 

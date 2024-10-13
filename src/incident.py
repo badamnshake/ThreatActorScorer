@@ -1,6 +1,6 @@
 import pandas as pd
-import re
-import pycountry
+# import re
+# import pycountry
 import pycountry_convert as pc
 from pathlib import Path 
 
@@ -9,6 +9,16 @@ base_path = Path(__file__).resolve().parent.parent
 # Initialize a variable to cache the loaded data
 cached_data = None
 
+# Function to load the processed incident data from the CSV file
+def load_processed_incident_data():
+    return pd.read_csv( base_path / 'data/incident_list_processed.csv')
+
+# Function to load the processed actor per country data from the CSV file
+def load_actor_per_country_data():
+    # Ensure that the file path is correct and relative to your setup
+    return pd.read_csv(base_path /  'data/actors_per_country_filled_lat_lon.csv')
+
+'''
 def load_data():
     """Load the Incident Data and cache it for reuse."""
     
@@ -207,4 +217,6 @@ def load_incident_data():
     incident_df['Output'] = incident_df.apply(process_row, axis=1)
 
     # Save the updated DataFrame
-    incident_df.to_csv('incident_list_processed.csv', index=False)
+    # incident_df.to_csv('incident_list_processed.csv', index=False)
+
+'''
