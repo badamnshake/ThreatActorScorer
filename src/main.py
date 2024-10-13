@@ -110,9 +110,6 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         html.Div(style={'flex': '1'}, children=[
             dcc.Graph(id='nist-bar-chart'),
         ]),
-        html.Div(style={'flex': '1'}, children=[
-            dcc.Graph(id='region-bar-chart'),
-        ]),
     ]),
 
     # Timeline chart
@@ -125,19 +122,9 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         geo_layout(),
     ]),
 
-    # Time series chart
-    html.Div([
-        time_series_layout(),
-    ]),
-
     # Heatmap Chart
     html.Div([
         heatmap_layout(),
-    ]),
-
-    # Resource Utilization chart
-    html.Div([
-        resource_utilization_layout(),
     ]),
 
     # CVSS Data Table
@@ -249,8 +236,6 @@ def update_graphs(n_clicks, ttps_input):
             labels={'capability_id': 'Violatons', 'capability_group': 'Type'},
         )
 
-
-
         return severity_fig, capability_fig, nist_fig, cvss_data.to_dict('records'), ttp_year_summary.to_dict('records')
     else:
         empty_fig = go.Figure()
@@ -270,33 +255,6 @@ def update_ttp_input(selected_group):
     return [go.Figure(), go.Figure(), go.Figure(), [], go.Figure(), go.Figure()]
 
 csv_file_path = r'..\data\threat_actor_groups_aliases.csv'
-
-'''
-# Callback to update the timeline chart
-@app.callback(
-    Output('timeline-chart', 'figure'),
-    Input('submit-button', 'n_clicks')
-)
-def update_timeline_chart(n_clicks):
-    if n_clicks > 0:
-        try:
-            # Load the CSV file
-            df = pd.read_csv(csv_file_path)
-
-            # Convert 'first_seen' and 'last_seen' columns to datetime
-            df['first_seen'] = pd.to_datetime(df['first_seen'])
-            df['last_seen'] = pd.to_datetime(df['last_seen'])
-
-            # Create a timeline chart using the 'name' column as the y-axis
-            fig = px.timeline(df, x_start='first_seen', x_end='last_seen', y='name', title='Threat Actor Activity Timeline')
-            return fig
-        except FileNotFoundError:
-            raise FileNotFoundError(f"CSV file not found at: {csv_file_path}")
-    else:
-        # Return an empty figure if no clicks yet
-        return go.Figure()
-'''
- # Callback to update the geo chart
 
 # Callback to update the geo chart
 @app.callback(
@@ -329,16 +287,6 @@ def update_heatmap_chart(n_clicks):
     if n_clicks > 0:
         return create_heatmap_chart()  # Create the heatmap chart
     return create_heatmap_chart()  # Return the chart by default
-
-# Callback to create the resource utilization chart
-@app.callback(
-    Output('resource-utilization-chart', 'figure'),
-    Input('submit-button', 'n_clicks')  # Adjust according to your buttons/input
-)
-def update_resource_utilization(n_clicks):
-    if n_clicks > 0:  # Trigger the update on button click
-        return create_resource_utilization_chart()
-    return create_resource_utilization_chart()  # Default chart on load
 
 
 
