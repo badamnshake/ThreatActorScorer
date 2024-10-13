@@ -6,11 +6,14 @@ base_path = Path(__file__).resolve().parent.parent
 
 # Initialize a variable to cache the loaded data
 cached_data = None
+incidents_data = None
 
 def load_data():
-    """Load the VERIS data and cache it for reuse."""
-    
     global cached_data
+    global incidents_data
+
+    if incidents_data is None:
+        incidents_data = load_group_incidents()  # Cache the processed data for future calls
     if cached_data is None:
         cached_data = load_group_data()  # Cache the processed data for future calls
     
@@ -44,12 +47,15 @@ def load_group_data():
 
     return groups_list  # Return the populated groups_list
 
+def load_group_incidents():
+    df = pd.read_csv(base_path / 'data/ta_incidents.csv')
+    df['event_date'] = pd.to_datetime(df['event_date'])
+    df.sort_values('event_date')
+    return df
+    
+
 def get_ttps_of_group(group_id):
     global cached_data
-    if cached_data is None:
-        cached_data = load_group_data()
-    
-    # Check if the group_id exists in cached_data
     if group_id in cached_data:
         return cached_data[group_id]
     else:
@@ -57,7 +63,10 @@ def get_ttps_of_group(group_id):
 
 def get_all_groups():
     global cached_data
-    if cached_data is None:
-        cached_data = load_group_data()
-
     return list(cached_data.keys())
+
+
+def get_group_incidents(group_id):
+    global incidents_data
+    return incidents_data.loc[incidents_data['actor'] == group_id]
+    
