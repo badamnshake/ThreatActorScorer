@@ -9,6 +9,10 @@ from cvwe_data import load_data as load_cd, extract_cvss_scores
 from group_data import get_all_groups, get_ttps_of_group, get_group_incidents, load_data as load_gd
 from incident import load_processed_incident_data, load_actor_per_country_data
 from scorer import get_score_using_datasets, get_score
+from time_series_chart import time_series_layout, create_time_series_chart
+from first_last_seen_chart import create_first_last_seen_chart  # Adjust based on your file structure
+
+
 
 # Cache all the data so the app is fast
 load_nd()  # NIST data
@@ -70,7 +74,11 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         }),
     ]),
 
-    
+    html.Div([time_series_layout()]),
+ # New layout for the First Seen and Last Seen chart
+    html.Div(id='first-last-seen-chart-container', children=[
+        dcc.Graph(id='first-last-seen-chart'),
+    ]),
 
 
     # Severity and Capability Pie Charts
@@ -127,6 +135,26 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
 
     html.H1(id='score-display', children='Score: 0'),
 ])
+# Callback to update time series chart based on selected threat actor
+@app.callback(
+    Output('time-series-chart', 'figure'),
+    Input('submit-button', 'n_clicks'),
+    State('group-id-dropdown', 'value')  
+)
+def update_time_series_chart(n_clicks, selected_actor):
+    if n_clicks > 0 and selected_actor:
+        # Pass the selected actor to your time series chart creation function
+        return create_time_series_chart(selected_actor)  # Modify this function to filter data based on the actor
+    return create_time_series_chart()  # Return the default chart if no actor is selected
+
+# Callback for the first and last seen chart
+@app.callback(
+    Output('first-last-seen-chart', 'figure'),
+    Input('group-id-dropdown', 'value')
+)
+def update_first_last_seen(selected_actor):
+    return create_first_last_seen_chart(selected_actor)  # Pass the selected actor to the function
+
 
 # Callback to update graphs based on TTPs input
 @app.callback(
