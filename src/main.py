@@ -14,7 +14,7 @@ from first_last_seen_chart import create_first_last_seen_chart  # Adjust based o
 from ttp_heatmap import load_complexity_scores, create_ttp_heatmap
 from ttp_complexity_chart import create_ttp_complexity_chart, load_complexity_scores
 from pathlib import Path
-import numpy as np
+from attack_types import create_attack_type_pie_chart, attack_type_layout
 
 # Cache all the data so the app is fast
 load_nd()  # NIST data
@@ -121,6 +121,12 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
         dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure())  # Initialize with an empty figure
     ]),
 
+# New layout for TTP attack_type_layout chart
+    html.Div([
+        attack_type_layout
+    ]),
+
+    
 
 
     # Severity and Capability Pie Charts
@@ -258,6 +264,17 @@ def update_ttp_complexity_bar_chart(selected_group, ttp_input):
     else:
         # Return an empty figure if no valid input is provided
         return go.Figure()
+    
+# Callback for the attack type pie chart
+@app.callback(
+    Output('attack-type-pie-chart', 'figure'),
+    [Input('group-id-dropdown', 'value'),
+     Input('ttp-input', 'value')]
+)
+def update_attack_type_pie_chart(selected_group, ttp_input):
+    return create_attack_type_pie_chart(selected_group, ttp_input)
+
+
 
 # Callback to update graphs based on TTPs input
 @app.callback(
