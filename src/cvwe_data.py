@@ -4,25 +4,23 @@ from pathlib import Path
 
 base_path = Path(__file__).resolve().parent.parent
 
-# Initialize a variable to cache the loaded data
+# Initialize variables to cache the loaded data
 cached_data = None
+cve_with_scores = None  # Ensure this variable is declared globally
 
 def load_data():
     """Load the CVSS data and cache it for reuse."""
-    
     global cached_data
     global cve_with_scores
 
     if cached_data is None:
         cached_data, cve_with_scores = load_cvss_data()  # Cache the processed data for future calls
 
-
-
 def load_cvss_data():
-
+    """Load and process CVSS data from CSV and Excel files."""
     # Load the CSV and Excel files
     cve_df = pd.read_csv(base_path / 'data/cve_mapping.csv')
-    cwe_df = pd.read_excel( base_path / 'data/cve_to_cwe.xlsx')
+    cwe_df = pd.read_excel(base_path / 'data/cve_to_cwe.xlsx')
 
     # Clean up and drop unnecessary columns in cve_df
     cve_df = cve_df.drop(columns=[
@@ -68,39 +66,12 @@ def load_cvss_data():
     # Flatten multi-level column names
     result.columns = ['ttp', 'cves', 'high_cvss', 'avg_cvss', 'cwes', 'mapping_type_count']
 
-    # Display the result
     return result, df_sorted
 
-
-
-def extract_cvss_data(ttps):
-    global cached_data
-    cvedf = cached_data.loc[cached_data['ttp'].isin(ttps)].reset_index(drop=True)
-    cvedf.drop(columns=['mapping_type_count'], inplace=True)
-    return cvedf, get_ttps_by_year(cvedf.copy())
-
-
 def extract_cvss_scores(ttps):
+    """Extract CVSS scores for the given TTPs."""
     global cve_with_scores
+    if cve_with_scores is None:
+        load_data()  # Ensure the data is loaded if it's not already
+
     return cve_with_scores.loc[cve_with_scores['attack_object_id'].isin(ttps)]
-
-
-
-
-def extract_cve_year(cve):
-    match = re.search(r'CVE-(\d{4})', cve)
-    return int(match.group(1)) if match else None
-
-
-def get_ttps_by_year(df):
-
-    df['cve_years'] = [[extract_cve_year(cve) for cve in cves.split(', ') if cve] for cves in df['cves']]
-
-    # Combine logic for finding most recent year
-    df['most_recent_cve_year'] = df['cve_years'].apply(lambda years: max([y for y in years if y is not None]) if years else None)
-
-    # Group by TTP and count
-    ttp_year_summary = df.groupby('most_recent_cve_year').size().reset_index(name='ttp_count').sort_values(by='most_recent_cve_year', ascending=False)
-
-    return ttp_year_summary
-    

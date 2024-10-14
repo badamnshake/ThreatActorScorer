@@ -1,7 +1,7 @@
 import json
 
 # Load the MITRE ATT&CK JSON file
-with open('data/enterprise-attack (1).json', 'r') as f:
+with open('data/enterprise-attack.json', 'r') as f:
     attack_data = json.load(f)
 
 mitigations = []

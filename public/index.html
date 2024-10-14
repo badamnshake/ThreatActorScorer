@@ -7,31 +7,55 @@
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Cesium.js"></script>
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <style>
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-        
-        /* Custom selection indicator wrapper */
-        .cesium-selection-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        /* Custom infobox styling */
+        #customInfoBox {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            max-height: 500px;  /* Set the max height */
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;      /* Initially hidden */
+            overflow-y: auto;   /* Enable vertical scrolling when content overflows */
+            font-family: sans-serif;
         }
 
-        /* Adjust selection box size dynamically */
-        .cesium-selection-indicator {
-            transform-origin: center;
-            transition: transform 0.2s ease-in-out;
+        #customInfoBox h3 {
+            margin: 0 0 10px;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        #customInfoBox a,p {
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            font-family: sans-serif;
         }
     </style>
 </head>
 
 <body>
     <div id="cesiumContainer"></div>
+
+    <!-- Custom infoBox -->
+    <div id="customInfoBox">
+        <h3 id="customInfoBoxTitle"></h3>
+        <p><strong>Number of Threat Actors:</strong> <span id="customInfoBoxCount"></span></p>
+        <div id="customInfoBoxActors"></div>
+    </div>
+
     <script type="module">
         // Your Cesium Ion access token
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyZWMwYjE0Zi0zYzZmLTQzODctODFmNS1lMDk0NzMxMzIyYTciLCJpZCI6MjQ2Njk2LCJpYXQiOjE3Mjg0MDIwOTh9.txrSqd--7624yo0gnOO_0wmym54zADAECgpphD2cQKA';
@@ -40,12 +64,13 @@
         const viewer = new Cesium.Viewer('cesiumContainer', {
             terrain: Cesium.Terrain.fromWorldTerrain(),
             baseLayerPicker: false,  // Disable base layer picker
+            imageryProvider: false,
             animation: false,  // Disable the animation control
             timeline: false,  // Disable the timeline
             geocoder: false,  // Disable the search box
             fullscreenButton: false,  // Disable fullscreen button
             homeButton: false,  // Disable the home button
-            infoBox: true,  // Enable info box to display details on click
+            infoBox: false,  // Disable Cesium's built-in infoBox
             sceneModePicker: false,  // Disable scene mode picker
             navigationHelpButton: false,  // Disable help button
             selectionIndicator: true  // Enable selection indicator
@@ -63,50 +88,53 @@
         // Function to add a country label and its threat actors (shown on click)
         function addCountryWithThreatActors(countryData) {
             const { country, latitude, longitude, actors } = countryData;
-            const actorCount = actors.length;  // Calculate the number of threat actors
+            const actorCount = actors.length;
 
             const entity = viewer.entities.add({
                 name: country,
                 position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
                 label: {
-                    text: country,  // Display the country name on the globe
+                    text: country,
                     font: '9pt sans-serif',
-                    fillColor: Cesium.Color.WHITE,
-                    outlineColor: Cesium.Color.BLACK,
+                    fillColor: Cesium.Color.BLACK,
+                    outlineColor: Cesium.Color.WHITE,
                     outlineWidth: 2,
                     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-                    pixelOffset: new Cesium.Cartesian2(0, -15)  // Move label slightly above the position
-                },
-                description: `
-                    <strong>${country}</strong><br />
-                    <strong>Number of Threat Actors:</strong> ${actorCount}<br />
-                    <strong>Threat Actors:</strong><br />
-                    ${actors.join('<br />')}
-                `,  // Display country name, actor count, and actors list in the info box on click
+                    pixelOffset: new Cesium.Cartesian2(0, -15)  // Position the label slightly above the entity
+                }
             });
 
-            // Adjust selection indicator size based on label length
+            // Show custom infoBox when the entity is clicked
             viewer.selectedEntityChanged.addEventListener(function (selectedEntity) {
                 if (selectedEntity === entity) {
-                    const textWidth = getTextWidth(country);
-                    const scaleFactor = textWidth / 50;  // Adjust scale factor based on text width
-                    const selectionIndicator = document.querySelector('.cesium-selection-indicator');
-                    if (selectionIndicator) {
-                        selectionIndicator.style.transform = `scale(${scaleFactor}, 1)`;  // Scale horizontally
-                    }
+                    showCustomInfoBox(country, actorCount, actors);
                 }
             });
         }
 
-        // Utility function to measure text width
-        function getTextWidth(text) {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            context.font = '9pt sans-serif';  // Match the label font
-            return context.measureText(text).width;
+        // Function to show the custom infoBox
+        function showCustomInfoBox(country, actorCount, actors) {
+            const infoBox = document.getElementById('customInfoBox');
+            const titleElement = document.getElementById('customInfoBoxTitle');
+            const countElement = document.getElementById('customInfoBoxCount');
+            const actorsElement = document.getElementById('customInfoBoxActors');
+
+            // Set the content of the infoBox
+            titleElement.innerText = country;
+            countElement.innerText = actorCount;
+            actorsElement.innerHTML = actors.map(actor => `<a href="#" onclick="navigateToProfile('${actor.trim().toLowerCase().replace(/\s+/g, '-')}')">${actor}</a>`).join('<br />');
+
+            // Show the infoBox
+            infoBox.style.display = 'block';
         }
+
+        // Make the function globally accessible by attaching it to the window object
+        window.navigateToProfile = function (actorName) {
+            console.log(`Navigating to: /profile/${actorName}`);  // Debugging log
+            window.top.location.href = `/profile/${actorName}`;
+        };
 
         // Fetch the threat actor data from the Flask API and process it
         fetch('http://localhost:8050/actors_by_country')
@@ -115,6 +143,8 @@
                 data.forEach(countryData => {
                     addCountryWithThreatActors(countryData);  // Pass the country data directly to the function
                 });
+                // Log the list of entities added to the globe
+                console.log("Entities added to the globe:", viewer.entities.values);
             })
             .catch(error => {
                 console.error('Error fetching threat actor data:', error);

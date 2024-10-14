@@ -2,30 +2,35 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 from flask import Flask, jsonify, send_from_directory
+from flask_cors import CORS
 from dash import Dash, dcc, html, Input, Output, State
-from veris_data import extract_veris_data, load_data as load_vd
-from nist_data import extract_nist_data, load_data as load_nd
-from cvwe_data import load_data as load_cd, extract_cvss_scores
-from group_data import get_all_groups, get_ttps_of_group, get_group_incidents, load_data as load_gd
-from incident import load_processed_incident_data, load_actor_per_country_data
-from scorer import get_score_using_datasets, get_score
+from group_data import load_data, get_all_groups, get_ttps_of_group, get_group_incidents
+from analysis import create_severity_pie_chart, create_capability_pie_chart, create_nist_bar_chart, create_incidents_scatter_plot, create_attack_geo_plot, create_cvss_scatter_plot
+from veris_data import extract_veris_data
+from nist_data import extract_nist_data
+from cvwe_data import extract_cvss_scores
+from incident import load_actor_per_country_data
 
-# Cache all the data so the app is fast
-load_nd()  # NIST data
-load_cd()  # CVE data
-load_vd()  # VERIS data
-load_gd()  # Group data
+# Load the data before setting up the app
+load_data()
 
 # Create Flask app and integrate it with Dash
-server = Flask(__name__, static_folder='../public')  # Adjust if necessary based on directory structure
+server = Flask(__name__, static_folder='../public')
+CORS(server)
+
 app = Dash(__name__, server=server, 
-            external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'], 
-            suppress_callback_exceptions=True)
+           external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'], 
+           suppress_callback_exceptions=True)
+
+# Serve static files like the Cesium globe page
+@server.route('/public/<path:path>')
+def serve_static_files(path):
+    return send_from_directory('../public', path)
 
 # Flask API endpoint to serve threat actor data by country
 @server.route('/actors_by_country', methods=['GET'])
 def get_actors_by_country():
-    actor_data = load_actor_per_country_data()
+    actor_data = load_actor_per_country_data()  # Ensure the data is loaded from the incident.py module
     data = [
         {
             'country': row['country'],
@@ -38,244 +43,130 @@ def get_actors_by_country():
     ]
     return jsonify(data)
 
-# Serve static files
-@server.route('/public/<path:path>')
-def serve_static_files(path):
-    return send_from_directory('../public', path)
-
-# Initial layout for the Dash app
-app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'}, children=[
-    html.H1(children='Threat Actor Analysis', style={'textAlign': 'center', 'color': '#4B0082'}),
-    html.Iframe(src='http://localhost:8050/public/index.html', style={"height": "600px", "width": "100%"}),
-    
-    # Dropdown and input field for TTPs
-    html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
-        
-        dcc.Dropdown(
-            id='group-id-dropdown',
-            options=[{'label': group, 'value': group} for group in get_all_groups()],
-            placeholder='Select a Group ID',
-            style={'min-width': '30%','marginRight': '10px'}
-        ),
-        dcc.Input(
-            id='ttp-input',
-            type='text',
-            value='',
-            placeholder='Enter TTPs (comma-separated)',
-            style={ 'min-width': '60%'}
-        ),
-        html.Button('Submit', id='submit-button', n_clicks=0, style={
-            'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white',
-             'cursor': 'pointer'
-        }),
-    ]),
-
-    
-
-
-    # Severity and Capability Pie Charts
-    html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
-        dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '10px'}),
-        dcc.Graph(id='capability-pie-chart', style={'flex': '1'}),
-    ]),
-
-    dcc.Graph(id='incidents'),
-    dcc.Graph(id='attack-geo'),
-    dcc.Graph(id='cvss-scatter'),
-    dcc.Graph(id='nist-bar-chart'),
-
-    # Dropdown and input field for TTPs
-    html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
-
-        dcc.Input(
-            id='score-capability',
-            type='text',
-            value='',
-            placeholder='Enter Capability (0-10)',
-            style={ 'min-width': '20%'}
-        ),
-        
-        dcc.Input(
-            id='score-frequency',
-            type='text',
-            value='',
-            placeholder='Enter Incident Numbers (0 - n)',
-            style={ 'min-width': '20%'}
-        ),
-
-        dcc.Input(
-            id='score-industry',
-            type='text',
-            value='',
-            placeholder='Enter Industry of Threat Actor',
-            style={ 'min-width': '20%'}
-        ),
-
-        dcc.Input(
-            id='score-violations',
-            type='text',
-            value='',
-            placeholder='Enter NIST Violations',
-            style={ 'min-width': '20%'}
-        ),
-
-        html.Button('Calculate Score Manually', id='update-score-button', n_clicks=0, style={
-            'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white',
-             'cursor': 'pointer'
-        }),
-    ]),
-
-    html.H1(id='score-display', children='Score: 0'),
+# Main page layout for the Dash app
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),  # This tracks the current URL
+    html.Div(id='page-content'),  # Page content that changes dynamically
+    # Embed custom script to listen for messages from iframe
+     html.Script('''
+        window.addEventListener('message', function(event) {
+    if (event.data.type === 'navigate' && event.data.url) {
+        console.log("Message received:", event.data.url);  // Ensure this logs the received URL
+        window.location.href = event.data.url;  // Trigger navigation in the parent window
+    }
+});
+    ''')
 ])
 
-# Callback to update graphs based on TTPs input
+# Home layout with dropdown and submit button
+home_layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'}, children=[
+    html.H1(children='Threat Actor Analysis', style={'textAlign': 'center', 'color': '#4B0082'}),
+    html.Iframe(
+        src='/public/index.html', 
+        style={"height": "1000px", "width": "100%"}, 
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation"
+    ),
+
+    # Dropdown and submit button
+    html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
+        dcc.Dropdown(
+            id='group-id-dropdown',
+            # Sort the groups alphabetically
+            options=[{'label': group, 'value': group} for group in sorted(get_all_groups())],
+            placeholder='Select a Group ID',
+            style={'min-width': '50%', 'marginRight': '10px'}
+        ),
+        html.Button('Submit', id='submit-button', n_clicks=0, style={
+            'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white', 'cursor': 'pointer'
+        }),
+    ])
+])
+
+# Profile layout function for displaying a specific threat actor's page
+def profile_layout(actor_name):
+    return html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'}, children=[
+        html.H1(f'Threat Actor Profile: {actor_name}', style={'textAlign': 'center', 'color': '#4B0082'}),
+        
+        # Display charts and analysis for the selected actor
+        html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
+            dcc.Graph(id='severity-pie-chart'),  # Severity Pie Chart
+            dcc.Graph(id='capability-pie-chart'),
+            dcc.Graph(id='nist-bar-chart')# Capability Pie Chart
+        ]),
+        
+           # NIST Violations Bar Chart
+        dcc.Graph(id='attack-geo'),
+        dcc.Graph(id='incidents'),        # Incidents Scatter Plot
+               # Attack Geo Plot
+        dcc.Graph(id='cvss-scatter')      # CVSS Scores Scatter Plot
+    ])
+
+# Callback to update the URL when the "Submit" button is clicked
+@app.callback(
+    Output('url', 'pathname'),
+    [Input('submit-button', 'n_clicks')],
+    [State('group-id-dropdown', 'value')]
+)
+def redirect_to_profile(n_clicks, selected_group):
+    if n_clicks > 0 and selected_group:
+        # Normalize the group name by converting to lowercase and replacing spaces with hyphens
+        normalized_group = selected_group.lower().replace(' ', '-')
+        # Redirect to the profile page with normalized group name
+        return f'/profile/{normalized_group}'
+    return '/'  # Return home if no selection is made
+
+# Callback to handle page navigation and layout rendering
+@app.callback(
+    Output('page-content', 'children'),
+    [Input('url', 'pathname')]
+)
+def render_page_content(pathname):
+    if pathname == '/':
+        return home_layout
+    elif pathname.startswith('/profile/'):
+        # Normalize the URL path for comparison
+        selected_group = pathname.split('/')[-1].replace('-', ' ')
+        return profile_layout(selected_group)  # Render the profile layout
+    else:
+        return html.H1('404 Page Not Found')
+
+# Separate callback to handle chart updates on profile pages
 @app.callback(
     [Output('severity-pie-chart', 'figure'),
      Output('capability-pie-chart', 'figure'),
      Output('nist-bar-chart', 'figure'),
      Output('incidents', 'figure'),
      Output('attack-geo', 'figure'),
-     Output('cvss-scatter', 'figure'),
-     Output('score-display', 'children')],
-    Input('submit-button', 'n_clicks'),
-    State('ttp-input', 'value'),
-    State('group-id-dropdown', 'value')
+     Output('cvss-scatter', 'figure')],
+    [Input('url', 'pathname')]
 )
-def update_graphs(n_clicks, ttps_input, group_id):
-    if n_clicks > 0 and ttps_input:
-        # Process TTPs input
-        ttps = [ttp.strip() for ttp in ttps_input.split(',')]
+def update_charts(pathname):
+    if pathname.startswith('/profile/'):
+        # Normalize the URL path to match against the data
+        selected_group = pathname.split('/')[-1].replace('-', ' ')
 
-        # Extract data
-        _, severity_counts, capability_counts = extract_veris_data(ttps)
-        nist_violations = extract_nist_data(ttps)
-        cvss_scores = extract_cvss_scores(ttps)
-        incident_data = load_processed_incident_data()
+        # Case-insensitive matching for group name
+        all_groups = get_all_groups()
+        matching_group = next((group for group in all_groups if group.lower() == selected_group.lower()), None)
 
-        score = get_score_using_datasets(severity_counts, incident_data, cvss_scores)
-        print(score)
+        if matching_group:
+            # Fetch data and create charts
+            average_severity, severity_counts, capability_counts = extract_veris_data(get_ttps_of_group(matching_group))
+            nist_violations = extract_nist_data(get_ttps_of_group(matching_group))
+            cvss_scores = extract_cvss_scores(get_ttps_of_group(matching_group))
+            incident_data = get_group_incidents(matching_group)
 
-        
+            severity_fig = create_severity_pie_chart(severity_counts)
+            capability_fig = create_capability_pie_chart(capability_counts)
+            nist_fig = create_nist_bar_chart(nist_violations)
+            incidents_fig = create_incidents_scatter_plot(matching_group, incident_data)
+            attack_geo_fig = create_attack_geo_plot(matching_group)
+            cvss_scores_fig = create_cvss_scatter_plot(cvss_scores)
 
-        # Prepare data for figures
-        severity_fig = create_severity_pie_chart(severity_counts)
-        capability_fig = create_capability_pie_chart(capability_counts)
-        nist_fig = create_nist_bar_chart(nist_violations)
-        incidents_fig = create_incidents_scatter_plot(group_id, incident_data)
-        attack_geo_fig = create_attack_geo_plot(group_id)
-        cvss_scores_fig = create_cvss_scatter_plot(cvss_scores)
+            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig]
 
-        return severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, f"Score: {score}"
-    else:
-        return go.Figure(), go.Figure(), go.Figure(), go.Figure(), go.Figure(), go.Figure(), ""  # Return empty figures for all outputs
-
-# New callback to update scores from manual entry
-@app.callback(
-    Output('score-display', 'children', allow_duplicate=True),
-    Input('update-score-button', 'n_clicks'),
-    
-    State('score-capability', 'value'),
-    State('score-frequency', 'value'),
-    State('score-industry', 'value'),
-    State('score-violations', 'value'),
-    prevent_initial_call=True
-    
-)
-def update_score(n_clicks, c, f, i, v):
-    value = 0
-    if(n_clicks > 0 and c and f and i and v):
-        value = get_score(c, f, v, i)
-    return f"Score: {value}"
-
-    
-
-# New callback to update TTP input based on selected group
-@app.callback(
-    Output('ttp-input', 'value'),
-    Input('group-id-dropdown', 'value')
-)
-def update_ttp_input(selected_group):
-    if selected_group:
-        ttps = get_ttps_of_group(selected_group)
-        return ', '.join(ttps) if isinstance(ttps, list) else ''
-    return ''
-
-
-    
-
-def create_severity_pie_chart(severity_counts):
-    """Create a pie chart for severity counts."""
-    severity_colors = ['#00FF00', '#FFFF00', '#FFA500', '#FF0000']  # Green, Yellow, Orange, Red
-    return px.pie(
-        names=severity_counts['severity_level'],
-        values=severity_counts['count'],
-        title='Techniques Rated',
-        color=severity_counts.index,
-        color_discrete_sequence=severity_colors
-    )
-
-def create_capability_pie_chart(capability_counts):
-    """Create a pie chart for capability counts."""
-    return px.pie(
-        capability_counts,
-        names='capability_group',
-        values='capability_id',
-        title='CIA Triad Capability Counts',
-        color_discrete_sequence=['#FF9999', '#66B3FF', '#99FF99']
-    )
-
-def create_nist_bar_chart(nist_violations):
-    """Create a bar chart for NIST violations."""
-    return px.bar(
-        nist_violations,
-        x='capability_id',
-        y='capability_group',
-        title='NIST Violations by Type',
-        labels={'capability_id': 'Violations', 'capability_group': 'Type'},
-    )
-
-def create_incidents_scatter_plot(group_id, incident_data):
-    """Create a scatter plot for incidents."""
-    gf = get_group_incidents(group_id)
-    return px.scatter(
-        gf,
-        x='event_date',
-        y='industry',
-        color='motive',
-        symbol='motive',
-        hover_name='description',
-        title='News Articles by Date and Industry',
-        labels={'industry': 'Industry', 'event_date': 'Event Date'}
-    ).update_layout(scattermode="group", scattergap=0.75)
-
-def create_attack_geo_plot(group_id):
-    """Create a geographic scatter plot of attack incidents."""
-    gf = get_group_incidents(group_id)
-    return px.choropleth(
-        gf,
-        locations='country',
-        locationmode='country names',
-        #size=[3] * len(gf),
-        hover_name='description',
-        color='country',
-        #opacity=0.6,
-        title='Scatter Geo Plot of Events by Country',
-        labels={'country': 'Country'},
-        color_discrete_sequence=px.colors.qualitative.Safe,
-    )
-
-def create_cvss_scatter_plot(cvss_scores):
-    """Create a scatter plot for CVSS scores."""
-    return px.scatter(
-        cvss_scores,
-        x='year',
-        y='cvss',
-        color='severity',
-        symbol='severity',
-        hover_name='cve',
-        title='CVEs Exploited by Threat Actors',
-        labels={'year': 'Year', 'cvss': 'CVSS Score'}
-    ).update_layout(scattermode="group", scattergap=0.75).update_xaxes(autorange='reversed')
+    # Return empty figures if no group is selected
+    return [go.Figure()] * 6
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)

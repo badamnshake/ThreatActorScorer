@@ -26,8 +26,3 @@ function addClickableName(name, position) {
         }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
-
-// Example usage
-addClickableName('Location A', { lon: -123.0744619, lat: 44.0503706 });
-addClickableName('Location B', { lon: -122.0744619, lat: 43.0503706 });
-
