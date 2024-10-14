@@ -11,14 +11,19 @@ from incident import load_processed_incident_data, load_actor_per_country_data
 from scorer import get_score_using_datasets, get_score
 from time_series_chart import time_series_layout, create_time_series_chart
 from first_last_seen_chart import create_first_last_seen_chart  # Adjust based on your file structure
-
-
+from ttp_heatmap import load_complexity_scores, create_ttp_heatmap
+from ttp_complexity_chart import create_ttp_complexity_chart, load_complexity_scores
+from pathlib import Path
+import numpy as np
 
 # Cache all the data so the app is fast
 load_nd()  # NIST data
 load_cd()  # CVE data
 load_vd()  # VERIS data
 load_gd()  # Group data
+# Sample selected TTPs (this would come from a dropdown or input in your actual app)
+selected_ttps = ['T1548', 'T1548.002', 'T1548.004']
+
 
 # Create Flask app and integrate it with Dash
 server = Flask(__name__, static_folder='../public')  # Adjust if necessary based on directory structure
@@ -41,6 +46,32 @@ def get_actors_by_country():
         if pd.notna(row['latitude']) and pd.notna(row['longitude'])
     ]
     return jsonify(data)
+
+#heatmap
+def create_ttp_heatmap(data):
+    # Create a heatmap using the provided data
+    heatmap_fig = go.Figure(data=go.Heatmap(
+        z=data['New_Complexity_Score'].values.reshape(1, -1),  # Reshape for heatmap
+        x=data['ID'].values,
+        colorscale='Viridis',
+    ))
+    heatmap_fig.update_layout(title='TTP Complexity Scores Heatmap')
+    return heatmap_fig
+
+def generate_heatmap(selected_ttps):
+    filtered_data = load_complexity_scores(selected_ttps)
+    heatmap_fig = go.Figure()  # Initialize heatmap_fig with an empty figure
+
+    if not filtered_data.empty:
+        heatmap_fig = create_ttp_heatmap(filtered_data)  # Use the filtered data to create the heatmap
+    else:
+        # Create a heatmap with all selected TTPs, showing 0 if they don't exist in the CSV
+        missing_ttps = set(selected_ttps) - set(filtered_data['ID'])
+        for ttp in missing_ttps:
+            filtered_data = filtered_data.append({'ID': ttp, 'New_Complexity_Score': 0}, ignore_index=True)
+        heatmap_fig = create_ttp_heatmap(filtered_data)  # Pass the updated filtered_data
+
+    return heatmap_fig
 
 # Serve static files
 @server.route('/public/<path:path>')
@@ -79,6 +110,17 @@ app.layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'
     html.Div(id='first-last-seen-chart-container', children=[
         dcc.Graph(id='first-last-seen-chart'),
     ]),
+
+    #New Layout for heatmap
+    html.Div([
+    dcc.Graph(id='ttp-heatmap', figure=go.Figure())  # Initialize with an empty figure
+]),
+
+# New layout for TTP complexity bar chart
+    html.Div([
+        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure())  # Initialize with an empty figure
+    ]),
+
 
 
     # Severity and Capability Pie Charts
@@ -155,6 +197,67 @@ def update_time_series_chart(n_clicks, selected_actor):
 def update_first_last_seen(selected_actor):
     return create_first_last_seen_chart(selected_actor)  # Pass the selected actor to the function
 
+#call back for heatmap
+@app.callback(
+    Output('ttp-heatmap', 'figure'),  # Ensure the ID matches your layout
+    Input('submit-button', 'n_clicks'),
+    State('ttp-input', 'value'),
+    State('group-id-dropdown', 'value')
+)
+def update_heatmap(n_clicks, ttps_input, group_id):
+    if n_clicks > 0:
+        ttps = [ttp.strip() for ttp in ttps_input.split(',')]
+        return generate_heatmap(ttps)  # Call to generate_heatmap with the TTPs
+    return go.Figure()  # Return an empty figure if no button clicks
+
+# Callback to bar chart
+base_path = Path(__file__).resolve().parent.parent
+complexity_df = pd.read_csv(base_path / 'data/Techniques_with_Complexity_Scores_New.csv')
+
+@app.callback(
+    Output('ttp-complexity-bar-chart', 'figure'),
+    [Input('group-id-dropdown', 'value'),  # Adjust input as needed
+     Input('ttp-input', 'value')]  # Assuming you're using the TTP input to update the chart
+)
+
+def update_ttp_complexity_bar_chart(selected_group, ttp_input):
+    # Example data processing based on the selected group and TTP input
+    if selected_group and ttp_input:
+        ttp_ids = [x.strip() for x in ttp_input.split(',')]
+        
+        # Use the already loaded complexity_df
+        # Filter based on selected TTP IDs if necessary
+        filtered_df = complexity_df[complexity_df['ID'].isin(ttp_ids)]
+        
+        # Fill N/A for hover data in 'sub-technique of' column
+        filtered_df['sub-technique of'] = filtered_df['sub-technique of'].fillna('N/A')
+        
+        # Create the bar chart with color scale based on 'Complexity_Score'
+        figure = px.bar(
+            filtered_df,
+            x='ID',
+            y='Complexity_Score',
+            color='Complexity_Score',
+            color_continuous_scale=px.colors.sequential.Viridis_r,
+            hover_data={
+                'ID': True,
+                'Complexity_Score': True,
+                'name': True,
+                'tactics': True,
+                'sub-technique of': True  # Directly use the modified column
+            }
+        ) 
+
+        figure.update_layout(
+            title='TTP Complexity Scores',
+            xaxis_title='TTP ID',
+            yaxis_title='Complexity Score',
+        )
+        
+        return figure
+    else:
+        # Return an empty figure if no valid input is provided
+        return go.Figure()
 
 # Callback to update graphs based on TTPs input
 @app.callback(
