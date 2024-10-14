@@ -5,7 +5,7 @@ from pathlib import Path
 # Define the base path for the CSV file
 base_path = Path(__file__).resolve().parent.parent
 
-# Step 1: Load CSV and Filter Data for the Selected TTPs
+# Load CSV and Filter Data for the Selected TTPs
 def load_complexity_scores(selected_ttps, csv_file_path=base_path / 'data/Techniques_with_Complexity_Scores_New.csv'):
     # Load the CSV file
     try:
@@ -18,7 +18,7 @@ def load_complexity_scores(selected_ttps, csv_file_path=base_path / 'data/Techni
     filtered_data = df[df['ID'].isin(selected_ttps)]
     return filtered_data if not filtered_data.empty else pd.DataFrame({'ID': selected_ttps, 'Complexity_Score': 0})
 
-# Step 2: Create a Clustered Bar Chart
+# Create a Clustered Bar Chart
 def create_ttp_complexity_chart(selected_ttps, filtered_df):
     # Create a DataFrame for all selected TTPs with a default complexity score of 0
     all_ttps_df = pd.DataFrame({'ID': selected_ttps, 'Complexity_Score': [0] * len(selected_ttps)})
@@ -53,7 +53,7 @@ def create_ttp_complexity_chart(selected_ttps, filtered_df):
 # Example usage
 if __name__ == "__main__":
     # Sample selected TTPs for demonstration
-    selected_ttps = ['T1548', 'T1548.002', 'T1548.004', 'T1234', 'T5678']  # Replace with actual TTP IDs
+    selected_ttps = ['T1548', 'T1548.002', 'T1548.004', 'T1234', 'T5678']  
     filtered_data = load_complexity_scores(selected_ttps)
     
     # If there is any filtered data, create the bar chart

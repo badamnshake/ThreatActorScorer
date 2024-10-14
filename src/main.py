@@ -216,8 +216,8 @@ complexity_df = pd.read_csv(base_path / 'data/Techniques_with_Complexity_Scores_
 
 @app.callback(
     Output('ttp-complexity-bar-chart', 'figure'),
-    [Input('group-id-dropdown', 'value'),  # Adjust input as needed
-     Input('ttp-input', 'value')]  # Assuming you're using the TTP input to update the chart
+    [Input('group-id-dropdown', 'value'),
+     Input('ttp-input', 'value')] 
 )
 
 def update_ttp_complexity_bar_chart(selected_group, ttp_input):
@@ -244,7 +244,7 @@ def update_ttp_complexity_bar_chart(selected_group, ttp_input):
                 'Complexity_Score': True,
                 'name': True,
                 'tactics': True,
-                'sub-technique of': True  # Directly use the modified column
+                'sub-technique of': True  
             }
         ) 
 
