@@ -114,8 +114,17 @@ def get_group_incidents(group_id):
 
 def get_frequency_score(actor_name):
     global incident_counts
-    # incident_counts.to_csv("x.csv")
-    return incident_counts.at[incident_counts.index[incident_counts['actor'] == actor_name][0], 'score']
+    # return incident_counts.at[incident_counts.index[incident_counts['actor'] == actor_name][0], 'score']
+
+    # Filter for matching actors
+    matching_indices = incident_counts.index[incident_counts['actor'] == actor_name]
+
+    # Check if there are any matching indices
+    if len(matching_indices) > 0:
+        return incident_counts.at[matching_indices[0], 'score']
+    else:
+        #print(f"No matching rows for actor: {actor_name}")
+        return 0  # Handle the case where no matches are found
 
 
 def get_ttp_complexity_data():

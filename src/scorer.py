@@ -65,7 +65,6 @@ def get_score_for_threat_actor(complexity_score, veris_impact, cvss_data, freque
     print("---------")
 
     # mitigation score
-    cwe_mit = cvss_data['cwe_id'].nunique() / len(cvss_data)
     mitigation_score = twmratio 
 
     print("mit  score")

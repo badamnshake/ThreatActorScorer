@@ -170,8 +170,23 @@ def update_charts(pathname):
             # freq = get_frequency_score(matching_group)
 
 
+            complexity_score = get_complexity_score(ttps)
+            frequency_score = get_frequency_score(matching_group)
+            industry_mode = incident_data['industry'].mode()[0] if not incident_data['industry'].empty else ''
+            actor_type_mode = incident_data['actor_type'].mode()[0] if not incident_data['actor_type'].empty else ''
+            techniques = get_techniques_wo_mitigations(ttps)
+
+            score = get_score_for_threat_actor(
+                complexity_score,
+                average_severity,
+                cvss_scores,
+                frequency_score if frequency_score is not None else 0,  # Default to 0 if None
+                industry_mode,
+                actor_type_mode,
+                techniques
+            )
             # calculate the score parallely
-            score = get_score_for_threat_actor(get_complexity_score(ttps),average_severity,cvss_scores,get_frequency_score(matching_group),incident_data['industry'].mode()[0],incident_data['actor_type'].mode()[0],get_techniques_wo_mitigations(ttps))                                       
+            # score = get_score_for_threat_actor(get_complexity_score(ttps),average_severity,cvss_scores,get_frequency_score(matching_group),incident_data['industry'].mode()[0],incident_data['actor_type'].mode()[0],get_techniques_wo_mitigations(ttps))                                       
             print(score)
 
             severity_fig = create_severity_pie_chart(severity_counts)
@@ -185,7 +200,7 @@ def update_charts(pathname):
             return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, ttp_complexity]
 
     # Return empty figures if no group is selected
-    return [go.Figure()] * 6
+    return [go.Figure()] * 7
 
 
 if __name__ == '__main__':
