@@ -8,13 +8,23 @@ SECTOR_SCORES = {
     'Professional, Scientific, and Technical Services': 0.6,
     'Information': 0.9,
     'Educational Services': 0.5,
+    'Arts, Entertainment, and Recreation': 0.3,
     'Finance and Insurance': 0.9,
     'Public Administration': 1.0,
     'Health Care and Social Assistance': 0.9,
+    'Other Services (except Public Administration)': 0.4,
     'Retail Trade': 0.6,
     'Manufacturing': 0.8,
+    'Administrative and Support and Waste Management and Remediation Services': 0.7,
+    'Accommodation and Food Services ': 0.5,
+    'Transportation and Warehousing': 0.8,
     'Utilities': 1.0,
-    # Add remaining sectors...
+    'Wholesale Trade': 0.7,
+    'Agriculture, Forestry, Fishing and Hunting': 0.8,
+    'Management of Companies and Enterprises': 0.6,
+    'Real Estate and Rental and Leasing': 0.2,
+    'Mining, Quarrying, and Oil and Gas Extraction': 0.8,
+    'Construction': 0.4,
 }
 
 ACTOR_TYPE_SCORES = {
