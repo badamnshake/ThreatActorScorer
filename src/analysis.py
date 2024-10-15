@@ -9,6 +9,8 @@ from cvwe_data import extract_cvss_scores
 from incident import load_processed_incident_data
 #from scorer import get_score_using_datasets, get_score
 from group_data import get_group_incidents
+from pathlib import Path
+import pandas as pd
 
 # Function to create the layout for the analysis page
 def display_analysis_layout(selected_group):
@@ -25,6 +27,7 @@ def display_analysis_layout(selected_group):
         dcc.Graph(id='attack-geo'),
         dcc.Graph(id='cvss-scatter'),
         dcc.Graph(id='nist-bar-chart'),
+        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure()),
 
         # Manual score calculation inputs and button
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
@@ -148,3 +151,46 @@ def create_cvss_scatter_plot(cvss_scores):
     ).update_xaxes(
         autorange='reversed'
     )
+
+# Function to create TTP complexity bar chart
+
+base_path = Path(__file__).resolve().parent.parent
+complexity_df = pd.read_csv(base_path / 'data/Techniques_with_Complexity_Scores_New.csv')
+def update_ttp_complexity_bar_chart(selected_group, ttp_input):
+    # Example data processing based on the selected group and TTP input
+    if selected_group and ttp_input:
+        ttp_ids = [x.strip() for x in ttp_input.split(',')]
+        
+        # Use the already loaded complexity_df
+        # Filter based on selected TTP IDs if necessary
+        filtered_df = complexity_df[complexity_df['ID'].isin(ttp_ids)]
+        
+        # Fill N/A for hover data in 'sub-technique of' column
+        filtered_df['sub-technique of'] = filtered_df['sub-technique of'].fillna('N/A')
+        
+        # Create the bar chart with color scale based on 'Complexity_Score'
+        figure = px.bar(
+            filtered_df,
+            x='ID',
+            y='Complexity_Score',
+            color='Complexity_Score',
+            color_continuous_scale=px.colors.sequential.Viridis_r,
+            hover_data={
+                'ID': True,
+                'Complexity_Score': True,
+                'name': True,
+                'tactics': True,
+                'sub-technique of': True  
+            }
+        ) 
+
+        figure.update_layout(
+            title='TTP Complexity Scores',
+            xaxis_title='TTP ID',
+            yaxis_title='Complexity Score',
+        )
+        
+        return figure
+    else:
+        # Return an empty figure if no valid input is provided
+        return go.Figure()

@@ -140,6 +140,14 @@ def render_page_content(pathname):
      Output('cvss-scatter', 'figure')],
     [Input('url', 'pathname')]
 )
+
+#separate callback to ttp complexity chart
+@app.callback(
+    Output('ttp-complexity-bar-chart', 'figure'),
+    [Input('group-id-dropdown', 'value'),
+     Input('ttp-input', 'value')] 
+)
+
 def update_charts(pathname):
     if pathname.startswith('/profile/'):
         # Normalize the URL path to match against the data
