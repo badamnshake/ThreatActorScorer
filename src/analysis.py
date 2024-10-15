@@ -3,7 +3,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import dcc, html
-from group_data import get_group_incidents
+from group_data import get_group_incidents, get_ttp_complexity_data
 
 # Function to create the layout for the analysis page
 def display_analysis_layout(selected_group):
