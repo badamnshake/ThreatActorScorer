@@ -101,3 +101,6 @@ def get_group_incidents(group_id):
     load_data()  # Ensure data is loaded
     return incidents_data.loc[incidents_data['actor'] == group_id]
 
+def get_ttp_complexity_data():
+    complexity_df = pd.read_csv(base_path / 'data/Techniques_with_Complexity_Scores_New.csv')
+    return complexity_df  
