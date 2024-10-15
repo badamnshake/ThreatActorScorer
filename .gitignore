@@ -137,3 +137,5 @@ doc/source/savefig/
 # Interactive terminal generated files #
 ########################################
 .jupyterlite.doit.db
+data/threat_actor_groups_aliases.csv
+data/threat_actor_groups_aliases.csv

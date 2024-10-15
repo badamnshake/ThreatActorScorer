@@ -110,3 +110,6 @@ def get_frequency_score(actor_name):
     return incident_counts.at[incident_counts.index[incident_counts['actor'] == actor_name][0], 'score']
 
 
+def get_ttp_complexity_data():
+    complexity_df = pd.read_csv(base_path / 'data/techniques_with_complexity_scores.csv')
+    return complexity_df  

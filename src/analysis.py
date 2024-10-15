@@ -20,6 +20,7 @@ def display_analysis_layout(selected_group):
         dcc.Graph(id='attack-geo'),
         dcc.Graph(id='cvss-scatter'),
         dcc.Graph(id='nist-bar-chart'),
+        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure()),
 
         # Manual score calculation inputs and button
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
@@ -143,3 +144,56 @@ def create_cvss_scatter_plot(cvss_scores):
     ).update_xaxes(
         autorange='reversed'
     )
+
+# Function to create TTP complexity bar chart
+def create_ttp_complexity_bar_chart(selected_group, ttp_input):
+    # Check if ttp_input is provided as a list
+    if selected_group and ttp_input:
+        ttp_ids = ttp_input
+        
+        # Load complexity_df
+        complexity_df = get_ttp_complexity_data()
+        filtered_df = complexity_df[complexity_df['ID'].isin(ttp_ids)]
+        
+        # Fill N/A for hover data in 'sub-technique of' column
+        filtered_df['sub-technique of'] = filtered_df['sub-technique of'].fillna('N/A')
+
+        # Extract the TTP ID without the decimal points (e.g., T1548 from T1548.005)
+        filtered_df['ID_base'] = filtered_df['ID'].apply(lambda x: x.split('.')[0])
+
+        # Create the hover text with the URL for each TTP ID (using the base ID)
+        filtered_df['hover_text'] = (
+            'ID: ' + filtered_df['ID'].astype(str) + '<br>' +
+            'Complexity Score: ' + filtered_df['complexity score'].astype(str) + '<br>' +
+            'Name: ' + filtered_df['name'] + '<br>' +
+            'Tactics: ' + filtered_df['tactics'] + '<br>' +
+            'Sub-Technique Of: ' + filtered_df['sub-technique of'] + '<br>' +
+            '<b>Link:</b> <a href="https://attack.mitre.org/techniques/' + filtered_df['ID_base'] + 
+            '" target="_blank">https://attack.mitre.org/techniques/' + filtered_df['ID_base'] + '</a>'
+        )
+
+        # Create the bar chart with color scale based on 'complexity score'
+        figure = px.bar(
+            filtered_df,
+            x='ID',
+            y='complexity score',
+            color='complexity score',
+            color_continuous_scale=px.colors.sequential.Viridis_r,
+            hover_data={'hover_text': True}  # Use hover_text for hover data
+        )
+
+        figure.update_traces(
+            hovertemplate='%{customdata}<extra></extra>',  # Format hover template
+            customdata=filtered_df['hover_text']  # Pass custom hover text
+        )
+
+        figure.update_layout(
+            title='TTP Complexity Scores',
+            xaxis_title='TTP ID',
+            yaxis_title='Complexity Score',
+        )
+
+        return figure
+    else:
+        # Return an empty figure if no valid input is provided
+        return go.Figure()
