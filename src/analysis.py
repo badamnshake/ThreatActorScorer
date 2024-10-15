@@ -171,12 +171,12 @@ def create_ttp_complexity_bar_chart(selected_group, ttp_input):
         figure = px.bar(
             filtered_df,
             x='ID',
-            y='Complexity_Score',
-            color='Complexity_Score',
+            y='complexity score',
+            color='complexity score',
             color_continuous_scale=px.colors.sequential.Viridis_r,
             hover_data={
                 'ID': True,
-                'Complexity_Score': True,
+                'complexity score': True,
                 'name': True,
                 'tactics': True,
                 'sub-technique of': True  
