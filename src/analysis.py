@@ -11,27 +11,14 @@ def display_analysis_layout(selected_group):
         html.H1(f'Analysis for {selected_group}', style={'textAlign': 'center'}),
 
         # Severity and Capability Pie Charts
-        dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '10px'}),
+        dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '30px'}),
         dcc.Graph(id='capability-pie-chart', style={'flex': '1'}),
 
         dcc.Graph(id='incidents'),
         dcc.Graph(id='attack-geo'),
         dcc.Graph(id='cvss-scatter'),
         dcc.Graph(id='nist-bar-chart'),
-        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure()),
-
-        # Manual score calculation inputs and button
-        html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
-            dcc.Input(id='score-capability', type='text', value='', placeholder='Enter Capability (0-10)', style={'minWidth': '20%'}),
-            dcc.Input(id='score-frequency', type='text', value='', placeholder='Enter Incident Numbers (0 - n)', style={'minWidth': '20%'}),
-            dcc.Input(id='score-industry', type='text', value='', placeholder='Enter Industry of Threat Actor', style={'minWidth': '20%'}),
-            dcc.Input(id='score-violations', type='text', value='', placeholder='Enter NIST Violations', style={'minWidth': '20%'}),
-            html.Button('Calculate Score Manually', id='update-score-button', n_clicks=0, style={
-                'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white', 'cursor': 'pointer'
-            }),
-        ]),
-
-        html.H1(id='score-display', children='Score: 0'),
+        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure())
     ])
 
 # Function to create severity pie chart
@@ -67,7 +54,7 @@ def create_nist_bar_chart(nist_violations):
         labels={'capability_id': 'Violations', 'capability_group': 'Type'},
     ).update_layout(
         height=800,  # Increase height
-        width=1000    # Increase width
+        #idth=1000    # Increase width
     )
 
 # Function to create incidents scatter plot
@@ -90,6 +77,7 @@ def create_incidents_scatter_plot(group_id, incident_data):
     title='Incidents by Year, Motive, and Industry',
     labels={'incident_count': 'Number of Incidents', 'year': 'Year', 'motive': 'Motive'},
 ).update_layout(
+    height = 1000,
     yaxis_title='Industry',  # X-axis is Industry
     xaxis_title='Year',  # Y-axis is Year
     legend_title_text='Motive',
@@ -114,7 +102,10 @@ def create_attack_geo_plot(group_id):
         title="Global Footprint of Threat Actor's Attacks",
         labels={'incident_count': 'Number of Incidents', 'country': 'Country'},
         color_continuous_scale=px.colors.sequential.Reds,  # Color scale for shading
+    ).update_layout(
+        height = 1000,
     )
+    
 # Function to create CVSS scores scatter plot
 def create_cvss_scatter_plot(cvss_scores):
     return px.scatter(

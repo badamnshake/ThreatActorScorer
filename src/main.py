@@ -8,7 +8,7 @@ from group_data import load_data as load_group_data, get_all_groups, get_ttps_of
 from analysis import create_severity_pie_chart, create_capability_pie_chart, create_nist_bar_chart, create_incidents_scatter_plot, create_attack_geo_plot, create_cvss_scatter_plot, create_ttp_complexity_bar_chart
 from veris_data import extract_veris_data, load_veris_data 
 from nist_data import extract_nist_data, load_nist_data
-from cvwe_data import extract_cvss_scores, load_cvss_data
+from cvwe_data import extract_cvss_scores, load_cvss_data, extract_cwe_mitigations, load_cwe_mitigations
 from incident import load_actor_per_country_data
 from scorer import get_score_for_threat_actor
 
@@ -18,6 +18,7 @@ load_group_data()
 load_veris_data()
 load_nist_data()
 load_cvss_data()
+load_cwe_mitigations()
 
 # Create Flask app and integrate it with Dash
 server = Flask(__name__, static_folder='../public')
@@ -92,20 +93,50 @@ def profile_layout(actor_name):
         html.H1(f'Threat Actor Profile: {actor_name}', style={'textAlign': 'center', 'color': '#4B0082'}),
         
         # Display charts and analysis for the selected actor
+        # New section to display the score breakdown
+        html.Div(id='score-breakdown', style={
+            'padding': '10px',
+            'border': '1px solid #ccc',
+            'borderRadius': '5px',
+            'backgroundColor': '#f9f9f9',
+            'marginTop': '20px',
+            'textAlign': 'center',
+            'width': '60%',
+            'height' : '500px',
+            'margin': '0 auto',
+            'color': 'red',  # Set font color to red
+            'fontSize': '3.0rem',
+        }),
+        
+         dcc.Graph(id='attack-geo'),    # Attack Geo Plot
+         dcc.Graph(id='incidents'),     # Incidents Scatter Plot
+        
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
             dcc.Graph(id='severity-pie-chart'),  # Severity Pie Chart
-            dcc.Graph(id='capability-pie-chart'),
+            dcc.Graph(id='capability-pie-chart'), #CIA Pie Chart
         ]),
+        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure()), #TTP Complexity Bar Chart
+        dcc.Graph(id='cvss-scatter'),      # CVE Scatter Plot
 
-        dcc.Graph(id='nist-bar-chart'),# Capability Pie Chart
+        dcc.Graph(id='nist-bar-chart'),
         
-           # NIST Violations Bar Chart
-        dcc.Graph(id='attack-geo'),
-        dcc.Graph(id='incidents'),        # Incidents Scatter Plot
-               # Attack Geo Plot
-        dcc.Graph(id='cvss-scatter'),      # CVSS Scores Scatter Plot
-        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure()) #TTP Complexity Bar Chart
     ])
+
+'''GAUGE INDICATOR
+    def create_gauge(value):
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=value,
+        title={'text': "Score"},
+        gauge={'axis': {'range': [0, 100]},
+               'bar': {'color': "lightgreen"},
+               'steps': [
+                   {'range': [0, 50], 'color': "red"},
+                   {'range': [50, 75], 'color': "yellow"},
+                   {'range': [75, 100], 'color': "green"}]
+               }
+    ))
+    return fig'''
 
 # Callback to update the URL when the "Submit" button is clicked
 @app.callback(
@@ -144,7 +175,8 @@ def render_page_content(pathname):
      Output('incidents', 'figure'),
      Output('attack-geo', 'figure'),
      Output('cvss-scatter', 'figure'),
-     Output('ttp-complexity-bar-chart', 'figure')],
+     Output('ttp-complexity-bar-chart', 'figure'),
+     Output('score-breakdown', 'children')],
     [Input('url', 'pathname')]
 )
 
@@ -167,6 +199,7 @@ def update_charts(pathname):
             nist_violations = extract_nist_data(ttps)
             cvss_scores = extract_cvss_scores(ttps)
             incident_data = get_group_incidents(matching_group)
+            cwe_mitigation_score = extract_cwe_mitigations(ttps)
             # freq = get_frequency_score(matching_group)
 
 
@@ -183,11 +216,24 @@ def update_charts(pathname):
                 frequency_score if frequency_score is not None else 0,  # Default to 0 if None
                 industry_mode,
                 actor_type_mode,
-                techniques
+                techniques,
+                cwe_mitigation_score,
             )
             # calculate the score parallely
             # score = get_score_for_threat_actor(get_complexity_score(ttps),average_severity,cvss_scores,get_frequency_score(matching_group),incident_data['industry'].mode()[0],incident_data['actor_type'].mode()[0],get_techniques_wo_mitigations(ttps))                                       
-            print(score)
+            #print(score)
+            # Generate a score breakdown
+            score_breakdown = html.Div([
+                html.H3(f"Threat Score: {round(score, 2)}"),
+                html.P(f"Complexity Score: {round(complexity_score, 2)}"),
+                html.P(f"Impact Score: {round(average_severity['severity'].mean(), 2)}"),
+                html.P(f"CVSS Score: {round(cvss_scores['cvss'].mean(), 2)}"),
+                html.P(f"Frequency Score: {round(frequency_score, 2)}"),
+                html.P(f"Sector Score: {industry_mode}"),
+                html.P(f"Actor Type Score: {actor_type_mode}"),
+                html.P(f"Mitigation Score: {round(cwe_mitigation_score, 2)}"),
+                html.H4(f"Total Score: {round(score, 2)}")
+            ])
 
             severity_fig = create_severity_pie_chart(severity_counts)
             capability_fig = create_capability_pie_chart(capability_counts)
@@ -197,10 +243,10 @@ def update_charts(pathname):
             cvss_scores_fig = create_cvss_scatter_plot(cvss_scores)
             ttp_complexity = create_ttp_complexity_bar_chart(matching_group,get_ttps_of_group(matching_group))
 
-            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, ttp_complexity]
+            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, ttp_complexity, score_breakdown]
 
     # Return empty figures if no group is selected
-    return [go.Figure()] * 7
+    return [go.Figure()] * 7 + [html.Div()]
 
 
 if __name__ == '__main__':

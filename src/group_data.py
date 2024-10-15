@@ -31,7 +31,7 @@ def load_data():
     max_incidents = incident_counts['incident_count'].max()
 
     # Step 3: Apply the linear transformation to get the score for each actor
-    incident_counts['score'] = (incident_counts['incident_count'] - min_incidents) / (max_incidents - min_incidents)
+    incident_counts['score'] = 0.01+((incident_counts['incident_count'] - min_incidents) / (max_incidents - min_incidents))*(1-0.01)
 
         
     cached_data = load_group_data()  # Cache the processed group data for future calls
