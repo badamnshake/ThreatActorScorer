@@ -14,44 +14,73 @@ SECTOR_SCORES = {
 
 ACTOR_TYPE_SCORES = {
     'Nation-State': 1.0,
-    'Criminals': 0.8,
-    'Hacktivists': 0.4,
-    'Hobbyists': 0.2,
-    'Terrorists': 0.6,
+    'Criminal': 0.8,
+    'Hacktivist': 0.4,
+    'Hobbyist': 0.2,
+    'Terrorist': 0.6,
 }
 
 
-def get_score_for_threat_actor(veris_impact, cvss_data, frequency, sector, actor_type):
+def get_score_for_threat_actor(complexity_score, veris_impact, cvss_data, frequency_score, sector, actor_type, twmratio):
     # impact score
     avg_cvss = cvss_data['cvss'].mean()
     sophistication = veris_impact['severity'].mean()
+
+
     cvss_weight = 0.5
     impact_score =  (sophistication + (avg_cvss * cvss_weight)) / (1 + cvss_weight)
+    impact_score /= 10
 
-    # frequency score
-    frequency_score = frequency
+    print("impact score: (always lie in 1-10)")
+
+    print("avg cvss")
+    print(avg_cvss)
+
+    print("sophistication")
+    print(sophistication)
+
+    print("impact score")
+    print(impact_score)
+    print("---------")
+
+    print("freq  score")
+    print(frequency_score)
+    print("---------")
+
 
     # sector score
     sector_score = SECTOR_SCORES.get(sector, 0.5)
 
+    print("sector score")
+    print(sector)
+    print(sector_score)
+    print("---------")
+
     # actor type score
     actor_type_score = ACTOR_TYPE_SCORES.get(actor_type, 0.5)  # Default to 0.5 if actor type is not in the list
 
+    print("actor type score")
+    print(actor_type)
+    print(actor_type_score)
+    print("---------")
+
     # mitigation score
     cwe_mit = cvss_data['cwe_id'].nunique() / len(cvss_data)
-    technique_mit = 0
-    mitigation_score =  7 * technique_mit + 3 * cwe_mit
+    mitigation_score = twmratio 
 
-    complexity_score = veris_impact['severity'].mean()
+    print("mit  score")
+    print(mitigation_score)
+    print("---------")
+
 
     # Combine the scores using weights (or equal weights if no specific weight is given)
     total_score = (
-        complexity_score * 0.2 +
-        frequency_score * 0.2 +
-        impact_score * 0.3 +
-        mitigation_score * 0.1 +
-        sector_score * 0.1 +
-        actor_type_score * 0.1
+        complexity_score * 20 + 
+        frequency_score * 20 +
+        impact_score * 30 +
+        mitigation_score * 10 +
+        sector_score * 10 +
+        actor_type_score * 10
     )
 
     return total_score

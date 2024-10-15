@@ -8,26 +8,33 @@ base_path = Path(__file__).resolve().parent.parent
 cached_data = None
 incidents_data = None
 incident_counts = None
+complexity_df = None
+tech_wo_mit = None
+
 
 def load_data():
     """
     Loads both group techniques data and incidents data if they haven't been loaded already.
     """
-    global cached_data, incidents_data, incident_counts
+    global cached_data, incidents_data, incident_counts, complexity_df, tech_wo_mit
 
-    if incidents_data is None:
-        incidents_data = load_group_incidents()  # Cache the processed incidents data for future calls
-        incident_counts = incidents_data.groupby('actor').size().reset_index(name='incident_count')
-        # Step 2: Calculate min and max incident counts across all actors
-        min_incidents = incident_counts['incident_count'].min()
-        max_incidents = incident_counts['incident_count'].max()
 
-        # Step 3: Apply the linear transformation to get the score for each actor
-        incident_counts['score'] = (incident_counts['incident_count'] - min_incidents) / (max_incidents - min_incidents)
+
+    complexity_df = pd.read_csv(base_path / 'data/techniques_with_complexity_scores.csv')
+    tech_wo_mit = pd.read_csv(base_path / 'data/techniques_without_mitigations.csv', header=None, names=['Technique'])
+    
+
+    incidents_data = load_group_incidents()  # Cache the processed incidents data for future calls
+    incident_counts = incidents_data.groupby('actor').size().reset_index(name='incident_count')
+    # Step 2: Calculate min and max incident counts across all actors
+    min_incidents = incident_counts['incident_count'].min()
+    max_incidents = incident_counts['incident_count'].max()
+
+    # Step 3: Apply the linear transformation to get the score for each actor
+    incident_counts['score'] = (incident_counts['incident_count'] - min_incidents) / (max_incidents - min_incidents)
 
         
-    if cached_data is None:
-        cached_data = load_group_data()  # Cache the processed group data for future calls
+    cached_data = load_group_data()  # Cache the processed group data for future calls
     
 
 def get_group_name(group_id, df):
@@ -107,9 +114,20 @@ def get_group_incidents(group_id):
 
 def get_frequency_score(actor_name):
     global incident_counts
+    # incident_counts.to_csv("x.csv")
     return incident_counts.at[incident_counts.index[incident_counts['actor'] == actor_name][0], 'score']
 
 
 def get_ttp_complexity_data():
-    complexity_df = pd.read_csv(base_path / 'data/techniques_with_complexity_scores.csv')
+    global complexity_df
     return complexity_df  
+
+def get_complexity_score(ttps):
+    global complexity_df
+    return complexity_df.loc[complexity_df["ID"].isin(ttps)]['complexity score'].mean()
+
+def get_techniques_wo_mitigations(ttps):
+    global tech_wo_mit
+    matches = tech_wo_mit[tech_wo_mit["Technique"].isin(ttps)]
+    return len(matches) / len(tech_wo_mit)
+    

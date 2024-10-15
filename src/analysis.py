@@ -11,10 +11,8 @@ def display_analysis_layout(selected_group):
         html.H1(f'Analysis for {selected_group}', style={'textAlign': 'center'}),
 
         # Severity and Capability Pie Charts
-        html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
-            dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '10px'}),
-            dcc.Graph(id='capability-pie-chart', style={'flex': '1'}),
-        ]),
+        dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '10px'}),
+        dcc.Graph(id='capability-pie-chart', style={'flex': '1'}),
 
         dcc.Graph(id='incidents'),
         dcc.Graph(id='attack-geo'),
@@ -91,14 +89,11 @@ def create_incidents_scatter_plot(group_id, incident_data):
     hover_name='industry',  # Hover over to see industry details
     title='Incidents by Year, Motive, and Industry',
     labels={'incident_count': 'Number of Incidents', 'year': 'Year', 'motive': 'Motive'},
-    size_max=60,  # Set maximum size for the bubbles
 ).update_layout(
     yaxis_title='Industry',  # X-axis is Industry
     xaxis_title='Year',  # Y-axis is Year
     legend_title_text='Motive',
     xaxis=dict(range=[2013, 2025]),  # Set fixed time range for y-axis
-    width=2500,  # Adjust the width as needed
-    height=1000,  # Adjust the height as needed
 )
 
 
@@ -119,12 +114,7 @@ def create_attack_geo_plot(group_id):
         title="Global Footprint of Threat Actor's Attacks",
         labels={'incident_count': 'Number of Incidents', 'country': 'Country'},
         color_continuous_scale=px.colors.sequential.Reds,  # Color scale for shading
-    ).update_layout(
-        width=2500,
-        height=800,
-        autosize=False,
     )
-
 # Function to create CVSS scores scatter plot
 def create_cvss_scatter_plot(cvss_scores):
     return px.scatter(
@@ -153,7 +143,7 @@ def create_ttp_complexity_bar_chart(selected_group, ttp_input):
         
         # Load complexity_df
         complexity_df = get_ttp_complexity_data()
-        filtered_df = complexity_df[complexity_df['ID'].isin(ttp_ids)]
+        filtered_df = complexity_df[complexity_df['ID'].isin(ttp_ids)].copy()
         
         # Fill N/A for hover data in 'sub-technique of' column
         filtered_df['sub-technique of'] = filtered_df['sub-technique of'].fillna('N/A')
@@ -171,6 +161,7 @@ def create_ttp_complexity_bar_chart(selected_group, ttp_input):
             '<b>Link:</b> <a href="https://attack.mitre.org/techniques/' + filtered_df['ID_base'] + 
             '" target="_blank">https://attack.mitre.org/techniques/' + filtered_df['ID_base'] + '</a>'
         )
+
 
         # Create the bar chart with color scale based on 'complexity score'
         figure = px.bar(

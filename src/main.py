@@ -4,7 +4,7 @@ import pandas as pd
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from dash import Dash, dcc, html, Input, Output, State
-from group_data import load_data as load_group_data, get_all_groups, get_ttps_of_group, get_group_incidents, get_frequency_score
+from group_data import load_data as load_group_data, get_all_groups, get_ttps_of_group, get_group_incidents, get_frequency_score, get_techniques_wo_mitigations, get_complexity_score
 from analysis import create_severity_pie_chart, create_capability_pie_chart, create_nist_bar_chart, create_incidents_scatter_plot, create_attack_geo_plot, create_cvss_scatter_plot, create_ttp_complexity_bar_chart
 from veris_data import extract_veris_data, load_veris_data 
 from nist_data import extract_nist_data, load_nist_data
@@ -64,16 +64,9 @@ app.layout = html.Div([
 ])
 
 # Home layout with dropdown and submit button
-home_layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'}, children=[
-    html.H1(children='Threat Actor Analysis', style={'textAlign': 'center', 'color': '#4B0082'}),
-    html.Iframe(
-        src='/public/index.html', 
-        style={"height": "1000px", "width": "100%"}, 
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation"
-    ),
-
-    # Dropdown and submit button
-    html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
+home_layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '5px'}, children=[
+    # html.H2(children='Threat Actor Analysis', style={'textAlign': 'center', 'color': '#4B0082'}),
+    html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '5px'}, children=[
         dcc.Dropdown(
             id='group-id-dropdown',
             # Sort the groups alphabetically
@@ -84,7 +77,13 @@ home_layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px
         html.Button('Submit', id='submit-button', n_clicks=0, style={
             'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white', 'cursor': 'pointer'
         }),
-    ])
+    ]),
+    html.Iframe(
+        src='/public/index.html', 
+        style={"height": "85vh", "width": "100%"}, 
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation"
+    )
+    # Dropdown and submit button
 ])
 
 # Profile layout function for displaying a specific threat actor's page
@@ -96,8 +95,9 @@ def profile_layout(actor_name):
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
             dcc.Graph(id='severity-pie-chart'),  # Severity Pie Chart
             dcc.Graph(id='capability-pie-chart'),
-            dcc.Graph(id='nist-bar-chart'),# Capability Pie Chart
         ]),
+
+        dcc.Graph(id='nist-bar-chart'),# Capability Pie Chart
         
            # NIST Violations Bar Chart
         dcc.Graph(id='attack-geo'),
@@ -169,13 +169,10 @@ def update_charts(pathname):
             incident_data = get_group_incidents(matching_group)
             # freq = get_frequency_score(matching_group)
 
+
             # calculate the score parallely
-            # get_score_for_threat_actor(average_severity,
-                                        # cvss_scores,
-                                        # freq,
-                                        # incident_data['industry'].mode()[0],
-                                        # incident_data['actor_type'].mode()[0]
-                                    #    )
+            score = get_score_for_threat_actor(get_complexity_score(ttps),average_severity,cvss_scores,get_frequency_score(matching_group),incident_data['industry'].mode()[0],incident_data['actor_type'].mode()[0],get_techniques_wo_mitigations(ttps))                                       
+            print(score)
 
             severity_fig = create_severity_pie_chart(severity_counts)
             capability_fig = create_capability_pie_chart(capability_counts)
@@ -190,24 +187,6 @@ def update_charts(pathname):
     # Return empty figures if no group is selected
     return [go.Figure()] * 6
 
-
-# New callback to update scores from manual entry
-# @app.callback(
-#     Output('score-display', 'children', allow_duplicate=True),
-#     Input('update-score-button', 'n_clicks'),
-    
-#     State('score-capability', 'value'),
-#     State('score-frequency', 'value'),
-#     State('score-industry', 'value'),
-#     State('score-violations', 'value'),
-#     prevent_initial_call=True
-    
-# )
-# def update_score(n_clicks, c, f, i, v):
-#     value = 0
-#     if(n_clicks > 0 and c and f and i and v):
-#         value = get_score(c, f, v, i)
-#     return f"Score: {value}"
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
