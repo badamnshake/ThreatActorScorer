@@ -8,7 +8,7 @@ from nist_data import extract_nist_data
 from cvwe_data import extract_cvss_scores
 from incident import load_processed_incident_data
 #from scorer import get_score_using_datasets, get_score
-from group_data import get_group_incidents
+from group_data import get_group_incidents, get_ttp_complexity_data
 from pathlib import Path
 import pandas as pd
 
@@ -153,16 +153,15 @@ def create_cvss_scatter_plot(cvss_scores):
     )
 
 # Function to create TTP complexity bar chart
-
-base_path = Path(__file__).resolve().parent.parent
-complexity_df = pd.read_csv(base_path / 'data/Techniques_with_Complexity_Scores_New.csv')
-def update_ttp_complexity_bar_chart(selected_group, ttp_input):
-    # Example data processing based on the selected group and TTP input
+def create_ttp_complexity_bar_chart(selected_group, ttp_input):
+    
+    # Check if ttp_input is provided as a list
     if selected_group and ttp_input:
-        ttp_ids = [x.strip() for x in ttp_input.split(',')]
+        ttp_ids = ttp_input
         
-        # Use the already loaded complexity_df
+        # Load complexity_df
         # Filter based on selected TTP IDs if necessary
+        complexity_df = get_ttp_complexity_data()
         filtered_df = complexity_df[complexity_df['ID'].isin(ttp_ids)]
         
         # Fill N/A for hover data in 'sub-technique of' column
@@ -182,8 +181,8 @@ def update_ttp_complexity_bar_chart(selected_group, ttp_input):
                 'tactics': True,
                 'sub-technique of': True  
             }
-        ) 
-
+        )
+        
         figure.update_layout(
             title='TTP Complexity Scores',
             xaxis_title='TTP ID',

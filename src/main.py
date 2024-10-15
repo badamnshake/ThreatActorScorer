@@ -5,7 +5,7 @@ from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from dash import Dash, dcc, html, Input, Output, State
 from group_data import load_data, get_all_groups, get_ttps_of_group, get_group_incidents
-from analysis import create_severity_pie_chart, create_capability_pie_chart, create_nist_bar_chart, create_incidents_scatter_plot, create_attack_geo_plot, create_cvss_scatter_plot
+from analysis import create_severity_pie_chart, create_capability_pie_chart, create_nist_bar_chart, create_incidents_scatter_plot, create_attack_geo_plot, create_cvss_scatter_plot, create_ttp_complexity_bar_chart
 from veris_data import extract_veris_data
 from nist_data import extract_nist_data
 from cvwe_data import extract_cvss_scores
@@ -91,14 +91,15 @@ def profile_layout(actor_name):
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
             dcc.Graph(id='severity-pie-chart'),  # Severity Pie Chart
             dcc.Graph(id='capability-pie-chart'),
-            dcc.Graph(id='nist-bar-chart')# Capability Pie Chart
+            dcc.Graph(id='nist-bar-chart'),# Capability Pie Chart
         ]),
         
            # NIST Violations Bar Chart
         dcc.Graph(id='attack-geo'),
         dcc.Graph(id='incidents'),        # Incidents Scatter Plot
                # Attack Geo Plot
-        dcc.Graph(id='cvss-scatter')      # CVSS Scores Scatter Plot
+        dcc.Graph(id='cvss-scatter'),      # CVSS Scores Scatter Plot
+        dcc.Graph(id='ttp-complexity-bar-chart', figure=go.Figure()) #TTP Complexity Bar Chart
     ])
 
 # Callback to update the URL when the "Submit" button is clicked
@@ -137,15 +138,9 @@ def render_page_content(pathname):
      Output('nist-bar-chart', 'figure'),
      Output('incidents', 'figure'),
      Output('attack-geo', 'figure'),
-     Output('cvss-scatter', 'figure')],
+     Output('cvss-scatter', 'figure'),
+     Output('ttp-complexity-bar-chart', 'figure')],
     [Input('url', 'pathname')]
-)
-
-#separate callback to ttp complexity chart
-@app.callback(
-    Output('ttp-complexity-bar-chart', 'figure'),
-    [Input('group-id-dropdown', 'value'),
-     Input('ttp-input', 'value')] 
 )
 
 def update_charts(pathname):
@@ -170,8 +165,9 @@ def update_charts(pathname):
             incidents_fig = create_incidents_scatter_plot(matching_group, incident_data)
             attack_geo_fig = create_attack_geo_plot(matching_group)
             cvss_scores_fig = create_cvss_scatter_plot(cvss_scores)
+            ttp_complexity = create_ttp_complexity_bar_chart(matching_group,get_ttps_of_group(matching_group))
 
-            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig]
+            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, ttp_complexity]
 
     # Return empty figures if no group is selected
     return [go.Figure()] * 6
