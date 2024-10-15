@@ -143,6 +143,33 @@ def render_page_content(pathname):
     [Input('url', 'pathname')]
 )
 
+#  callback for the update-score-button
+@app.callback(
+    Output('score-display', 'children'),
+    [
+        Input('update-score-button', 'n_clicks'),
+        Input('score-capability', 'value'),
+        Input('score-frequency', 'value'),
+        Input('score-industry', 'value'),
+        Input('score-violations', 'value')
+    ]
+)
+def update_manual_score(n_clicks, capability, frequency, industry, violations):
+    if n_clicks > 0:
+        # Perform your score calculation based on inputs here
+        score = calculate_score(capability, frequency, industry, violations)
+        return f'Score: {score}'
+    return 'Score: 0'
+
+def calculate_score(capability, frequency, industry, violations):
+    # Dummy score calculation logic, replace with actual logic
+    try:
+        score = int(capability) + int(frequency) + len(industry) + int(violations)
+        return score
+    except ValueError:
+        return 0
+
+
 def update_charts(pathname):
     if pathname.startswith('/profile/'):
         # Normalize the URL path to match against the data

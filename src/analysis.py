@@ -108,8 +108,6 @@ def create_incidents_scatter_plot(group_id, incident_data):
     height=1000,  # Adjust the height as needed
 )
 
-
-
 # Function to create geographic plot for attacks
 def create_attack_geo_plot(group_id):
     gf = get_group_incidents(group_id)
