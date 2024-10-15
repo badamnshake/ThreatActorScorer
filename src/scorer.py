@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 # Manually defined values for Targeted Sector and Actor Type scoring
 SECTOR_SCORES = {
     'Professional, Scientific, and Technical Services': 0.6,
@@ -61,19 +63,19 @@ def get_score_for_threat_actor(complexity_score, veris_impact, cvss_data, freque
     print("---------")
 
 
-    # sector score
-    sector_score = SECTOR_SCORES.get(sector, 0.5)
+    sector_score = sector.apply(lambda x: np.mean([SECTOR_SCORES.get(i, 0) for i in x])).mean()
 
     print("Sector Score")
-    print(sector)
     print(sector_score)
     print("---------")
 
     # actor type score
-    actor_type_score = ACTOR_TYPE_SCORES.get(actor_type, 0.5)  # Default to 0.5 if actor type is not in the list
+
+    actor_type_score = actor_type.apply(lambda x: np.mean([ACTOR_TYPE_SCORES.get(i, 0) for i in x])).mean()
+
+
 
     print("Actor Type Score")
-    print(actor_type)
     print(actor_type_score)
     print("---------")
 
@@ -97,5 +99,51 @@ def get_score_for_threat_actor(complexity_score, veris_impact, cvss_data, freque
         sector_score * 10 +
         actor_type_score * 10
     )
+    data = {
+        'Score': [
+            complexity_score,
+            frequency_score,
+            impact_score,
+            mitigation_score,
+            sector_score,
+            actor_type_score,
+            0  # Placeholder for 'Remaining' score
+        ],
+        'Label': [
+            'Complexity Score',
+            'Frequency Score',
+            'Impact Score',
+            'Mitigation Score',
+            'Sector Score',
+            'Actor Type Score',
+            ''  # Label for remaining part
+        ],
+        'Max Weight': [
+            20,
+            20,
+            30,
+            10,
+            10,
+            10,
+            0
+            
+        ]
+    }
 
-    return total_score
+    # Create DataFrame
+    df = pd.DataFrame(data)
+
+    # Calculate weights
+    df['Weight'] = df['Score'] * [20, 20, 30, 10, 10, 10, 0]  # Weight for remaining is 0 initially
+
+    # Calculate total score
+    total_score = df['Weight'].sum()
+
+    # Update the remaining weight based on total score
+    df.loc[df['Label'] == '', 'Weight'] = 100 - total_score
+
+    print("---------")
+
+    print(total_score)
+
+    return total_score, df

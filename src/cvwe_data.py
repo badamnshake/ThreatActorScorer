@@ -17,6 +17,7 @@ def load_data():
 
     if cached_data is None:
         cached_data, cve_with_scores = load_cvss_data()
+    cwe_mitigations = load_cwe_mitigations()
 
 def load_cvss_data():
     """Load and process CVSS data from CSV and Excel files."""
@@ -85,69 +86,72 @@ def extract_cvss_scores(ttps):
 def load_cwe_mitigations():
     """Load and process TTP-CVE-CWE and CWE mitigations data from CSV files."""
     # Load the TTP-CVE-CWE and CWE mitigations data
-    ttp_cves_cwes_path = base_path / 'data/ttp_cves_cwes.csv'
-    cwe_mitigations_path = base_path / 'data/cwe_mitigations.csv'
+    # ttp_cves_cwes_path = base_path / 'data/ttp_cves_cwes.csv'
+    # cwe_mitigations_path = base_path / 'data/cwe_mitigations.csv'
 
-    # Read the CSV files
-    ttp_cves_cwes_df = pd.read_csv(ttp_cves_cwes_path)
-    cwe_mitigations_df = pd.read_csv(cwe_mitigations_path)
+    # # Read the CSV files
+    # ttp_cves_cwes_df = pd.read_csv(ttp_cves_cwes_path)
+    # cwe_mitigations_df = pd.read_csv(cwe_mitigations_path)
 
-    # Clean and ensure columns are stripped of extra spaces
-    ttp_cves_cwes_df.columns = ttp_cves_cwes_df.columns.str.strip()
-    cwe_mitigations_df.columns = cwe_mitigations_df.columns.str.strip()
+    # # Clean and ensure columns are stripped of extra spaces
+    # ttp_cves_cwes_df.columns = ttp_cves_cwes_df.columns.str.strip()
+    # cwe_mitigations_df.columns = cwe_mitigations_df.columns.str.strip()
 
-    # Split and clean the 'CWE-ID' column in the ttp_cves_cwes_df
-    ttp_cves_cwes_df['CWE-ID'] = ttp_cves_cwes_df['CWE-ID'].str.split(',')
-    ttp_cves_cwes_df['CWE-ID'] = ttp_cves_cwes_df['CWE-ID'].apply(lambda x: [cwe.strip() for cwe in x])
+    # # Split and clean the 'CWE-ID' column in the ttp_cves_cwes_df
+    # ttp_cves_cwes_df['CWE-ID'] = ttp_cves_cwes_df['CWE-ID'].str.split(',')
+    # ttp_cves_cwes_df['CWE-ID'] = ttp_cves_cwes_df['CWE-ID'].apply(lambda x: [cwe.strip() for cwe in x])
 
-    # Ensure that the CWE-ID in cwe_mitigations_df is treated as a string for comparison
-    cwe_mitigations_df['CWE-ID'] = cwe_mitigations_df['CWE-ID'].astype(str)
+    # # Ensure that the CWE-ID in cwe_mitigations_df is treated as a string for comparison
+    # cwe_mitigations_df['CWE-ID'] = cwe_mitigations_df['CWE-ID'].astype(str)
 
-    # Initialize a list to store the final result with mitigation info
-    mitigation_results = []
+    # # Initialize a list to store the final result with mitigation info
+    # mitigation_results = []
 
-    # Loop through each TTP and check for CWE mitigations
-    for index, row in ttp_cves_cwes_df.iterrows():
-        ttp = row['ttp']  # Get the TTP
-        cwes = row['CWE-ID']  # Get the associated CWE-IDs
+    # # Loop through each TTP and check for CWE mitigations
+    # for index, row in ttp_cves_cwes_df.iterrows():
+    #     ttp = row['ttp']  # Get the TTP
+    #     cwes = row['CWE-ID']  # Get the associated CWE-IDs
 
-        mitigated_cwes = []
-        unmitigated_cwes = []
+    #     mitigated_cwes = []
+    #     unmitigated_cwes = []
 
-        # Check each CWE-ID in the list
-        for cwe in cwes:
-            cwe = str(cwe).strip()  # Clean the CWE string
-            cwe_data = cwe_mitigations_df[cwe_mitigations_df['CWE-ID'] == cwe]  # Filter for this CWE in cwe_mitigations
+    #     # Check each CWE-ID in the list
+    #     for cwe in cwes:
+    #         cwe = str(cwe).strip()  # Clean the CWE string
+    #         cwe_data = cwe_mitigations_df[cwe_mitigations_df['CWE-ID'] == cwe]  # Filter for this CWE in cwe_mitigations
 
-            if not cwe_data.empty:
-                potential_mitigation = cwe_data['Potential_Mitigations'].values[0]
-                if pd.notna(potential_mitigation) and potential_mitigation.strip():
-                    mitigated_cwes.append(cwe)  # This CWE has a mitigation
-                else:
-                    unmitigated_cwes.append(cwe)  # No mitigation data
-            else:
-                unmitigated_cwes.append(cwe)  # CWE not found
+    #         if not cwe_data.empty:
+    #             potential_mitigation = cwe_data['Potential_Mitigations'].values[0]
+    #             if pd.notna(potential_mitigation) and potential_mitigation.strip():
+    #                 mitigated_cwes.append(cwe)  # This CWE has a mitigation
+    #             else:
+    #                 unmitigated_cwes.append(cwe)  # No mitigation data
+    #         else:
+    #             unmitigated_cwes.append(cwe)  # CWE not found
 
-        # Calculate the ratio of mitigated CWEs
-        total_cwes = len(cwes)
-        mitigated_count = len(mitigated_cwes)
-        mitigation_ratio = mitigated_count / total_cwes if total_cwes > 0 else 0
+    #     # Calculate the ratio of mitigated CWEs
+    #     total_cwes = len(cwes)
+    #     mitigated_count = len(mitigated_cwes)
+    #     mitigation_ratio = mitigated_count / total_cwes if total_cwes > 0 else 0
 
-        # Store the results
-        mitigation_results.append({
-            'ttp': ttp,
-            'total_cwes': total_cwes,
-            'mitigated_cwes': mitigated_cwes,
-            'unmitigated_cwes': unmitigated_cwes,
-            'mitigation_ratio': mitigation_ratio
-        })
+    #     # Store the results
+    #     mitigation_results.append({
+    #         'ttp': ttp,
+    #         'total_cwes': total_cwes,
+    #         'mitigated_cwes': mitigated_cwes,
+    #         'unmitigated_cwes': unmitigated_cwes,
+    #         'mitigation_ratio': mitigation_ratio
+    #     })
+    #     m = pd.DataFrame(mitigation_results)
+    #     m.to_csv("mitigation_results.csv")
+    
+    return pd.read_csv(base_path / 'data/mitigation_results.csv')
 
-    return pd.DataFrame(mitigation_results)
 
 def extract_cwe_mitigations(ttps):
     """Extract the mitigation_ratio column for specific TTPs and store in a global variable."""
     global cwe_mitigations
-    mitigations_df = load_cwe_mitigations()  # Load the CWE mitigation data
+    mitigations_df = cwe_mitigations # Load the CWE mitigation data
 
     # Filter only the rows where TTP is in the provided ttps list
     filtered_mitigations = mitigations_df[mitigations_df['ttp'].isin(ttps)]

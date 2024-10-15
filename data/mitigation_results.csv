@@ -1,0 +1,143 @@
+,ttp,total_cwes,mitigated_cwes,unmitigated_cwes,mitigation_ratio
+0, T1480,1,[],['NVD-CWE-noinfo'],0.0
+1, T1565.001,2,"['CWE-639', 'CWE-352']",[],1.0
+2,T0803,1,['CWE-306'],[],1.0
+3,T0804,1,['CWE-306'],[],1.0
+4,T0812,1,['CWE-22'],[],1.0
+5,T0814,1,['CWE-400'],[],1.0
+6,T0816,1,['CWE-306'],[],1.0
+7,T0826,2,['CWE-400'],['CWE-757'],0.5
+8,T0828,6,"['CWE-190', 'CWE-190', 'CWE-287', 'CWE-862', 'CWE-287', 'CWE-338']",[],1.0
+9,T0833,1,['CWE-287'],[],1.0
+10,T0836,1,['CWE-306'],[],1.0
+11,T0842,2,"['CWE-319', 'CWE-294']",[],1.0
+12,T0855,4,"['CWE-294', 'CWE-306', 'CWE-287', 'CWE-306']",[],1.0
+13,T0859,1,['CWE-319'],[],1.0
+14,T0860,2,"['CWE-862', 'CWE-306']",[],1.0
+15,T0873,1,[],['CWE-843'],0.0
+16,T0875,1,['CWE-306'],[],1.0
+17,T0880,1,[],['CWE-290'],0.0
+18,T1003,1,[],['CWE-255'],0.0
+19,T1003.008,1,['CWE-20'],[],1.0
+20,T1005,82,"['CWE-200', 'CWE-200', 'CWE-22', 'CWE-22', 'CWE-787', 'CWE-190', 'CWE-306', 'CWE-639', 'CWE-22', 'CWE-732', 'CWE-125', 'CWE-190', 'CWE-125', 'CWE-89', 'CWE-200', 'CWE-601', 'CWE-125', 'CWE-863', 'CWE-732', 'CWE-200', 'CWE-125', 'CWE-22', 'CWE-79', 'CWE-200', 'CWE-20', 'CWE-22', 'CWE-22', 'CWE-79', 'CWE-787', 'CWE-200', 'CWE-611', 'CWE-312', 'CWE-203', 'CWE-203', 'CWE-22', 'CWE-416', 'CWE-89', 'CWE-862', 'CWE-306', 'CWE-89', 'CWE-89', 'CWE-99', 'CWE-125', 'CWE-209', 'CWE-306', 'CWE-611', 'CWE-787', 'CWE-79', 'CWE-22', 'CWE-22', 'CWE-425', 'CWE-22', 'CWE-416', 'CWE-787', 'CWE-611', 'CWE-22', 'CWE-200', 'CWE-200', 'CWE-287', 'CWE-787', 'CWE-416', 'CWE-787', 'CWE-552', 'CWE-22', 'CWE-200', 'CWE-22', 'CWE-776']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-668', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-345', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo']",0.8170731707317073
+21,T1005 ,1,['CWE-98'],[],1.0
+22,T1036,13,"['CWE-552', 'CWE-601', 'CWE-79', 'CWE-79', 'CWE-601', 'CWE-601', 'CWE-20', 'CWE-20', 'CWE-22', 'CWE-79', 'CWE-601', 'CWE-287']",['CWE-693'],0.9230769230769231
+23,T1036 ,1,['CWE-601'],[],1.0
+24,T1036.,1,['CWE-732'],[],1.0
+25,T1036.005,1,[],['CWE-290'],0.0
+26,T1040,9,"['CWE-327', 'CWE-294', 'CWE-212', 'CWE-319', 'CWE-332', 'CWE-319', 'CWE-319', 'CWE-287']",['CWE-347'],0.8888888888888888
+27,T1046,2,['CWE-776'],['CWE-918'],0.5
+28,T1053.005,1,['CWE-20'],[],1.0
+29,T1055,7,"['CWE-362', 'CWE-416', 'CWE-22', 'CWE-79']","['CWE-264', 'CWE-399', 'NVD-CWE-noinfo']",0.5714285714285714
+30,T1055.001,1,['CWE-427'],[],1.0
+31,T1057,1,[],['NVD-CWE-noinfo'],0.0
+32,T1059,91,"['CWE-79', 'CWE-79', 'CWE-79', 'CWE-22', 'CWE-80', 'CWE-78', 'CWE-78', 'CWE-917', 'CWE-732', 'CWE-20', 'CWE-73', 'CWE-79', 'CWE-434', 'CWE-74', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-74', 'CWE-502', 'CWE-74', 'CWE-212', 'CWE-20', 'CWE-287', 'CWE-434', 'CWE-502', 'CWE-306', 'CWE-193', 'CWE-798', 'CWE-306', 'CWE-502', 'CWE-787', 'CWE-78', 'CWE-78', 'CWE-79', 'CWE-20', 'CWE-89', 'CWE-89', 'CWE-119', 'CWE-284', 'CWE-74', 'CWE-79', 'CWE-119', 'CWE-20', 'CWE-94', 'CWE-78', 'CWE-862', 'CWE-88', 'CWE-22', 'CWE-20', 'CWE-119', 'CWE-88', 'CWE-88', 'CWE-78', 'CWE-78', 'CWE-88', 'CWE-78', 'CWE-78', 'CWE-798', 'CWE-89', 'CWE-20', 'CWE-20', 'CWE-89', 'CWE-89', 'CWE-119', 'CWE-611', 'CWE-287', 'CWE-611', 'CWE-79', 'CWE-78', 'CWE-502', 'CWE-611', 'CWE-89', 'CWE-94', 'CWE-287', 'CWE-89', 'CWE-20', 'CWE-94']","['NVD-CWE-Other', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'CWE-347', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-918', 'CWE-669', 'NVD-CWE-Other', 'CWE-399', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo']",0.8461538461538461
+33,T1059 ,1,['CWE-89'],[],1.0
+34,T1059.001,1,[],['CWE-264'],0.0
+35,T1059.004,6,"['CWE-77', 'CWE-78', 'CWE-116', 'CWE-119', 'CWE-78', 'CWE-78']",[],1.0
+36,T1059.006,1,['CWE-732'],[],1.0
+37,T1059.007,37,"['CWE-79', 'CWE-74', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-601', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-125', 'CWE-787', 'CWE-330', 'CWE-131', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79']",[],1.0
+38,T1066,1,['CWE-798'],[],1.0
+39,T1068,122,"['CWE-732', 'CWE-862', 'CWE-863', 'CWE-306', 'CWE-306', 'CWE-639', 'CWE-787', 'CWE-89', 'CWE-416', 'CWE-732', 'CWE-732', 'CWE-787', 'CWE-125', 'CWE-362', 'CWE-287', 'CWE-787', 'CWE-476', 'CWE-306', 'CWE-294', 'CWE-798', 'CWE-798', 'CWE-306', 'CWE-78', 'CWE-276', 'CWE-20', 'CWE-502', 'CWE-416', 'CWE-200', 'CWE-59', 'CWE-416', 'CWE-416', 'CWE-352', 'CWE-20', 'CWE-287', 'CWE-522', 'CWE-88', 'CWE-352', 'CWE-269', 'CWE-88', 'CWE-78', 'CWE-78', 'CWE-88', 'CWE-78', 'CWE-306', 'CWE-78', 'CWE-798', 'CWE-20', 'CWE-732', 'CWE-862', 'CWE-287', 'CWE-838', 'CWE-863', 'CWE-20', 'CWE-119', 'CWE-273', 'CWE-863', 'CWE-532', 'CWE-22', 'CWE-284', 'CWE-787', 'CWE-639', 'CWE-416', 'CWE-119', 'CWE-362', 'CWE-20', 'CWE-131', 'CWE-362', 'CWE-79', 'CWE-200', 'CWE-284', 'CWE-119', 'CWE-22', 'CWE-94', 'CWE-94', 'CWE-416', 'CWE-20', 'CWE-20', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-59']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-349', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'CWE-17', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-noinfo']",0.6639344262295082
+40,T1068 ,2,"['CWE-22', 'CWE-352']",[],1.0
+41,T1078,48,"['CWE-327', 'CWE-770', 'CWE-863', 'CWE-20', 'CWE-552', 'CWE-787', 'CWE-78', 'CWE-94', 'CWE-94', 'CWE-20', 'CWE-862', 'CWE-640', 'CWE-78', 'CWE-88', 'CWE-427', 'CWE-88', 'CWE-88', 'CWE-269', 'CWE-613', 'CWE-78', 'CWE-88', 'CWE-332', 'CWE-78', 'CWE-916', 'CWE-89', 'CWE-78', 'CWE-89', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-20', 'CWE-22', 'CWE-200', 'CWE-330', 'CWE-338', 'CWE-617', 'CWE-131', 'CWE-284']","['CWE-347', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'CWE-347', 'NVD-CWE-Other', 'CWE-668', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'CWE-264', 'NVD-CWE-noinfo']",0.7916666666666666
+42,T1078 ,4,"['CWE-312', 'CWE-522', 'CWE-532', 'CWE-522']",[],1.0
+43,T1078.001,9,"['CWE-276', 'CWE-330', 'CWE-798', 'CWE-798', 'CWE-200', 'CWE-798', 'CWE-798', 'CWE-200', 'CWE-798']",[],1.0
+44,T1078.003,1,[],['CWE-264'],0.0
+45,T1080,1,['CWE-20'],[],1.0
+46,T1083,8,"['CWE-22', 'CWE-22', 'CWE-538', 'CWE-22', 'CWE-552', 'CWE-200', 'CWE-22']",['CWE-264'],0.875
+47,T1087,1,[],['CWE-264'],0.0
+48,T1091,10,"['CWE-122', 'CWE-787', 'CWE-119', 'CWE-416', 'CWE-401', 'CWE-20', 'CWE-123']","['NVD-CWE-Other', 'NVD-CWE-noinfo', 'CWE-264']",0.7
+49,T1098,8,"['CWE-862', 'CWE-78', 'CWE-287', 'CWE-640', 'CWE-522', 'CWE-352']","['NVD-CWE-noinfo', 'NVD-CWE-Other']",0.75
+50,T1105,2,"['CWE-20', 'CWE-22']",[],1.0
+51,T1110,17,"['CWE-330', 'CWE-327', 'CWE-331', 'CWE-326', 'CWE-330', 'CWE-916', 'CWE-332', 'CWE-916', 'CWE-203', 'CWE-521', 'CWE-327', 'CWE-200', 'CWE-200', 'CWE-330', 'CWE-338']","['CWE-347', 'CWE-335']",0.8823529411764706
+52,T1110.001,1,['CWE-521'],[],1.0
+53,T1114.001,1,['CWE-787'],[],1.0
+54,T1133,38,"['CWE-89', 'CWE-917', 'CWE-20', 'CWE-98', 'CWE-532', 'CWE-862', 'CWE-122', 'CWE-74', 'CWE-502', 'CWE-74', 'CWE-502', 'CWE-78', 'CWE-787', 'CWE-787', 'CWE-20', 'CWE-20', 'CWE-59', 'CWE-20', 'CWE-89', 'CWE-22', 'CWE-862', 'CWE-59', 'CWE-78', 'CWE-89', 'CWE-89', 'CWE-20', 'CWE-611', 'CWE-200', 'CWE-78', 'CWE-611', 'CWE-787', 'CWE-200', 'CWE-22', 'CWE-116', 'CWE-119']","['NVD-CWE-noinfo', 'NVD-CWE-Other', 'CWE-255']",0.9210526315789473
+55,T1133 ,1,['CWE-434'],[],1.0
+56,T1134,1,['CWE-863'],[],1.0
+57,T1134.001,1,['CWE-284'],[],1.0
+58,T1134.001.,1,[],['CWE-264'],0.0
+59,T1136,23,"['CWE-276', 'CWE-787', 'CWE-89', 'CWE-787', 'CWE-521', 'CWE-287', 'CWE-89', 'CWE-787', 'CWE-416', 'CWE-787', 'CWE-787', 'CWE-284', 'CWE-94']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-264']",0.5652173913043478
+60,T1149,1,[],['NVD-CWE-noinfo'],0.0
+61,T1185,23,"['CWE-79', 'CWE-79', 'CWE-79', 'CWE-80', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-74', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79']",['CWE-346'],0.9565217391304348
+62,T1189,107,"['CWE-79', 'CWE-362', 'CWE-416', 'CWE-79', 'CWE-684', 'CWE-79', 'CWE-122', 'CWE-384', 'CWE-79', 'CWE-787', 'CWE-416', 'CWE-862', 'CWE-94', 'CWE-787', 'CWE-787', 'CWE-22', 'CWE-829', 'CWE-787', 'CWE-125', 'CWE-330', 'CWE-131', 'CWE-787', 'CWE-787', 'CWE-352', 'CWE-416', 'CWE-787', 'CWE-502', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-79', 'CWE-601', 'CWE-79', 'CWE-20', 'CWE-20', 'CWE-352', 'CWE-79', 'CWE-434', 'CWE-787', 'CWE-404', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-79', 'CWE-79', 'CWE-119', 'CWE-119', 'CWE-89', 'CWE-200', 'CWE-20', 'CWE-200', 'CWE-284', 'CWE-20', 'CWE-284', 'CWE-20', 'CWE-119', 'CWE-416', 'CWE-416', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-416', 'CWE-200', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-416', 'CWE-119', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-119', 'CWE-94', 'CWE-78', 'CWE-78', 'CWE-94', 'CWE-119', 'CWE-94', 'CWE-94', 'CWE-94']","['CWE-843', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-843', 'NVD-CWE-noinfo', 'CWE-264', 'CWE-310', 'NVD-CWE-noinfo', 'CWE-399', 'CWE-264', 'CWE-264', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-255', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399', 'NVD-CWE-noinfo']",0.7663551401869159
+63,T1190,199,"['CWE-306', 'CWE-863', 'CWE-22', 'CWE-306', 'CWE-862', 'CWE-22', 'CWE-295', 'CWE-93', 'CWE-684', 'CWE-532', 'CWE-862', 'CWE-122', 'CWE-200', 'CWE-200', 'CWE-787', 'CWE-125', 'CWE-119', 'CWE-89', 'CWE-400', 'CWE-732', 'CWE-20', 'CWE-20', 'CWE-434', 'CWE-502', 'CWE-79', 'CWE-434', 'CWE-787', 'CWE-119', 'CWE-787', 'CWE-22', 'CWE-193', 'CWE-200', 'CWE-295', 'CWE-787', 'CWE-22', 'CWE-787', 'CWE-787', 'CWE-400', 'CWE-20', 'CWE-20', 'CWE-20', 'CWE-400', 'CWE-20', 'CWE-20', 'CWE-22', 'CWE-476', 'CWE-284', 'CWE-74', 'CWE-20', 'CWE-665', 'CWE-20', 'CWE-22', 'CWE-20', 'CWE-78', 'CWE-94', 'CWE-22', 'CWE-78', 'CWE-119', 'CWE-330', 'CWE-22', 'CWE-521', 'CWE-20', 'CWE-20', 'CWE-20', 'CWE-203', 'CWE-400', 'CWE-20', 'CWE-352', 'CWE-20', 'CWE-20', 'CWE-306', 'CWE-89', 'CWE-203', 'CWE-798', 'CWE-20', 'CWE-20', 'CWE-119', 'CWE-732', 'CWE-494', 'CWE-770', 'CWE-20', 'CWE-404', 'CWE-20', 'CWE-502', 'CWE-502', 'CWE-415', 'CWE-434', 'CWE-425', 'CWE-20', 'CWE-287', 'CWE-200', 'CWE-22', 'CWE-79', 'CWE-20', 'CWE-538', 'CWE-287', 'CWE-22', 'CWE-89', 'CWE-552', 'CWE-119', 'CWE-119', 'CWE-502', 'CWE-20', 'CWE-94', 'CWE-20', 'CWE-119', 'CWE-77', 'CWE-119', 'CWE-79', 'CWE-22', 'CWE-287', 'CWE-20', 'CWE-284', 'CWE-94', 'CWE-89', 'CWE-94', 'CWE-77', 'CWE-94', 'CWE-22', 'CWE-94', 'CWE-119', 'CWE-798', 'CWE-119', 'CWE-78', 'CWE-78', 'CWE-78', 'CWE-20', 'CWE-200', 'CWE-200', 'CWE-22', 'CWE-20', 'CWE-776', 'CWE-79', 'CWE-20', 'CWE-78', 'CWE-94', 'CWE-89', 'CWE-79', 'CWE-287', 'CWE-120', 'CWE-119', 'CWE-119', 'CWE-79', 'CWE-20', 'CWE-119', 'CWE-119', 'CWE-79', 'CWE-22', 'CWE-79']","['NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-704', 'CWE-669', 'CWE-264', 'NVD-CWE-noinfo', 'CWE-189', 'NVD-CWE-Other', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-264', 'CWE-310', 'NVD-CWE-Other', 'CWE-264', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'CWE-255', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-264']",0.7487437185929648
+64,T1190 ,2,"['CWE-190', 'CWE-294']",[],1.0
+65,T1200,2,['CWE-119'],['NVD-CWE-noinfo'],0.5
+66,T1202,4,"['CWE-59', 'CWE-22', 'CWE-22']",['CWE-399'],0.75
+67,T1203,182,"['CWE-787', 'CWE-22', 'CWE-787', 'CWE-190', 'CWE-787', 'CWE-787', 'CWE-416', 'CWE-94', 'CWE-862', 'CWE-434', 'CWE-787', 'CWE-119', 'CWE-787', 'CWE-295', 'CWE-787', 'CWE-22', 'CWE-119', 'CWE-416', 'CWE-787', 'CWE-330', 'CWE-131', 'CWE-125', 'CWE-829', 'CWE-119', 'CWE-352', 'CWE-416', 'CWE-787', 'CWE-502', 'CWE-134', 'CWE-415', 'CWE-502', 'CWE-502', 'CWE-787', 'CWE-416', 'CWE-22', 'CWE-78', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-190', 'CWE-434', 'CWE-787', 'CWE-404', 'CWE-20', 'CWE-119', 'CWE-22', 'CWE-787', 'CWE-79', 'CWE-787', 'CWE-787', 'CWE-22', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-134', 'CWE-119', 'CWE-20', 'CWE-89', 'CWE-416', 'CWE-119', 'CWE-119', 'CWE-20', 'CWE-284', 'CWE-119', 'CWE-20', 'CWE-787', 'CWE-284', 'CWE-90', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-416', 'CWE-119', 'CWE-284', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-426', 'CWE-119', 'CWE-79', 'CWE-416', 'CWE-119', 'CWE-119', 'CWE-416', 'CWE-200', 'CWE-94', 'CWE-119', 'CWE-20', 'CWE-78', 'CWE-119', 'CWE-119', 'CWE-416', 'CWE-119', 'CWE-78', 'CWE-119', 'CWE-20', 'CWE-94', 'CWE-119', 'CWE-119', 'CWE-94', 'CWE-119', 'CWE-94', 'CWE-89', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-119', 'CWE-78', 'CWE-78', 'CWE-94', 'CWE-119', 'CWE-94', 'CWE-20', 'CWE-119', 'CWE-94', 'CWE-94', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-94', 'CWE-94', 'CWE-119']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-843', 'NVD-CWE-noinfo', 'CWE-843', 'CWE-843', 'NVD-CWE-noinfo', 'CWE-824', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-843', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399', 'CWE-264', 'CWE-189', 'NVD-CWE-noinfo', 'CWE-310', 'CWE-399', 'CWE-264', 'CWE-264', 'CWE-19', 'NVD-CWE-noinfo', 'CWE-254', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-255', 'CWE-264', 'CWE-399', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399', 'NVD-CWE-noinfo', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-189', 'CWE-189', 'NVD-CWE-noinfo', 'CWE-399', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399', 'CWE-264', 'NVD-CWE-noinfo']",0.6758241758241759
+68,T1204,1,[],['CWE-290'],0.0
+69,T1204.001,29,"['CWE-79', 'CWE-74', 'CWE-79', 'CWE-22', 'CWE-352', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-787', 'CWE-352', 'CWE-79', 'CWE-79', 'CWE-352', 'CWE-79', 'CWE-416', 'CWE-352', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-352', 'CWE-79', 'CWE-20']",['CWE-264'],0.9655172413793104
+70,T1204.001.,1,['CWE-352'],[],1.0
+71,T1204.002,68,"['CWE-22', 'CWE-787', 'CWE-122', 'CWE-125', 'CWE-20', 'CWE-787', 'CWE-22', 'CWE-20', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-200', 'CWE-119', 'CWE-79', 'CWE-352', 'CWE-119', 'CWE-123', 'CWE-22', 'CWE-787', 'CWE-787', 'CWE-416', 'CWE-787', 'CWE-79', 'CWE-415', 'CWE-22', 'CWE-119', 'CWE-416', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-119', 'CWE-284', 'CWE-426', 'CWE-119', 'CWE-94', 'CWE-200', 'CWE-119', 'CWE-119', 'CWE-78', 'CWE-20', 'CWE-94', 'CWE-119', 'CWE-94']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-824', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-19', 'CWE-264', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-189', 'CWE-189', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-399']",0.6470588235294118
+72,T1210,8,"['CWE-908', 'CWE-20', 'CWE-120', 'CWE-22', 'CWE-20', 'CWE-94']","['CWE-918', 'CWE-281']",0.75
+73,T1211,20,"['CWE-89', 'CWE-125', 'CWE-125', 'CWE-494', 'CWE-20', 'CWE-20', 'CWE-416', 'CWE-20', 'CWE-200', 'CWE-178', 'CWE-295', 'CWE-552', 'CWE-287', 'CWE-79', 'CWE-20', 'CWE-22', 'CWE-119']","['NVD-CWE-noinfo', 'CWE-706', 'NVD-CWE-noinfo']",0.85
+74,T1212,7,"['CWE-22', 'CWE-22', 'CWE-617', 'CWE-200', 'CWE-22', 'CWE-200']",['NVD-CWE-noinfo'],0.8571428571428571
+75,T1213,2,['CWE-306'],['NVD-CWE-Other'],0.5
+76,T1404,3,"['CWE-787', 'CWE-416']",['CWE-17'],0.6666666666666666
+77,T1409,1,['CWE-311'],[],1.0
+78,T1456,1,['CWE-200'],[],1.0
+79,T1461,1,[],['CWE-922'],0.0
+80,T1477,4,"['CWE-119', 'CWE-862', 'CWE-306']",['NVD-CWE-Other'],0.75
+81,T1478,6,"['CWE-269', 'CWE-552', 'CWE-79', 'CWE-79', 'CWE-494', 'CWE-79']",[],1.0
+82,T1478 ,1,[],['NVD-CWE-Other'],0.0
+83,T1480,1,[],['NVD-CWE-Other'],0.0
+84,T1485,24,"['CWE-787', 'CWE-787', 'CWE-79', 'CWE-59', 'CWE-79', 'CWE-787', 'CWE-20', 'CWE-59', 'CWE-178', 'CWE-787', 'CWE-787', 'CWE-79', 'CWE-787', 'CWE-416', 'CWE-287']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo']",0.625
+85,T1489,5,"['CWE-20', 'CWE-20', 'CWE-295', 'CWE-125']",['NVD-CWE-Other'],0.8
+86,T1491,3,"['CWE-79', 'CWE-434', 'CWE-94']",[],1.0
+87,T1491.002,1,[],['NVD-CWE-noinfo'],0.0
+88,T1496,2,[],"['CWE-757', 'NVD-CWE-noinfo']",0.0
+89,T1497,7,"['CWE-863', 'CWE-502', 'CWE-20', 'CWE-79']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo']",0.5714285714285714
+90,T1499,20,"['CWE-400', 'CWE-400', 'CWE-190', 'CWE-787', 'CWE-119', 'CWE-787', 'CWE-193', 'CWE-400', 'CWE-400', 'CWE-770', 'CWE-400', 'CWE-20', 'CWE-362', 'CWE-131', 'CWE-416', 'CWE-119', 'CWE-20']","['CWE-843', 'NVD-CWE-Other', 'CWE-835']",0.85
+91,T1499.001,1,['CWE-401'],[],1.0
+92,T1499.002,1,['CWE-770'],[],1.0
+93,T1499.003,1,['CWE-400'],[],1.0
+94,T1499.004,99,"['CWE-415', 'CWE-20', 'CWE-787', 'CWE-190', 'CWE-120', 'CWE-416', 'CWE-269', 'CWE-362', 'CWE-190', 'CWE-125', 'CWE-787', 'CWE-125', 'CWE-122', 'CWE-120', 'CWE-400', 'CWE-770', 'CWE-476', 'CWE-400', 'CWE-476', 'CWE-787', 'CWE-476', 'CWE-662', 'CWE-362', 'CWE-662', 'CWE-787', 'CWE-416', 'CWE-787', 'CWE-20', 'CWE-20', 'CWE-400', 'CWE-400', 'CWE-787', 'CWE-476', 'CWE-787', 'CWE-665', 'CWE-20', 'CWE-79', 'CWE-416', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-20', 'CWE-20', 'CWE-20', 'CWE-20', 'CWE-862', 'CWE-306', 'CWE-125', 'CWE-123', 'CWE-20', 'CWE-193', 'CWE-20', 'CWE-425', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-416', 'CWE-502', 'CWE-611', 'CWE-787', 'CWE-119', 'CWE-787', 'CWE-416', 'CWE-787', 'CWE-20', 'CWE-617', 'CWE-674', 'CWE-772', 'CWE-319', 'CWE-787', 'CWE-20', 'CWE-284', 'CWE-119', 'CWE-119', 'CWE-798', 'CWE-776', 'CWE-120', 'CWE-476']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-755', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-755', 'NVD-CWE-noinfo', 'CWE-843', 'NVD-CWE-noinfo', 'CWE-755', 'NVD-CWE-noinfo', 'CWE-310', 'NVD-CWE-noinfo', 'CWE-264']",0.797979797979798
+95,T1505,1,['CWE-94'],[],1.0
+96,T1505.003,13,"['CWE-20', 'CWE-73', 'CWE-434', 'CWE-89', 'CWE-20', 'CWE-89', 'CWE-434', 'CWE-20', 'CWE-20', 'CWE-20']","['NVD-CWE-noinfo', 'NVD-CWE-Other', 'NVD-CWE-Other']",0.7692307692307693
+97,T1518,1,['CWE-200'],[],1.0
+98,T1518.001,1,['CWE-200'],[],1.0
+99,T1525,1,['CWE-732'],[],1.0
+100,T1528,6,"['CWE-319', 'CWE-306', 'CWE-294', 'CWE-312', 'CWE-20', 'CWE-200']",[],1.0
+101,T1529,4,"['CWE-20', 'CWE-306', 'CWE-352']",['NVD-CWE-noinfo'],0.75
+102,T1531,1,['CWE-20'],[],1.0
+103,T1533,1,[],['CWE-922'],0.0
+104,T1539,3,"['CWE-79', 'CWE-916', 'CWE-20']",[],1.0
+105,T1542.001,7,"['CWE-416', 'CWE-306', 'CWE-416', 'CWE-284', 'CWE-352']","['NVD-CWE-Other', 'CWE-347']",0.7142857142857143
+106,T1542.004,2,"['CWE-94', 'CWE-94']",[],1.0
+107,T1546,1,['CWE-94'],[],1.0
+108,T1548,7,"['CWE-319', 'CWE-20', 'CWE-119', 'CWE-119']","['NVD-CWE-noinfo', 'CWE-347', 'CWE-189']",0.5714285714285714
+109,T1548.002,2,['CWE-20'],['NVD-CWE-noinfo'],0.5
+110,T1548.003,1,['CWE-863'],[],1.0
+111,T1550,1,['CWE-94'],[],1.0
+112,T1550.001,1,[],['CWE-345'],0.0
+113,T1550.002,1,[],['CWE-255'],0.0
+114,T1552,17,"['CWE-312', 'CWE-522', 'CWE-319', 'CWE-522', 'CWE-311', 'CWE-640', 'CWE-532', 'CWE-312', 'CWE-319', 'CWE-319', 'CWE-532', 'CWE-522', 'CWE-22', 'CWE-20', 'CWE-22']","['NVD-CWE-noinfo', 'CWE-290']",0.8823529411764706
+115,T1552 ,1,['CWE-532'],[],1.0
+116,T1552.001,7,"['CWE-20', 'CWE-611', 'CWE-522', 'CWE-522']","['NVD-CWE-Other', 'CWE-255', 'CWE-255']",0.5714285714285714
+117,T1552.004,1,['CWE-200'],[],1.0
+118,T1553,2,['CWE-295'],['CWE-264'],0.5
+119,T1553.002,1,[],['CWE-264'],0.0
+120,T1554,1,['CWE-94'],[],1.0
+121,T1557,39,"['CWE-79', 'CWE-74', 'CWE-327', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-601', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-601', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-332', 'CWE-862', 'CWE-306', 'CWE-99', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-79', 'CWE-295', 'CWE-295', 'CWE-295', 'CWE-295', 'CWE-787', 'CWE-416', 'CWE-20', 'CWE-200']","['CWE-347', 'CWE-310', 'CWE-264', 'NVD-CWE-Other']",0.8974358974358975
+122,T1558.001,1,[],['CWE-264'],0.0
+123,T1562,4,"['CWE-862', 'CWE-284']","['CWE-668', 'NVD-CWE-noinfo']",0.5
+124,T1563,8,"['CWE-384', 'CWE-384', 'CWE-384', 'CWE-613', 'CWE-384', 'CWE-287', 'CWE-203', 'CWE-384']",[],1.0
+125,T1565,33,"['CWE-787', 'CWE-532', 'CWE-862', 'CWE-79', 'CWE-22', 'CWE-79', 'CWE-59', 'CWE-59', 'CWE-79', 'CWE-787', 'CWE-190', 'CWE-862', 'CWE-287', 'CWE-178', 'CWE-338', 'CWE-787', 'CWE-79', 'CWE-416', 'CWE-787', 'CWE-79', 'CWE-787', 'CWE-776', 'CWE-94']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo']",0.696969696969697
+126,T1565.001,18,"['CWE-862', 'CWE-89', 'CWE-552', 'CWE-787', 'CWE-787', 'CWE-22', 'CWE-59', 'CWE-89', 'CWE-20', 'CWE-59', 'CWE-89', 'CWE-89', 'CWE-287', 'CWE-287', 'CWE-59']","['NVD-CWE-noinfo', 'CWE-345', 'NVD-CWE-Other']",0.8333333333333334
+127,T1565.002,3,"['CWE-79', 'CWE-601', 'CWE-20']",[],1.0
+128,T1565.003,1,['CWE-190'],[],1.0
+129,T1566,26,"['CWE-787', 'CWE-122', 'CWE-787', 'CWE-20', 'CWE-22', 'CWE-787', 'CWE-200', 'CWE-20', 'CWE-352', 'CWE-119', 'CWE-20', 'CWE-123', 'CWE-787', 'CWE-787', 'CWE-416', 'CWE-200', 'CWE-22', 'CWE-639', 'CWE-20', 'CWE-94']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-290', 'NVD-CWE-noinfo']",0.7692307692307693
+130,T1566.001,2,"['CWE-20', 'CWE-502']",[],1.0
+131,T1566.002,5,"['CWE-601', 'CWE-601', 'CWE-601', 'CWE-601', 'CWE-601']",[],1.0
+132,T1569,1,['CWE-119'],[],1.0
+133,T1574,55,"['CWE-787', 'CWE-20', 'CWE-190', 'CWE-120', 'CWE-269', 'CWE-787', 'CWE-125', 'CWE-122', 'CWE-787', 'CWE-125', 'CWE-120', 'CWE-119', 'CWE-770', 'CWE-913', 'CWE-798', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-416', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-787', 'CWE-20', 'CWE-862', 'CWE-306', 'CWE-123', 'CWE-787', 'CWE-125', 'CWE-787', 'CWE-416', 'CWE-427', 'CWE-787', 'CWE-787', 'CWE-502', 'CWE-787', 'CWE-119', 'CWE-119', 'CWE-415', 'CWE-787', 'CWE-416', 'CWE-787']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-843', 'CWE-668', 'NVD-CWE-noinfo']",0.7818181818181819
+134,T1574.001,3,"['CWE-426', 'CWE-20', 'CWE-94']",[],1.0
+135,T1574.002,1,['CWE-20'],[],1.0
+136,T1574.008,3,"['CWE-427', 'CWE-427']",['NVD-CWE-Other'],0.6666666666666666
+137,T1575,4,"['CWE-787', 'CWE-787', 'CWE-787', 'CWE-119']",[],1.0
+138,T1588.004,1,['CWE-295'],[],1.0
+139,T1589,1,['CWE-209'],[],1.0
+140,T1600,1,['CWE-327'],[],1.0
+141,T1608,27,"['CWE-20', 'CWE-78', 'CWE-352', 'CWE-88', 'CWE-352', 'CWE-20', 'CWE-404', 'CWE-352', 'CWE-306', 'CWE-119', 'CWE-119', 'CWE-20', 'CWE-119', 'CWE-20']","['NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'NVD-CWE-noinfo', 'CWE-264', 'CWE-264', 'CWE-264', 'NVD-CWE-Other', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264', 'CWE-264']",0.5185185185185185

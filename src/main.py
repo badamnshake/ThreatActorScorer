@@ -91,22 +91,24 @@ home_layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '5px'
 def profile_layout(actor_name):
     return html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px'}, children=[
         html.H1(f'Threat Actor Profile: {actor_name}', style={'textAlign': 'center', 'color': '#4B0082'}),
+
+        dcc.Graph(id='score-breakdown'),    # Attack Geo Plot
         
         # Display charts and analysis for the selected actor
         # New section to display the score breakdown
-        html.Div(id='score-breakdown', style={
-            'padding': '10px',
-            'border': '1px solid #ccc',
-            'borderRadius': '5px',
-            'backgroundColor': '#f9f9f9',
-            'marginTop': '20px',
-            'textAlign': 'center',
-            'width': '60%',
-            'height' : '500px',
-            'margin': '0 auto',
-            'color': 'red',  # Set font color to red
-            'fontSize': '3.0rem',
-        }),
+        # html.Div(id='score-breakdown', style={
+        #     'padding': '10px',
+        #     'border': '1px solid #ccc',
+        #     'borderRadius': '5px',
+        #     'backgroundColor': '#f9f9f9',
+        #     'marginTop': '20px',
+        #     'textAlign': 'center',
+        #     'width': '60%',
+        #     'height' : '500px',
+        #     'margin': '0 auto',
+        #     'color': 'red',  # Set font color to red
+        #     'fontSize': '3.0rem',
+        # }),
         
          dcc.Graph(id='attack-geo'),    # Attack Geo Plot
          dcc.Graph(id='incidents'),     # Incidents Scatter Plot
@@ -176,7 +178,7 @@ def render_page_content(pathname):
      Output('attack-geo', 'figure'),
      Output('cvss-scatter', 'figure'),
      Output('ttp-complexity-bar-chart', 'figure'),
-     Output('score-breakdown', 'children')],
+     Output('score-breakdown', 'figure')],
     [Input('url', 'pathname')]
 )
 
@@ -200,16 +202,15 @@ def update_charts(pathname):
             cvss_scores = extract_cvss_scores(ttps)
             incident_data = get_group_incidents(matching_group)
             cwe_mitigation_score = extract_cwe_mitigations(ttps)
-            # freq = get_frequency_score(matching_group)
 
 
             complexity_score = get_complexity_score(ttps)
             frequency_score = get_frequency_score(matching_group)
-            industry_mode = incident_data['industry'].mode()[0] if not incident_data['industry'].empty else ''
-            actor_type_mode = incident_data['actor_type'].mode()[0] if not incident_data['actor_type'].empty else ''
+            industry_mode = incident_data.groupby('industry')['industry']
+            actor_type_mode = incident_data.groupby('actor_type')['actor_type']
             techniques = get_techniques_wo_mitigations(ttps)
 
-            score = get_score_for_threat_actor(
+            score, score_df = get_score_for_threat_actor(
                 complexity_score,
                 average_severity,
                 cvss_scores,
@@ -219,21 +220,29 @@ def update_charts(pathname):
                 techniques,
                 cwe_mitigation_score,
             )
-            # calculate the score parallely
-            # score = get_score_for_threat_actor(get_complexity_score(ttps),average_severity,cvss_scores,get_frequency_score(matching_group),incident_data['industry'].mode()[0],incident_data['actor_type'].mode()[0],get_techniques_wo_mitigations(ttps))                                       
-            #print(score)
-            # Generate a score breakdown
-            score_breakdown = html.Div([
-                html.H3(f"Threat Score: {round(score, 2)}"),
-                html.P(f"Complexity Score: {round(complexity_score, 2)}"),
-                html.P(f"Impact Score: {round(average_severity['severity'].mean(), 2)}"),
-                html.P(f"CVSS Score: {round(cvss_scores['cvss'].mean(), 2)}"),
-                html.P(f"Frequency Score: {round(frequency_score, 2)}"),
-                html.P(f"Sector Score: {industry_mode}"),
-                html.P(f"Actor Type Score: {actor_type_mode}"),
-                html.P(f"Mitigation Score: {round(cwe_mitigation_score, 2)}"),
-                html.H4(f"Total Score: {round(score, 2)}")
-            ])
+            score_fig = go.Figure(
+                go.Pie(
+                    values=score_df['Weight'],
+                    labels=[f"{label} ({weight:.2f}% / {max_weight}%)" if label else '' for label, weight, max_weight in zip(score_df['Label'], score_df['Weight'], score_df['Max Weight'])],
+                    # labels=[f"{label} ({weight:.2f}%)" for label, weight in zip(score_df['Label'], score_df['Weight'])],  # Format labels
+                    marker_colors=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#d3d3d377'],  # Colors for each section
+                    hole=0.6,  # Donut chart style
+                    sort=False  # Prevent sorting slices
+                )
+            )
+
+            score_fig.update_traces(textinfo='label+percent', hoverinfo='label+percent')  # Show labels and percentage on hover
+            score_fig.update_layout(
+                showlegend=True,  # Show the legend
+
+                annotations=[go.layout.Annotation(
+                    text=f"Score: {score:.2f}",
+                    x=0.5, y=0.5,  # Position at the center of the chart
+                    font=dict(size=20, color="black"),
+                    showarrow=False
+                )]
+            )
+
 
             severity_fig = create_severity_pie_chart(severity_counts)
             capability_fig = create_capability_pie_chart(capability_counts)
@@ -243,10 +252,10 @@ def update_charts(pathname):
             cvss_scores_fig = create_cvss_scatter_plot(cvss_scores)
             ttp_complexity = create_ttp_complexity_bar_chart(matching_group,get_ttps_of_group(matching_group))
 
-            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, ttp_complexity, score_breakdown]
+            return [severity_fig, capability_fig, nist_fig, incidents_fig, attack_geo_fig, cvss_scores_fig, ttp_complexity, score_fig]
 
     # Return empty figures if no group is selected
-    return [go.Figure()] * 7 + [html.Div()]
+    return [go.Figure()] * 8
 
 
 if __name__ == '__main__':
