@@ -4,15 +4,20 @@ import pandas as pd
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from dash import Dash, dcc, html, Input, Output, State
-from group_data import load_data, get_all_groups, get_ttps_of_group, get_group_incidents
+from group_data import load_data as load_group_data, get_all_groups, get_ttps_of_group, get_group_incidents, get_frequency_score
 from analysis import create_severity_pie_chart, create_capability_pie_chart, create_nist_bar_chart, create_incidents_scatter_plot, create_attack_geo_plot, create_cvss_scatter_plot
-from veris_data import extract_veris_data
-from nist_data import extract_nist_data
-from cvwe_data import extract_cvss_scores
+from veris_data import extract_veris_data, load_veris_data 
+from nist_data import extract_nist_data, load_nist_data
+from cvwe_data import extract_cvss_scores, load_cvss_data
 from incident import load_actor_per_country_data
+from scorer import get_score_for_threat_actor
 
 # Load the data before setting up the app
-load_data()
+#!!!!!!!! do not remove this section
+load_group_data()
+load_veris_data()
+load_nist_data()
+load_cvss_data()
 
 # Create Flask app and integrate it with Dash
 server = Flask(__name__, static_folder='../public')
@@ -74,7 +79,7 @@ home_layout = html.Div(style={'fontFamily': 'Arial, sans-serif', 'margin': '20px
             # Sort the groups alphabetically
             options=[{'label': group, 'value': group} for group in sorted(get_all_groups())],
             placeholder='Select a Group ID',
-            style={'min-width': '50%', 'marginRight': '10px'}
+            style={'minWidth': '50%', 'marginRight': '10px'}
         ),
         html.Button('Submit', id='submit-button', n_clicks=0, style={
             'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white', 'cursor': 'pointer'
@@ -151,10 +156,23 @@ def update_charts(pathname):
 
         if matching_group:
             # Fetch data and create charts
-            average_severity, severity_counts, capability_counts = extract_veris_data(get_ttps_of_group(matching_group))
-            nist_violations = extract_nist_data(get_ttps_of_group(matching_group))
-            cvss_scores = extract_cvss_scores(get_ttps_of_group(matching_group))
+            ttps = get_ttps_of_group(matching_group)
+            average_severity, severity_counts, capability_counts = extract_veris_data(ttps)
+
+
+
+            nist_violations = extract_nist_data(ttps)
+            cvss_scores = extract_cvss_scores(ttps)
             incident_data = get_group_incidents(matching_group)
+            # freq = get_frequency_score(matching_group)
+
+            # calculate the score parallely
+            # get_score_for_threat_actor(average_severity,
+                                        # cvss_scores,
+                                        # freq,
+                                        # incident_data['industry'].mode()[0],
+                                        # incident_data['actor_type'].mode()[0]
+                                    #    )
 
             severity_fig = create_severity_pie_chart(severity_counts)
             capability_fig = create_capability_pie_chart(capability_counts)
@@ -168,5 +186,25 @@ def update_charts(pathname):
     # Return empty figures if no group is selected
     return [go.Figure()] * 6
 
+
+# New callback to update scores from manual entry
+# @app.callback(
+#     Output('score-display', 'children', allow_duplicate=True),
+#     Input('update-score-button', 'n_clicks'),
+    
+#     State('score-capability', 'value'),
+#     State('score-frequency', 'value'),
+#     State('score-industry', 'value'),
+#     State('score-violations', 'value'),
+#     prevent_initial_call=True
+    
+# )
+# def update_score(n_clicks, c, f, i, v):
+#     value = 0
+#     if(n_clicks > 0 and c and f and i and v):
+#         value = get_score(c, f, v, i)
+#     return f"Score: {value}"
+
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
+

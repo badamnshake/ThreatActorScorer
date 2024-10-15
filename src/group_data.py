@@ -7,20 +7,27 @@ base_path = Path(__file__).resolve().parent.parent
 # Initialize variables to cache the loaded data
 cached_data = None
 incidents_data = None
+incident_counts = None
 
 def load_data():
     """
     Loads both group techniques data and incidents data if they haven't been loaded already.
     """
-    global cached_data, incidents_data
+    global cached_data, incidents_data, incident_counts
 
     if incidents_data is None:
         incidents_data = load_group_incidents()  # Cache the processed incidents data for future calls
-        print("Incidents data loaded successfully.")
+        incident_counts = incidents_data.groupby('actor').size().reset_index(name='incident_count')
+        # Step 2: Calculate min and max incident counts across all actors
+        min_incidents = incident_counts['incident_count'].min()
+        max_incidents = incident_counts['incident_count'].max()
+
+        # Step 3: Apply the linear transformation to get the score for each actor
+        incident_counts['score'] = (incident_counts['incident_count'] - min_incidents) / (max_incidents - min_incidents)
+
         
     if cached_data is None:
         cached_data = load_group_data()  # Cache the processed group data for future calls
-        print("Group data loaded successfully.")
     
 
 def get_group_name(group_id, df):
@@ -75,7 +82,6 @@ def get_ttps_of_group(group_id):
     Retrieves the list of TTPs for a given group ID.
     """
     global cached_data
-    load_data()  # Ensure data is loaded
 
     # Check if the group ID is in the cached data
     if group_id in cached_data:
@@ -89,7 +95,6 @@ def get_all_groups():
     Returns a list of all group IDs.
     """
     global cached_data
-    load_data()  # Ensure data is loaded
     return list(cached_data.keys())
 
 
@@ -98,6 +103,10 @@ def get_group_incidents(group_id):
     Retrieves incidents associated with a given group ID.
     """
     global incidents_data
-    load_data()  # Ensure data is loaded
     return incidents_data.loc[incidents_data['actor'] == group_id]
+
+def get_frequency_score(actor_name):
+    global incident_counts
+    return incident_counts.at[incident_counts.index[incident_counts['actor'] == actor_name][0], 'score']
+
 

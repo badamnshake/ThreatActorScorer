@@ -3,11 +3,6 @@
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import dcc, html
-from veris_data import extract_veris_data
-from nist_data import extract_nist_data
-from cvwe_data import extract_cvss_scores
-from incident import load_processed_incident_data
-#from scorer import get_score_using_datasets, get_score
 from group_data import get_group_incidents
 
 # Function to create the layout for the analysis page
@@ -28,10 +23,10 @@ def display_analysis_layout(selected_group):
 
         # Manual score calculation inputs and button
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '20px'}, children=[
-            dcc.Input(id='score-capability', type='text', value='', placeholder='Enter Capability (0-10)', style={'min-width': '20%'}),
-            dcc.Input(id='score-frequency', type='text', value='', placeholder='Enter Incident Numbers (0 - n)', style={'min-width': '20%'}),
-            dcc.Input(id='score-industry', type='text', value='', placeholder='Enter Industry of Threat Actor', style={'min-width': '20%'}),
-            dcc.Input(id='score-violations', type='text', value='', placeholder='Enter NIST Violations', style={'min-width': '20%'}),
+            dcc.Input(id='score-capability', type='text', value='', placeholder='Enter Capability (0-10)', style={'minWidth': '20%'}),
+            dcc.Input(id='score-frequency', type='text', value='', placeholder='Enter Incident Numbers (0 - n)', style={'minWidth': '20%'}),
+            dcc.Input(id='score-industry', type='text', value='', placeholder='Enter Industry of Threat Actor', style={'minWidth': '20%'}),
+            dcc.Input(id='score-violations', type='text', value='', placeholder='Enter NIST Violations', style={'minWidth': '20%'}),
             html.Button('Calculate Score Manually', id='update-score-button', n_clicks=0, style={
                 'marginLeft': '10px', 'backgroundColor': '#4CAF50', 'color': 'white', 'cursor': 'pointer'
             }),
