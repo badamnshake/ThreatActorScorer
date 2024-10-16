@@ -116,7 +116,7 @@ def get_score_for_threat_actor(complexity_score, veris_impact, cvss_data, freque
             'Mitigation Score',
             'Sector Score',
             'Actor Type Score',
-            ''  # Label for remaining part
+            '.'  # Label for remaining part
         ],
         'Max Weight': [
             20,
@@ -140,7 +140,7 @@ def get_score_for_threat_actor(complexity_score, veris_impact, cvss_data, freque
     total_score = df['Weight'].sum()
 
     # Update the remaining weight based on total score
-    df.loc[df['Label'] == '', 'Weight'] = 100 - total_score
+    df.loc[df['Label'] == '.', 'Weight'] = 100 - total_score
 
     print("---------")
 

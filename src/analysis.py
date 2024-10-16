@@ -11,8 +11,12 @@ def display_analysis_layout(selected_group):
         html.H1(f'Analysis for {selected_group}', style={'textAlign': 'center'}),
 
         # Severity and Capability Pie Charts
-        dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '30px'}),
-        dcc.Graph(id='capability-pie-chart', style={'flex': '1'}),
+        # dcc.Graph(id='severity-pie-chart', style={'flex': '1', 'marginRight': '30px'}),
+        # dcc.Graph(id='capability-pie-chart', style={'flex': '1'}),
+        html.Div([
+            dcc.Graph(id='severity-pie-chart', style={'width': '48%', 'marginRight': '2%'}),  # Set width and adjust margin
+            dcc.Graph(id='capability-pie-chart', style={'width': '48%'})  # Ensure both graphs take equal space
+        ], style={'display': 'flex', 'justifyContent': 'space-between'}),
 
         dcc.Graph(id='incidents'),
         dcc.Graph(id='attack-geo'),
@@ -40,7 +44,7 @@ def create_capability_pie_chart(capability_counts):
         capability_counts,
         names='capability_group',
         values='capability_id',
-        title='Breakdown of Confidentiality, Integrity, and Availability Impact by Threat Actors',
+        title='Breakdown of Confidentiality, Integrity, and Availability Impact',
         color_discrete_sequence=['#FF9999', '#66B3FF', '#99FF99']
     )
 
@@ -77,7 +81,7 @@ def create_incidents_scatter_plot(group_id, incident_data):
     title='Incidents by Year, Motive, and Industry',
     labels={'incident_count': 'Number of Incidents', 'year': 'Year', 'motive': 'Motive'},
 ).update_layout(
-    height = 1000,
+    height = 700,
     yaxis_title='Industry',  # X-axis is Industry
     xaxis_title='Year',  # Y-axis is Year
     legend_title_text='Motive',
@@ -103,7 +107,7 @@ def create_attack_geo_plot(group_id):
         labels={'incident_count': 'Number of Incidents', 'country': 'Country'},
         color_continuous_scale=px.colors.sequential.Reds,  # Color scale for shading
     ).update_layout(
-        height = 1000,
+        height = 800,
     )
     
 # Function to create CVSS scores scatter plot

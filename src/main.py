@@ -94,26 +94,11 @@ def profile_layout(actor_name):
 
         dcc.Graph(id='score-breakdown'),    # Attack Geo Plot
         
-        # Display charts and analysis for the selected actor
-        # New section to display the score breakdown
-        # html.Div(id='score-breakdown', style={
-        #     'padding': '10px',
-        #     'border': '1px solid #ccc',
-        #     'borderRadius': '5px',
-        #     'backgroundColor': '#f9f9f9',
-        #     'marginTop': '20px',
-        #     'textAlign': 'center',
-        #     'width': '60%',
-        #     'height' : '500px',
-        #     'margin': '0 auto',
-        #     'color': 'red',  # Set font color to red
-        #     'fontSize': '3.0rem',
-        # }),
         
          dcc.Graph(id='attack-geo'),    # Attack Geo Plot
          dcc.Graph(id='incidents'),     # Incidents Scatter Plot
         
-        html.Div(style={'display': 'flex', 'justifyContent': 'space-between'}, children=[
+        html.Div(style={'display': 'flex', 'justifyContent': 'space-around'}, children=[
             dcc.Graph(id='severity-pie-chart'),  # Severity Pie Chart
             dcc.Graph(id='capability-pie-chart'), #CIA Pie Chart
         ]),
@@ -223,7 +208,7 @@ def update_charts(pathname):
             score_fig = go.Figure(
                 go.Pie(
                     values=score_df['Weight'],
-                    labels=[f"{label} ({weight:.2f}% / {max_weight}%)" if label else '' for label, weight, max_weight in zip(score_df['Label'], score_df['Weight'], score_df['Max Weight'])],
+                    labels=[f"{label} ({weight:.1f}% / {max_weight}%)" if label != '.' else f"{weight:.1f}%" for label, weight, max_weight in zip(score_df['Label'], score_df['Weight'], score_df['Max Weight'])],
                     # labels=[f"{label} ({weight:.2f}%)" for label, weight in zip(score_df['Label'], score_df['Weight'])],  # Format labels
                     marker_colors=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#d3d3d377'],  # Colors for each section
                     hole=0.6,  # Donut chart style
@@ -231,12 +216,12 @@ def update_charts(pathname):
                 )
             )
 
-            score_fig.update_traces(textinfo='label+percent', hoverinfo='label+percent')  # Show labels and percentage on hover
+            score_fig.update_traces(textinfo='label', hoverinfo='label+percent')  # Show labels and percentage on hover
             score_fig.update_layout(
                 showlegend=True,  # Show the legend
 
                 annotations=[go.layout.Annotation(
-                    text=f"Score: {score:.2f}",
+                    text=f"Score: {score:.1f}",
                     x=0.5, y=0.5,  # Position at the center of the chart
                     font=dict(size=20, color="black"),
                     showarrow=False
