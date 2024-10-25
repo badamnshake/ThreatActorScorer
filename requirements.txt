@@ -1,0 +1,8 @@
+dash==2.18.0
+Flask==3.0.3
+Flask_Cors==5.0.0
+mitreattack_python==3.0.6
+numpy==2.1.2
+pandas==2.2.3
+plotly==5.24.0
+pycountry_convert==0.7.2
